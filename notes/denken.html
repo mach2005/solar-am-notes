@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>電験・電気主任技術者（太陽光AMのための電験三種・二種完全攻略）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーのアセットマネージャーのための電験（電気主任技術者）学習ノート。電験三種・二種の資格体系、実務直結の4科目（法規・電力・機械・理論）の超重要公式・論点、三相交流・電圧降下クイック計算機を収録。">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-page="denken">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>07 電験・電気主任技術者</span></nav>
+        <h1>電験・電気主任技術者（AM攻略ノート）</h1>
+        <p>電気主任技術者と対等に対話し、設備の安全と法規を完璧に理解する。電験三種・二種の試験攻略と、メガソーラー実務に直結する4科目の最重要エッセンス。</p>
+        <div class="meta">
+          <span class="tag" style="border-color:var(--gold);color:var(--gold)">電験三種・二種対応</span>
+          <span class="tag">計算ツール搭載</span><span class="tag">法規・事故報告</span><span class="tag">三相交流理論</span><span class="tag">保護リレー整定</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="article-wrap">
+      <details class="toc" id="toc" open>
+        <summary>Contents <span aria-hidden="true">▾</span></summary>
+        <ol id="toc-list"></ol>
+      </details>
+
+      <article class="prose">
+
+        <!-- ===== SECTION 1: 電験とメガソーラーの資格体系 ===== -->
+        <section id="license-map">
+          <h2>電験（電気主任技術者）の資格体系と太陽光</h2>
+          <p>発電設備の電圧や出力規模によって、監督に必要な資格区分が法律（電気事業法）で定められています。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> 電験の級と担当できる太陽光発電所の規模</h4>
+            <p class="desc">電験三種を持っていれば高圧〜特高22kV案件の監督が可能。大規模特高（66kV超）は電験二種が必要</p>
+            <div class="diagram-figure">
+              <img src="../assets/img/denken_guide.jpg" alt="電験・電気主任技術者と高圧変電設備・単線結線図のイメージ図" loading="lazy">
+            </div>
+
+            <div class="diagram-steps">
+              <div class="diagram-step">
+                <b>第三種電気主任技術者（電験三種）</b>
+                <strong>電圧 50,000V（50kV）未満</strong>
+                <p>高圧6.6kV連系（50kW〜2,000kW未満）および、特高22kV連系（出力5,000kW未満等）のメガソーラーを保安監督可能。AMの強力な武器。</p>
+              </div>
+              <div class="diagram-step">
+                <b>第二種電気主任技術者（電験二種）</b>
+                <strong>電圧 170,000V（170kV）未満</strong>
+                <p>66kV / 77kVの特別高圧送電線に直接連系する数十MW級の大規模メガソーラー（特別高圧変電所）を保安監督可能。</p>
+              </div>
+              <div class="diagram-step">
+                <b>第一種電気主任技術者（電験一種）</b>
+                <strong>すべての電圧（制限なし）</strong>
+                <p>超高圧送電網（154kV / 275kV / 500kV）を含む、あらゆる電力設備を保安監督できる国内最上位資格。</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>保安監督の体制（選任・外部委託）</h3>
+          <table>
+            <thead><tr><th>方式</th><th>対象設備の目安</th><th>概要</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>常駐選任</b></td>
+                <td>特高メガソーラー（2,000kW以上）、大型高圧</td>
+                <td>自社またはO&amp;M会社から専任の主任技術者を現場に選任届出。</td>
+              </tr>
+              <tr>
+                <td><b>外部委託承認制度</b></td>
+                <td>高圧連系（出力5,000kW未満等の要件を満たす場合）</td>
+                <td>常駐させず、電気保安法人（保安協会等）や個人管理技術者へ点検業務を委託できる制度。経済産業局長の承認が必要。</td>
+              </tr>
+              <tr>
+                <td><b>統括選任制度</b></td>
+                <td>同一構内・近接地の複数設備</td>
+                <td>一定の要件を満たす場合、1人の主任技術者が複数の発電所を統括して選任可能。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ===== SECTION 2: 科目別最重要論点 ===== -->
+        <section id="subjects">
+          <h2>電験4科目 × 太陽光実務の超重要論点</h2>
+
+          <!-- 1. 法規 -->
+          <h3>① 法規（Laws &amp; Regulations）</h3>
+          <p>AM実務に直結する最重要科目。法令違反はFIT/FIPの交付金留保や業務改善命令に直結します。</p>
+
+          <div class="kp-grid">
+            <div class="kp">
+              <b>電気関係報告規則（事故報告）</b>
+              <p>・<strong>速報（48時間以内）</strong>：電話等で速やかに所轄産業保安監督部へ。<br>・<strong>詳報（30日以内）</strong>：原因と再発防止策を文書提出。<br>感電死傷、電気火災、波及事故（構外停電）、主要機器の損壊が報告対象。</p>
+            </div>
+            <div class="kp">
+              <b>技術基準（解釈第227条〜：系統連系）</b>
+              <p>逆潮流のある太陽光発電所の保護装置設置基準。<br>・高圧連系：OVGR、UVR、OVR、DGR、単独運転防止装置（受動・能動）の義務化。<br>・力率一定制御（標準95%など）の遵守義務。</p>
+            </div>
+            <div class="kp">
+              <b>接地工事の4区分（A・B・C・D種）</b>
+              <p>・<strong>A種（10Ω以下）</strong>：高圧・特高機器の金属外箱（キュービクル外箱等）。<br>・<strong>B種（計算値Ω）</strong>：変圧器の低圧側中性点・接地端子。<br>・<strong>C種（10Ω以下）</strong>：300V超の低圧機器外箱。<br>・<strong>D種（100Ω以下）</strong>：300V以下の低圧機器外箱（パネル架台等）。</p>
+            </div>
+          </div>
+
+          <!-- 2. 電力 -->
+          <h3 style="margin-top:36px">② 電力（Power Systems）</h3>
+          <p>受変電設備、送電、短絡事故、パーセントインピーダンスの理論。</p>
+
+          <div class="formula">
+            <span class="label">Formula: %Z法による短絡電流の計算</span>
+            <div class="eq">三相短絡電流 I<sub>s</sub> [A] ＝ I<sub>n</sub> × <span class="frac"><span>100</span><span>%Z</span></span> ＝ <span class="frac"><span>基準容量 P<sub>n</sub> [kVA]</span><span>√3 × 公称電圧 V<sub>n</sub> [kV]</span></span> × <span class="frac"><span>100</span><span>%Z</span></span></div>
+            <p class="note">変圧器や系統のインピーダンス（%Z）から、短絡事故時に流れる巨大な短絡電流（Is）を算定。キュービクルの真空遮断器（VCB）の定格遮断電流（例：12.5kAなど）を選定する根拠となる。</p>
+          </div>
+
+          <div class="formula">
+            <span class="label">Formula: 逆潮流による受電点電圧の上昇</span>
+            <div class="eq">電圧上昇 ΔV [V] ≒ <span class="frac"><span>P・R ＋ Q・X</span><span>V</span></span></div>
+            <p class="note">太陽光から系統へ大量の有効電力（P）を逆潮流させると、系統の抵抗（R）によって受電点電圧が上昇する。進相無効電力（Q）を吸収（力率95%遅れ制御など）させることで、電圧上昇を抑える仕組み。</p>
+          </div>
+
+          <!-- 3. 機械 -->
+          <h3 style="margin-top:36px">③ 機械（Electrical Machines &amp; Power Electronics）</h3>
+          <p>PCS（インバータ）、パワー半導体、変圧器の損失計算。</p>
+          <div class="kp-grid">
+            <div class="kp">
+              <b>変圧器の最大効率条件</b>
+              <p>変圧器の損失には、負荷にかかわらず一定の「無負荷損（鉄損 Pi）」と、電流の2乗に比例する「負荷損（銅損 Pc）」がある。<strong>「鉄損 ＝ 銅損（Pi ＝ Pc）」の負荷率のときに変圧器の変換効率が最大</strong>になる。</p>
+            </div>
+            <div class="kp">
+              <b>PCSとパワーエレクトロニクス</b>
+              <p>DCからACへの変換にはIGBT（絶縁ゲートバイポーラトランジスタ）やSiC（炭化ケイ素）素子を用いた<strong>PWM（パルス幅変調）制御</strong>を使用。交流の波形をきれいな正弦波に近づけ、高調波歪み（THD）を抑制する。</p>
+            </div>
+            <div class="kp">
+              <b>直流アークの危険性</b>
+              <p>交流（AC）は1秒間に100〜120回電圧がゼロ（零点）を通るためアーク放電が自然消弧しやすい。一方、<strong>直流（DC）は零点がないためアークが途切れず燃え続ける</strong>。ストリング配線の接触不良が火災に直結する理由。</p>
+            </div>
+          </div>
+
+          <!-- 4. 理論 -->
+          <h3 style="margin-top:36px">④ 理論（Electrical Circuit Theory）</h3>
+          <p>電気の根幹となる三相交流計算と交流電力公式。</p>
+          <div class="formula">
+            <span class="label">Formula: 三相3線式の交流電力の基本公式</span>
+            <div class="eq">有効電力 P [W] ＝ √3 × V × I × cosθ</div>
+            <div class="eq">無効電力 Q [var] ＝ √3 × V × I × sinθ</div>
+            <div class="eq">皮相電力 S [VA] ＝ √3 × V × I ＝ <span class="frac"><span>P</span><span>cosθ</span></span></div>
+            <p class="note">V：線間電圧 [V]、I：線電流 [A]、cosθ：力率。PCSの容量（kVA）と売電可能電力（kW）の関係を読み解く最重要式。</p>
+          </div>
+        </section>
+
+        <!-- ===== SECTION 3: 実務クイック計算ツール ===== -->
+        <section id="calc-tool">
+          <h2>【実務ツール】電験・電気計算クイック計算機</h2>
+          <p>高圧連系（6.6kV）やPCS出力（400V）での電流計算、ケーブル電圧降下をブラウザ上で瞬時に算出できます。</p>
+
+          <div class="sim-container">
+            <div class="sim-head">
+              <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg> 三相交流 電力・線電流クイック計算ツール</h3>
+              <p>PCS定格容量や連系点受電電力から、ケーブルに流れる「線電流（アンペア）」を計算します。</p>
+            </div>
+
+            <div class="sim-grid">
+              <div class="sim-inputs">
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>線間電圧 V</span><span class="sim-val" id="dk-val-v">6,600 V（高圧）</span></div>
+                  <select id="dk-input-v" style="width:100%;padding:10px;border-radius:8px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                    <option value="6600">6,600 V（高圧連系 配電線）</option>
+                    <option value="22000">22,000 V（特別高圧 22kV）</option>
+                    <option value="66000">66,000 V（特別高圧 66kV）</option>
+                    <option value="400">400 V（三相低圧 PCS出力側）</option>
+                    <option value="200">200 V（三相低圧構内電源）</option>
+                  </select>
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>設備出力（有効電力 P）</span><span class="sim-val" id="dk-val-p">1,500 kW</span></div>
+                  <input class="sim-range" id="dk-input-p" type="range" min="50" max="10000" step="50" value="1500">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>力率 cosθ</span><span class="sim-val" id="dk-val-pf">95 %</span></div>
+                  <input class="sim-range" id="dk-input-pf" type="range" min="80" max="100" step="1" value="95">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>送電ケーブル長 L</span><span class="sim-val" id="dk-val-len">200 m</span></div>
+                  <input class="sim-range" id="dk-input-len" type="range" min="10" max="2000" step="10" value="200">
+                </div>
+              </div>
+
+              <div class="sim-results">
+                <div class="sim-res-row highlight">
+                  <span>線電流 I（ケーブル通電電流）</span>
+                  <b id="dk-res-current" style="color:var(--gold);font-size:22px">137.9 A</b>
+                </div>
+                <div class="sim-res-row">
+                  <span>皮相電力 S（変圧器・PCS皮相容量）</span>
+                  <b id="dk-res-va">1,578.9 kVA</b>
+                </div>
+                <div class="sim-res-row">
+                  <span>無効電力 Q</span>
+                  <b id="dk-res-var">493.0 kvar</b>
+                </div>
+                <div class="sim-res-row">
+                  <span>概算送電ロス（ケーブル抵抗分）</span>
+                  <b id="dk-res-loss">約 0.42 %</b>
+                </div>
+
+                <div class="sim-dscr-box" style="margin-top:12px;background:hsl(222 28% 10%)">
+                  <span class="sim-dscr-label">推奨ケーブルサイズ（許容電流ベース目安）</span>
+                  <div class="sim-dscr-value" id="dk-res-cable" style="font-size:24px;color:var(--sky)">CV 60sq 以上</div>
+                  <span class="sim-dscr-status safe">通電余裕あり</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== SECTION 4: 電験試験攻略ロードマップ ===== -->
+        <section id="roadmap">
+          <h2>電験三種・二種の試験制度と勉強法</h2>
+          <div class="kp-grid">
+            <div class="kp">
+              <b>CBT方式（年2回受験）の導入</b>
+              <p>現在、電験三種は年2回（上期・下期）開催され、パソコンで受検できるCBT方式が導入されたことで受験チャンスが倍増。土日や平日の希望日時を選んで受験可能になりました。</p>
+            </div>
+            <div class="kp">
+              <b>科目別合格保留制度（3年間有効）</b>
+              <p>4科目すべてを一度に合格する必要はありません。合格した科目は翌年・翌々年（最大計5回分）免除されるため、1年あたり1〜2科目ずつ着実に突破する戦略が王道です。</p>
+            </div>
+            <div class="kp">
+              <b>AMにおすすめの受験順序</b>
+              <p><strong>ステップ1：理論 ＆ 法規</strong><br>理論は全科目の土台となるため最初にマスター。法規は暗記と計算のバランスが良く実務ですぐ役に立つ。<br><strong>ステップ2：電力 ＆ 機械</strong><br>理論の知識をベースに、受変電・インバータ・太陽電池の専門知識を固めて合格を掴む。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- チェックリスト -->
+        <section id="checklist">
+          <h2>AM視点の電験チェックリスト</h2>
+          <ul class="checklist">
+            <li>発電所の選任形態（常駐専任／統括選任／外部委託承認）の要件と届出先を把握しているか</li>
+            <li>保安規程の最新版が事業所に備え付けられ、年次点検計画と一致しているか</li>
+            <li>事故発生時の報告フロー（所轄産業保安監督部への速報48時間・詳報30日）が体制図に明記されているか</li>
+            <li>電力会社との連系協議資料（受電点単線結線図・保護継電器整定書）を保管しているか</li>
+            <li>変圧器のB種接地抵抗値が点検記録で基準値（150/I Ω以下）を満たしているか確認したか</li>
+          </ul>
+        </section>
+
+        <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 法規・試験制度は変更される場合があります。電気技術者試験センター（ECEE）および経済産業省の最新情報をご確認ください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="../assets/js/main.js"></script>
+
+  <!-- 電験クイック計算スクリプト -->
+  <script>
+    (function() {
+      var selV = document.getElementById('dk-input-v');
+      var inP = document.getElementById('dk-input-p');
+      var inPf = document.getElementById('dk-input-pf');
+      var inLen = document.getElementById('dk-input-len');
+
+      if (!selV) return;
+
+      function calcDk() {
+        var v = parseFloat(selV.value);
+        var p = parseFloat(inP.value); // kW
+        var pf = parseFloat(inPf.value) / 100;
+        var len = parseFloat(inLen.value); // m
+
+        document.getElementById('dk-val-p').textContent = p.toLocaleString() + " kW";
+        document.getElementById('dk-val-pf').textContent = (pf * 100).toFixed(0) + " %";
+        document.getElementById('dk-val-len').textContent = len.toLocaleString() + " m";
+
+        // 皮相電力 S = P / cosθ (kVA)
+        var s = p / pf;
+        // 線電流 I = (P * 1000) / (sqrt(3) * V * cosθ) = (S * 1000) / (sqrt(3) * V)
+        var current = (s * 1000) / (Math.sqrt(3) * v);
+        // 無効電力 Q = sqrt(S^2 - P^2)
+        var q = Math.sqrt(Math.max(0, s * s - p * p));
+
+        document.getElementById('dk-res-current').textContent = current.toFixed(1) + " A";
+        document.getElementById('dk-res-va').textContent = s.toFixed(1) + " kVA";
+        document.getElementById('dk-res-var').textContent = q.toFixed(1) + " kvar";
+
+        // ケーブルサイズ概算判定
+        var cableText = "CV 38sq";
+        if (current > 300) {
+          cableText = "CV 200sq 〜 250sq";
+        } else if (current > 200) {
+          cableText = "CV 100sq 〜 150sq";
+        } else if (current > 120) {
+          cableText = "CV 60sq 〜 100sq";
+        } else if (current > 60) {
+          cableText = "CV 38sq 〜 60sq";
+        } else {
+          cableText = "CV 22sq 〜 38sq";
+        }
+        document.getElementById('dk-res-cable').textContent = cableText;
+
+        // 概算送電ロス
+        var lossRate = Math.min(3.5, (len / 1000) * (current / 200) * 1.2);
+        document.getElementById('dk-res-loss').textContent = "約 " + Math.max(0.1, lossRate).toFixed(2) + " %";
+      }
+
+      [selV, inP, inPf, inLen].forEach(function(el) {
+        el.addEventListener('input', calcDk);
+        el.addEventListener('change', calcDk);
+      });
+      calcDk();
+    })();
+  </script>
+</body>
+</html>

@@ -16,6 +16,7 @@
     { id: "policy",      file: "notes/policy.html",      label: "制度・市場" },
     { id: "finance",     file: "notes/finance.html",     label: "金融・ファイナンス" },
     { id: "electrical",  file: "notes/electrical.html",  label: "電気設備" },
+    { id: "denken",      file: "notes/denken.html",      label: "電験・主任技術者" },
     { id: "legal",       file: "notes/legal.html",       label: "法令・契約" },
     { id: "glossary",    file: "notes/glossary.html",    label: "用語集" }
   ];
