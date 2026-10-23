@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>電気設備（モジュール・PCS・受変電・保安）｜Solar AM Notes</title>
-  <meta name="description" content="メガソーラーの電気設備ノート。システム構成、太陽電池モジュールとIV特性、PCSの役割と方式、電圧区分と連系区分、保護継電器、電気保安体制と電気主任技術者、力率制御を解説。">
+  <title>電気設備（イラスト・図解で学ぶメガソーラー）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーの電気設備をイラストと図解でわかりやすく解説。パネルから系統連系までの電気の流れ、セル・ストリング・アレイの階層、IVカーブとMPPT、PCS方式比較、キュービクル内部機器、保護リレーの仕組み。">
   <meta name="theme-color" content="#0b0f17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,10 +29,13 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>05 電気設備</span></nav>
-        <h1>電気設備</h1>
-        <p>パネルで生まれた直流が、交流に変換され、昇圧されて系統へ届くまで。O&amp;M報告や故障報告を正しく理解するための設備知識。</p>
-        <div class="meta"><span class="tag">モジュール</span><span class="tag">PCS</span><span class="tag">受変電設備</span><span class="tag">保護継電器</span><span class="tag">電気主任技術者</span></div>
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>05 電気設備（図解）</span></nav>
+        <h1>電気設備（イラスト・図解）</h1>
+        <p>太陽光が電力系統へ届くまでの「電気の流れ」と各機器の役割を、イラストとダイアグラムで直感的に理解するためのノートです。</p>
+        <div class="meta">
+          <span class="tag" style="border-color:var(--gold);color:var(--gold)">イラスト図解</span>
+          <span class="tag">システム全体図</span><span class="tag">IVカーブ</span><span class="tag">PCS比較</span><span class="tag">キュービクル内部</span><span class="tag">保護継電器</span>
+        </div>
       </div>
     </section>
 
@@ -43,147 +46,526 @@
       </details>
 
       <article class="prose">
-        <section id="system">
-          <h2>システム構成</h2>
-          <div class="flow">
-            <div class="node">モジュール<small>直流（DC）発電</small></div><div class="arrow">→</div>
-            <div class="node">接続箱・集電箱<small>ストリングを束ねる</small></div><div class="arrow">→</div>
-            <div class="node">PCS<small>DC→AC変換</small></div><div class="arrow">→</div>
-            <div class="node">昇圧変圧器<small>低圧→高圧/特高</small></div><div class="arrow">→</div>
-            <div class="node">受変電設備<small>計量・保護</small></div><div class="arrow">→</div>
-            <div class="node">電力系統<small>送配電網</small></div>
-          </div>
-          <ul>
-            <li><b>ストリング</b>：モジュールを直列に接続した単位。直列数で電圧が決まる。</li>
-            <li><b>アレイ</b>：ストリングを並列に組み合わせ、架台に設置したまとまり。</li>
-            <li><b>接続箱</b>：複数ストリングを並列に束ね、逆流防止・ヒューズ・開閉器を備える。</li>
-            <li><b>受変電設備</b>：高圧連系ではキュービクル、特別高圧連系では変電所（開閉所）を設け、遮断器・保護継電器・取引用メーターを設置。</li>
-          </ul>
-        </section>
 
-        <section id="module">
-          <h2>太陽電池モジュール</h2>
-          <table>
-            <thead><tr><th>種類</th><th>特徴</th></tr></thead>
-            <tbody>
-              <tr><td><b>単結晶シリコン</b></td><td>変換効率が高く、現在の主流。PERC・TOPCon・HJTなどの高効率セル技術がある</td></tr>
-              <tr><td><b>多結晶シリコン</b></td><td>制度初期の案件で多く採用。単結晶より効率はやや低い</td></tr>
-              <tr><td><b>薄膜系（CIS・CdTe等）</b></td><td>温度上昇による出力低下が比較的小さい。面積あたりの出力は低め</td></tr>
-              <tr><td><b>両面発電（バイフェイシャル）</b></td><td>裏面でも反射光を受けて発電。地面の反射率（アルベド）が効く</td></tr>
-            </tbody>
-          </table>
+        <!-- ===== SECTION 1: 全体システム図解 ===== -->
+        <section id="system-flow">
+          <h2>電気の流れとシステム全体図</h2>
+          <p>太陽電池パネルで生まれた直流（DC）電力は、いくつもの設備を経て交流（AC）に変換され、高い電圧へと昇圧されて送電線へ送り出されます。</p>
 
-          <h3>IV特性（電流−電圧特性）</h3>
-          <div class="kp-grid">
-            <div class="kp"><b>Voc（開放電圧）</b><p>電流ゼロ時の電圧。低温ほど高くなるため、冬の最低気温でPCSの最大入力電圧を超えない設計が必要</p></div>
-            <div class="kp"><b>Isc（短絡電流）</b><p>電圧ゼロ時の電流。日射量にほぼ比例</p></div>
-            <div class="kp"><b>Pmax（最大出力）</b><p>Vpm × Ipm。STC条件での値がモジュールの公称出力（W）</p></div>
-            <div class="kp"><b>FF（曲線因子）</b><p>Pmax ÷（Voc × Isc）。IVカーブの「角張り具合」。劣化や抵抗増加で低下</p></div>
-          </div>
-          <div class="callout info"><span class="ic">ℹ️</span><div><b class="t">バイパスダイオード</b><p>モジュール内のセルの一部が影になると、その部分が抵抗となり発熱（ホットスポット）します。バイパスダイオードは影になったセル群を迂回させて損失と発熱を抑えます。故障するとホットスポットや出力低下の原因に。</p></div></div>
-        </section>
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> メガソーラー設備構成の全体図</h4>
+            <p class="desc">日光が当たってから系統（電力会社）へ流れるまでの機器構成と電線のつながり</p>
+            <div class="diagram-figure">
+              <img src="../assets/img/electrical_flow.jpg" alt="メガソーラー電気設備のアイソメトリック図解（パネル→接続箱→PCS→変圧器→キュービクル→送電鉄塔）" loading="lazy">
+            </div>
 
-        <section id="pcs">
-          <h2>PCS（パワーコンディショナ）</h2>
-          <h3>主な役割</h3>
-          <ul>
-            <li><b>DC→AC変換</b>：インバータで直流を系統と同じ周波数（東日本50Hz／西日本60Hz）の交流に変換。</li>
-            <li><b>MPPT（最大電力点追従）</b>：日射・温度で変わる最大出力点を追いかけ、常に最大電力を取り出す。</li>
-            <li><b>系統連系保護</b>：系統異常を検知して停止。単独運転を防止。</li>
-            <li><b>出力・力率制御</b>：出力制御指示への対応、力率一定制御、電圧上昇抑制。</li>
-          </ul>
-          <h3>集中型とストリング型（分散型）</h3>
-          <table>
-            <thead><tr><th>項目</th><th>集中型</th><th>ストリング型（分散型）</th></tr></thead>
-            <tbody>
-              <tr><td>容量</td><td>1台あたり数百kW〜数MW</td><td>1台あたり数十kW〜百数十kW程度</td></tr>
-              <tr><td>故障時の影響</td><td>1台停止の影響が大きい</td><td>影響が小さく、全体の稼働率を維持しやすい</td></tr>
-              <tr><td>保守</td><td>専門メーカーによる現地修理が中心</td><td>本体交換で対応しやすい</td></tr>
-              <tr><td>MPPT</td><td>多数のストリングをまとめて制御</td><td>きめ細かく制御でき、影・ミスマッチに強い</td></tr>
-            </tbody>
-          </table>
-          <div class="formula">
-            <span class="label">過積載率</span>
-            <div class="eq">過積載率 ＝ <span class="frac"><span>モジュール容量（DC, kWp）</span><span>PCS容量（AC, kW）</span></span></div>
-            <p class="note">朝夕・曇天の発電量を増やせる一方、晴天時にはクリッピングが発生。経済性で最適値を決める。なお、FIT認定後のパネル増設は調達価格の変更対象となるルールがあるため注意。</p>
+            <div class="diagram-steps">
+              <div class="diagram-step">
+                <b>STEP 01 【直流発電】</b>
+                <strong>太陽電池アレイ</strong>
+                <p>太陽光を吸収して直流（DC数百V〜1,500V）を発電。影や汚れがあると電圧・電流が低下する。</p>
+              </div>
+              <div class="diagram-step">
+                <b>STEP 02 【集電・保護】</b>
+                <strong>接続箱 / 集電箱</strong>
+                <p>十数本〜数十本のストリング配線を束ねる。逆流防止ダイオードやヒューズ、開閉器を備える。</p>
+              </div>
+              <div class="diagram-step">
+                <b>STEP 03 【変換・制御】</b>
+                <strong>PCS（パワコン）</strong>
+                <p>直流（DC）を系統と同じ交流（AC 50/60Hz）に変換。最大電力点を追う「MPPT制御」を担う心臓部。</p>
+              </div>
+              <div class="diagram-step">
+                <b>STEP 04 【昇圧・保護】</b>
+                <strong>変圧器・キュービクル</strong>
+                <p>PCSから出た低圧（300〜400V）を高圧（6,600V）や特高（22kV〜66kV）へ一気に昇圧。遮断器や保護リレーを内蔵。</p>
+              </div>
+              <div class="diagram-step">
+                <b>STEP 05 【系統連系】</b>
+                <strong>受電点・送電線</strong>
+                <p>電力会社の配電線・送電鉄塔へ接続。売電メーター（取引用計量器）で売電電力量をカウントする。</p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="voltage">
-          <h2>電圧区分と連系区分</h2>
-          <table>
-            <thead><tr><th>区分</th><th>交流</th><th>直流</th></tr></thead>
-            <tbody>
-              <tr><td><b>低圧</b></td><td>600V以下</td><td>750V以下</td></tr>
-              <tr><td><b>高圧</b></td><td>600V超 7,000V以下</td><td>750V超 7,000V以下</td></tr>
-              <tr><td><b>特別高圧</b></td><td colspan="2">7,000V超</td></tr>
-            </tbody>
-          </table>
-          <table>
-            <thead><tr><th>連系区分（原則）</th><th>発電設備の出力</th><th>受変電設備の例</th></tr></thead>
-            <tbody>
-              <tr><td>低圧連系</td><td>50kW未満</td><td>—</td></tr>
-              <tr><td>高圧連系（6.6kV）</td><td>50kW以上 2,000kW未満</td><td>キュービクル</td></tr>
-              <tr><td>特別高圧連系（22kV・66kV等）</td><td>2,000kW以上</td><td>特高変電所（主変圧器・ガス遮断器等）</td></tr>
-            </tbody>
-          </table>
-          <div class="callout tip"><span class="ic">✅</span><div><b class="t">「メガソーラー」の連系</b><p>1MW級は高圧連系、2MW以上は特別高圧連系が原則。特高案件は変電所設備の保守費用・停電点検の調整が大きくなるため、O&amp;M費の構造も変わります。</p></div></div>
+        <!-- ===== SECTION 2: パネルの階層図解 ===== -->
+        <section id="module-hierarchy">
+          <h2>セル・モジュール・ストリング・アレイの階層</h2>
+          <p>発電所現場で飛び交う「ストリング」「アレイ」という言葉は、パネルのまとめ方の単位です。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> 構成単位の階層図解</h4>
+            <p class="desc">小さなセルが直列・並列に組み合わさって、数百〜1,500Vのメガソーラーを構成します</p>
+
+            <svg class="svg-diagram" viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .h-box { fill: hsl(222, 24%, 14%); stroke: hsl(222, 20%, 28%); stroke-width: 1.5; rx: 10; }
+                .h-box.active { stroke: hsl(42, 96%, 60%); fill: hsl(42, 96%, 60%, 0.08); }
+                .h-title { font-family: sans-serif; font-weight: 700; font-size: 14px; fill: hsl(220, 20%, 92%); }
+                .h-sub { font-family: sans-serif; font-size: 11px; fill: hsl(220, 12%, 68%); }
+                .h-spec { font-family: monospace; font-size: 12px; fill: hsl(34, 98%, 58%); font-weight: 700; }
+                .h-arr { stroke: hsl(34, 98%, 58%); stroke-width: 2; fill: none; marker-end: url(#arrow); }
+              </style>
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="hsl(34, 98%, 58%)"/>
+                </marker>
+              </defs>
+
+              <!-- セル -->
+              <g transform="translate(10, 20)">
+                <rect class="h-box" width="160" height="180"/>
+                <rect x="55" y="25" width="50" height="50" rx="4" fill="hsl(205, 85%, 55%)" stroke="#fff" stroke-width="1"/>
+                <text x="80" y="98" text-anchor="middle" class="h-title">① セル（Cell）</text>
+                <text x="80" y="120" text-anchor="middle" class="h-sub">発電の最小単位</text>
+                <text x="80" y="142" text-anchor="middle" class="h-sub">シリコンの薄板</text>
+                <text x="80" y="172" text-anchor="middle" class="h-spec">約 0.5 〜 0.6 V</text>
+              </g>
+
+              <!-- 矢印1 -->
+              <path class="h-arr" d="M 175 110 L 195 110"/>
+
+              <!-- モジュール -->
+              <g transform="translate(200, 20)">
+                <rect class="h-box" width="165" height="180"/>
+                <rect x="42" y="20" width="80" height="55" rx="4" fill="hsl(222, 28%, 20%)" stroke="hsl(205, 85%, 62%)" stroke-width="1.5"/>
+                <!-- セルグリッド線 -->
+                <line x1="62" y1="20" x2="62" y2="75" stroke="hsl(222, 20%, 30%)"/>
+                <line x1="82" y1="20" x2="82" y2="75" stroke="hsl(222, 20%, 30%)"/>
+                <line x1="102" y1="20" x2="102" y2="75" stroke="hsl(222, 20%, 30%)"/>
+                <line x1="42" y1="47" x2="122" y2="47" stroke="hsl(222, 20%, 30%)"/>
+                <text x="82" y="98" text-anchor="middle" class="h-title">② モジュール</text>
+                <text x="82" y="120" text-anchor="middle" class="h-sub">セルを直列接続</text>
+                <text x="82" y="142" text-anchor="middle" class="h-sub">いわゆる「パネル」</text>
+                <text x="82" y="172" text-anchor="middle" class="h-spec">約 40 〜 50 V</text>
+              </g>
+
+              <!-- 矢印2 -->
+              <path class="h-arr" d="M 370 110 L 390 110"/>
+
+              <!-- ストリング -->
+              <g transform="translate(395, 20)">
+                <rect class="h-box active" width="170" height="180"/>
+                <!-- 3枚のパネル直列イメージ -->
+                <rect x="25" y="22" width="32" height="50" rx="3" fill="hsl(205, 85%, 45%)"/>
+                <line x1="57" y1="47" x2="69" y2="47" stroke="hsl(34, 98%, 58%)" stroke-width="2"/>
+                <rect x="69" y="22" width="32" height="50" rx="3" fill="hsl(205, 85%, 45%)"/>
+                <line x1="101" y1="47" x2="113" y2="47" stroke="hsl(34, 98%, 58%)" stroke-width="2"/>
+                <rect x="113" y="22" width="32" height="50" rx="3" fill="hsl(205, 85%, 45%)"/>
+                <text x="85" y="98" text-anchor="middle" class="h-title">③ ストリング</text>
+                <text x="85" y="120" text-anchor="middle" class="h-sub">パネル十数枚を直列</text>
+                <text x="85" y="142" text-anchor="middle" class="h-sub">点検・監視の基本単位</text>
+                <text x="85" y="172" text-anchor="middle" class="h-spec">600 〜 1,000 V</text>
+              </g>
+
+              <!-- 矢印3 -->
+              <path class="h-arr" d="M 570 110 L 590 110"/>
+
+              <!-- アレイ -->
+              <g transform="translate(595, 20)">
+                <rect class="h-box" width="155" height="180"/>
+                <rect x="30" y="20" width="95" height="24" rx="3" fill="hsl(205, 85%, 50%)"/>
+                <rect x="30" y="48" width="95" height="24" rx="3" fill="hsl(205, 85%, 50%)"/>
+                <text x="77" y="98" text-anchor="middle" class="h-title">④ アレイ（Array）</text>
+                <text x="77" y="120" text-anchor="middle" class="h-sub">ストリングを並列配置</text>
+                <text x="77" y="142" text-anchor="middle" class="h-sub">架台上に並ぶ大集団</text>
+                <text x="77" y="172" text-anchor="middle" class="h-spec">数百kW 〜 数MW</text>
+              </g>
+            </svg>
+          </div>
+          <div class="callout tip"><span class="ic">💡</span><div><b class="t">AM実務メモ：なぜストリング単位で監視するのか？</b><p>モジュール1枚の故障や影でも、直列でつながる「ストリング全体」の電流が低下します。遠隔監視でストリングごとの電流値を比較することで、「どの架台のどの列で異常が起きているか」を遠隔からピンポイントで突き止められます。</p></div></div>
         </section>
 
-        <section id="protection">
-          <h2>保護装置</h2>
-          <p>発電所の事故を系統に波及させない、また系統異常時に発電所を安全に切り離すため、各種の保護継電器（リレー）を設置します。</p>
-          <table>
-            <thead><tr><th>略称</th><th>名称</th><th>役割</th></tr></thead>
-            <tbody>
-              <tr><td><b>OVR / UVR</b></td><td>過電圧／不足電圧継電器</td><td>系統電圧の異常を検出して解列</td></tr>
-              <tr><td><b>OFR / UFR</b></td><td>周波数上昇／低下継電器</td><td>周波数の異常を検出して解列</td></tr>
-              <tr><td><b>OVGR</b></td><td>地絡過電圧継電器</td><td>系統側の地絡を零相電圧で検出</td></tr>
-              <tr><td><b>DGR / GR</b></td><td>地絡方向継電器／地絡継電器</td><td>構内の地絡事故を検出し、波及事故を防ぐ</td></tr>
-              <tr><td><b>OCR</b></td><td>過電流継電器</td><td>短絡・過負荷を検出</td></tr>
-              <tr><td><b>単独運転検出</b></td><td>受動的方式／能動的方式</td><td>系統が停電しているのに発電所だけが送電し続ける状態を検出して停止（PCSに内蔵されることが多い）</td></tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><b>VCB（真空遮断器）</b>・<b>LBS（負荷開閉器）</b>：高圧回路の開閉・遮断装置。</li>
-            <li><b>SPD（避雷器）</b>：雷サージから機器を保護。落雷後は動作・劣化状況を確認。</li>
-            <li>保護継電器は年次点検で<b>動作試験（継電器試験）</b>を行い、整定値通りに動作するか確認する。</li>
-          </ul>
+        <!-- ===== SECTION 3: IV特性とMPPTの図解 ===== -->
+        <section id="iv-curve">
+          <h2>IV特性（電流−電圧カーブ）とMPPTの図解</h2>
+          <p>太陽電池は乾電池とは違い、<strong>電圧と電流の組み合わせが日射や温度で刻々と変化</strong>します。この特性を表したものが「IVカーブ」です。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M19 19C19 9 16 5 4 5"/></svg> IVカーブと最大電力点（Pmax）</h4>
+            <p class="desc">青線が電流（I）、橙線が電力（P＝V×I）。PCSは常に山の頂点（Pmax）を自動で追い続けます（MPPT）。</p>
+
+            <svg class="svg-diagram" viewBox="0 0 740 380" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .axis { stroke: hsl(220, 20%, 40%); stroke-width: 2; }
+                .grid-l { stroke: hsl(222, 20%, 20%); stroke-dasharray: 4,4; }
+                .label-txt { font-family: sans-serif; font-size: 13px; fill: hsl(220, 12%, 68%); }
+                .val-tag { font-family: monospace; font-size: 13px; font-weight: 700; }
+              </style>
+              <!-- グリッド背景 -->
+              <rect x="70" y="30" width="620" height="280" fill="hsl(222, 30%, 8%)" rx="6"/>
+              <line class="grid-l" x1="70" y1="100" x2="690" y2="100"/>
+              <line class="grid-l" x1="70" y1="170" x2="690" y2="170"/>
+              <line class="grid-l" x1="70" y1="240" x2="690" y2="240"/>
+              <line class="grid-l" x1="225" y1="30" x2="225" y2="310"/>
+              <line class="grid-l" x1="380" y1="30" x2="380" y2="310"/>
+              <line class="grid-l" x1="510" y1="30" x2="510" y2="310"/>
+
+              <!-- 軸 -->
+              <line class="axis" x1="70" y1="310" x2="705" y2="310"/> <!-- X軸 (V) -->
+              <line class="axis" x1="70" y1="310" x2="70" y2="20"/>   <!-- Y軸 (I) -->
+              <text x="700" y="335" class="label-txt" font-weight="700">電圧 V [V] →</text>
+              <text x="20" y="25" class="label-txt" font-weight="700">↑ 電流 I [A]</text>
+              <text x="690" y="25" class="label-txt" fill="hsl(34, 98%, 58%)" font-weight="700">電力 P [W] ↑</text>
+
+              <!-- IV曲線 (青) : (70, 70) から右へ進み、510付近で急降下、650で0へ -->
+              <path d="M 70 70 Q 420 75 510 110 T 650 310" fill="none" stroke="hsl(205, 85%, 62%)" stroke-width="4"/>
+
+              <!-- 電力曲線 P=V*I (橙) : 山型 (70, 310) -> (510, 60) -> (650, 310) -->
+              <path d="M 70 310 Q 320 180 510 60 Q 580 140 650 310" fill="none" stroke="hsl(34, 98%, 58%)" stroke-width="3.5" stroke-dasharray="6,3"/>
+
+              <!-- Pmax 点 (510, 60) と (510, 110) -->
+              <line x1="510" y1="60" x2="510" y2="310" stroke="hsl(42, 96%, 60%)" stroke-width="1.5" stroke-dasharray="3,3"/>
+              <line x1="70" y1="110" x2="510" y2="110" stroke="hsl(205, 85%, 62%)" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+              <circle cx="510" cy="110" r="7" fill="hsl(205, 85%, 62%)" stroke="#fff" stroke-width="2"/>
+              <circle cx="510" cy="60" r="7" fill="hsl(42, 96%, 60%)" stroke="#fff" stroke-width="2"/>
+
+              <!-- 吹き出し・ラベル -->
+              <!-- Isc -->
+              <circle cx="70" cy="70" r="5" fill="hsl(205, 85%, 62%)"/>
+              <text x="85" y="65" class="val-tag" fill="hsl(205, 85%, 62%)">Isc（短絡電流）</text>
+              <text x="85" y="82" class="label-txt" font-size="11">電圧ゼロ時の最大電流</text>
+
+              <!-- Voc -->
+              <circle cx="650" cy="310" r="5" fill="hsl(205, 85%, 62%)"/>
+              <text x="590" y="340" class="val-tag" fill="hsl(205, 85%, 62%)">Voc（開放電圧）</text>
+              <text x="590" y="358" class="label-txt" font-size="11">電流ゼロ時の最大電圧</text>
+
+              <!-- Pmax 点の説明 -->
+              <g transform="translate(360, 40)">
+                <rect width="180" height="48" rx="8" fill="hsl(42, 96%, 60%, 0.15)" stroke="hsl(42, 96%, 60%)" stroke-width="1.5"/>
+                <text x="90" y="20" text-anchor="middle" class="val-tag" fill="hsl(42, 96%, 60%)">★ 最大電力点（Pmax）</text>
+                <text x="90" y="38" text-anchor="middle" class="label-txt" font-size="11">Vpm × Ipm ＝ 最大出力</text>
+              </g>
+
+              <!-- Vpm -->
+              <text x="510" y="330" text-anchor="middle" class="val-tag" fill="hsl(42, 96%, 60%)">Vpm（最適動作電圧）</text>
+              <!-- Ipm -->
+              <text x="18" y="115" class="val-tag" fill="hsl(205, 85%, 62%)">Ipm</text>
+            </svg>
+
+            <div class="compare-grid" style="margin-top:20px">
+              <div class="compare-box">
+                <h4>❄️ 冬期・低温時の変化</h4>
+                <ul>
+                  <li>温度が下がると <strong>Voc（開放電圧）が右へ伸びて高くなる</strong>。</li>
+                  <li>冬の早朝の一番寒い時間帯に、PCSの最大入力許容電圧を超えてパンクしないよう設計する（Vocの温度係数計算）。</li>
+                </ul>
+              </div>
+              <div class="compare-box accent">
+                <h4>☀️ 夏期・高温時の変化</h4>
+                <ul>
+                  <li>パネル温度が60℃超に上がると <strong>電圧Vが左へ縮んで大幅に低下</strong> する。</li>
+                  <li>日射があっても夏場にPRが下がる主要原因は、この「電圧低下による損失（温度損失）」です。</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section id="safety">
-          <h2>電気保安体制</h2>
-          <table>
-            <thead><tr><th>区分</th><th>対象（太陽電池発電設備）</th><th>主な義務</th></tr></thead>
-            <tbody>
-              <tr><td><b>小規模事業用電気工作物</b></td><td>10kW以上 50kW未満</td><td>技術基準適合維持、基礎情報の届出、使用前自己確認</td></tr>
-              <tr><td><b>自家用電気工作物</b></td><td>50kW以上（高圧・特高連系）</td><td>保安規程の届出、電気主任技術者の選任（または外部委託承認）、技術基準適合維持</td></tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><b>電気主任技術者</b>：事業用電気工作物の工事・維持・運用の保安監督者。第三種は電圧5万V未満（出力5,000kW以上の発電所を除く）を監督できる。</li>
-            <li><b>外部委託承認制度</b>：一定規模以下の設備では、電気保安法人や個人の電気管理技術者に保安業務を委託できる（規模要件は改正されることがあるので最新を確認）。</li>
-            <li>太陽電池発電設備には専用の技術基準（発電用太陽電池設備に関する技術基準を定める省令）があり、架台・基礎の強度なども規定されている。</li>
-          </ul>
+        <!-- ===== SECTION 4: PCS方式の比較図解 ===== -->
+        <section id="pcs-types">
+          <h2>PCS（パワコン）集中型 vs ストリング型</h2>
+          <p>メガソーラーの設計思想は、巨大なPCSでまとめて変換する「集中型（セントラル）」と、小型PCSを無数に並べる「ストリング型（分散型）」で大きく分かれます。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> 2つの方式の配線・回路の違い</h4>
+            <p class="desc">配線の長さ、MPPTの制御細かさ、故障時の売電ストップ範囲に決定的な違いがあります</p>
+
+            <svg class="svg-diagram" viewBox="0 0 740 290" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .c-panel { fill: hsl(205, 85%, 45%); rx: 3; }
+                .c-cable-dc { stroke: hsl(34, 98%, 58%); stroke-width: 2.5; stroke-dasharray: 4,2; fill: none; }
+                .c-cable-ac { stroke: hsl(152, 60%, 50%); stroke-width: 3; fill: none; }
+                .c-node { rx: 8; stroke-width: 1.5; }
+              </style>
+
+              <!-- 左：集中型 -->
+              <g transform="translate(10, 10)">
+                <rect width="350" height="270" rx="10" fill="hsl(222, 26%, 10%)" stroke="hsl(222, 20%, 25%)"/>
+                <text x="175" y="28" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(205, 85%, 62%)" font-size="15">A. 集中型（セントラル方式）</text>
+
+                <!-- パネル群 -->
+                <rect class="c-panel" x="25" y="55" width="22" height="32"/><rect class="c-panel" x="52" y="55" width="22" height="32"/><rect class="c-panel" x="79" y="55" width="22" height="32"/>
+                <rect class="c-panel" x="25" y="100" width="22" height="32"/><rect class="c-panel" x="52" y="100" width="22" height="32"/><rect class="c-panel" x="79" y="100" width="22" height="32"/>
+                <rect class="c-panel" x="25" y="145" width="22" height="32"/><rect class="c-panel" x="52" y="145" width="22" height="32"/><rect class="c-panel" x="79" y="145" width="22" height="32"/>
+
+                <!-- 接続箱 -->
+                <rect class="c-node" x="125" y="85" width="55" height="70" fill="hsl(222, 22%, 18%)" stroke="hsl(34, 98%, 58%)"/>
+                <text x="152" y="120" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">接続箱</text>
+
+                <path class="c-cable-dc" d="M 103 71 L 125 100"/>
+                <path class="c-cable-dc" d="M 103 116 L 125 120"/>
+                <path class="c-cable-dc" d="M 103 161 L 125 140"/>
+
+                <!-- 長いDC配線 -->
+                <path class="c-cable-dc" d="M 180 120 L 245 120"/>
+                <text x="212" y="112" text-anchor="middle" font-size="10" fill="hsl(34, 98%, 58%)">長いDC線</text>
+
+                <!-- 巨大PCS -->
+                <rect class="c-node" x="245" y="70" width="80" height="100" fill="hsl(222, 24%, 22%)" stroke="hsl(205, 85%, 62%)"/>
+                <text x="285" y="110" text-anchor="middle" font-size="12" fill="#fff" font-weight="800">大型PCS</text>
+                <text x="285" y="128" text-anchor="middle" font-size="10" fill="hsl(220, 12%, 68%)">500kW〜2MW</text>
+
+                <!-- AC線 -->
+                <path class="c-cable-ac" d="M 325 120 L 345 120"/>
+
+                <text x="175" y="210" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● 直流側（DC）配線が長くなる</text>
+                <text x="175" y="232" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● 1台停止するとサイト全体が大打撃</text>
+                <text x="175" y="254" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● 初期投資・変圧器コストは抑えやすい</text>
+              </g>
+
+              <!-- 右：ストリング型 -->
+              <g transform="translate(380, 10)">
+                <rect width="350" height="270" rx="10" fill="hsl(222, 26%, 10%)" stroke="hsl(42, 96%, 60%, 0.4)"/>
+                <text x="175" y="28" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(42, 96%, 60%)" font-size="15">B. 分散型（ストリング方式）★近年主流</text>
+
+                <!-- パネル1 + 小型PCS1 -->
+                <rect class="c-panel" x="25" y="55" width="22" height="32"/><rect class="c-panel" x="52" y="55" width="22" height="32"/>
+                <path class="c-cable-dc" d="M 74 71 L 105 71"/>
+                <rect class="c-node" x="105" y="55" width="48" height="32" fill="hsl(42, 96%, 60%, 0.2)" stroke="hsl(42, 96%, 60%)"/>
+                <text x="129" y="75" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">PCS 1</text>
+
+                <!-- パネル2 + 小型PCS2 -->
+                <rect class="c-panel" x="25" y="100" width="22" height="32"/><rect class="c-panel" x="52" y="100" width="22" height="32"/>
+                <path class="c-cable-dc" d="M 74 116 L 105 116"/>
+                <rect class="c-node" x="105" y="100" width="48" height="32" fill="hsl(42, 96%, 60%, 0.2)" stroke="hsl(42, 96%, 60%)"/>
+                <text x="129" y="120" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">PCS 2</text>
+
+                <!-- パネル3 + 小型PCS3 -->
+                <rect class="c-panel" x="25" y="145" width="22" height="32"/><rect class="c-panel" x="52" y="145" width="22" height="32"/>
+                <path class="c-cable-dc" d="M 74 161 L 105 161"/>
+                <rect class="c-node" x="105" y="145" width="48" height="32" fill="hsl(42, 96%, 60%, 0.2)" stroke="hsl(42, 96%, 60%)"/>
+                <text x="129" y="165" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">PCS 3</text>
+
+                <!-- AC集電線 -->
+                <path class="c-cable-ac" d="M 153 71 L 220 71 L 220 116 L 250 116"/>
+                <path class="c-cable-ac" d="M 153 116 L 250 116"/>
+                <path class="c-cable-ac" d="M 153 161 L 220 161 L 220 116"/>
+
+                <!-- AC集電箱 -->
+                <rect class="c-node" x="250" y="85" width="70" height="62" fill="hsl(152, 60%, 50%, 0.15)" stroke="hsl(152, 60%, 50%)"/>
+                <text x="285" y="115" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">AC集電箱</text>
+                <text x="285" y="132" text-anchor="middle" font-size="9" fill="hsl(152, 60%, 60%)">変圧器へ</text>
+
+                <text x="175" y="210" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● 直流線が短く交流（AC）で集電</text>
+                <text x="175" y="232" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● 1台故障しても数％のロスで稼働継続</text>
+                <text x="175" y="254" text-anchor="middle" font-size="12" fill="hsl(220, 15%, 85%)">● MPPTが細かく影・傾斜地に強い</text>
+              </g>
+            </svg>
+          </div>
         </section>
 
-        <section id="powerquality">
-          <h2>力率・電圧の管理</h2>
-          <ul>
-            <li>高圧・特高連系では、系統の電圧上昇を抑えるため、電力会社から<b>力率一定制御</b>（例：力率95%など）を求められることが多い。</li>
-            <li>力率を下げると有効電力（売電量）の上限がPCS容量の範囲で圧迫される場合がある。</li>
-            <li><b>FRT要件</b>：系統の瞬時的な電圧低下・周波数変動時に、すぐに解列せず運転を継続する能力。大量の再エネが一斉に脱落するのを防ぐ。</li>
-          </ul>
+        <!-- ===== SECTION 5: キュービクル内部機器マップ ===== -->
+        <section id="cubicle">
+          <h2>キュービクル（高圧受変電設備）の中身</h2>
+          <p>発電所敷地の隅にある金属製の箱「キュービクル」。中には高電圧を扱い、発電所と電力会社系統を守る重要機器が凝縮されています。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></svg> キュービクル内部の機器配置イメージ</h4>
+            <p class="desc">扉を開けると「受電盤」「変圧器盤」「連系盤」に分かれています</p>
+
+            <svg class="svg-diagram" viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .cub-frame { fill: hsl(222, 28%, 12%); stroke: hsl(220, 20%, 35%); stroke-width: 2; rx: 8; }
+                .panel-sec { fill: hsl(222, 24%, 16%); stroke: hsl(222, 20%, 25%); rx: 6; }
+                .dev-box { fill: hsl(222, 30%, 22%); stroke: hsl(42, 96%, 60%); stroke-width: 1.5; rx: 4; }
+                .dev-title { font-family: sans-serif; font-size: 13px; font-weight: 700; fill: #fff; }
+                .dev-role { font-family: sans-serif; font-size: 11px; fill: hsl(220, 12%, 75%); }
+              </style>
+
+              <!-- 外枠 -->
+              <rect class="cub-frame" x="10" y="10" width="720" height="300"/>
+
+              <!-- 盤1: 高圧引込・遮断盤 -->
+              <g transform="translate(25, 25)">
+                <rect class="panel-sec" width="220" height="270"/>
+                <text x="110" y="24" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(205, 85%, 62%)" font-size="13">① 引込・遮断盤</text>
+
+                <!-- LBS -->
+                <g transform="translate(15, 38)">
+                  <rect class="dev-box" width="190" height="56" stroke="hsl(205, 85%, 62%)"/>
+                  <text x="15" y="22" class="dev-title">LBS（高圧負荷開閉器）</text>
+                  <text x="15" y="42" class="dev-role">点検時の回路手動切り離し</text>
+                </g>
+
+                <!-- VCB -->
+                <g transform="translate(15, 106)">
+                  <rect class="dev-box" width="190" height="74" fill="hsl(222, 30%, 25%)" stroke="hsl(2, 80%, 62%)" stroke-width="2"/>
+                  <text x="15" y="24" class="dev-title" fill="hsl(2, 80%, 62%)">★ VCB（真空遮断器）</text>
+                  <text x="15" y="44" class="dev-role">主遮断器。短絡や地絡時に</text>
+                  <text x="15" y="60" class="dev-role">瞬時に回路を遮断する命綱</text>
+                </g>
+
+                <!-- VT / CT -->
+                <g transform="translate(15, 192)">
+                  <rect class="dev-box" width="190" height="62" stroke="hsl(220, 20%, 40%)"/>
+                  <text x="15" y="22" class="dev-title">VT・CT（計器用変成器）</text>
+                  <text x="15" y="42" class="dev-role">高電圧・大電流を計器・リレー用</text>
+                  <text x="15" y="56" class="dev-role">の小さな値に変換する</text>
+                </g>
+              </g>
+
+              <!-- 盤2: 変圧器盤 -->
+              <g transform="translate(260, 25)">
+                <rect class="panel-sec" width="220" height="270"/>
+                <text x="110" y="24" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(34, 98%, 58%)" font-size="13">② 変圧器盤（トランス）</text>
+
+                <!-- 変圧器本体 -->
+                <g transform="translate(15, 38)">
+                  <rect class="dev-box" width="190" height="130" stroke="hsl(34, 98%, 58%)" stroke-width="2"/>
+                  <text x="95" y="32" text-anchor="middle" class="dev-title" fill="hsl(34, 98%, 58%)">昇圧変圧器（Tr）</text>
+                  <text x="95" y="58" text-anchor="middle" font-size="12" fill="#fff">400V → 6,600V</text>
+                  <text x="15" y="86" class="dev-role">PCSからの交流電圧を、配電線に</text>
+                  <text x="15" y="104" class="dev-role">流せる高圧6.6kVへと昇圧する。</text>
+                  <text x="15" y="120" class="dev-role">油入変圧器／モールド変圧器</text>
+                </g>
+
+                <!-- 進相コンデンサ -->
+                <g transform="translate(15, 180)">
+                  <rect class="dev-box" width="190" height="74" stroke="hsl(220, 20%, 40%)"/>
+                  <text x="15" y="24" class="dev-title">SC（進相コンデンサ）</text>
+                  <text x="15" y="46" class="dev-role">力率の改善・一定制御に使用。</text>
+                  <text x="15" y="62" class="dev-role">電力会社指定の力率を満たす</text>
+                </g>
+              </g>
+
+              <!-- 盤3: 保護・計測盤 -->
+              <g transform="translate(495, 25)">
+                <rect class="panel-sec" width="220" height="270"/>
+                <text x="110" y="24" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(42, 96%, 60%)" font-size="13">③ 制御・保護リレー盤</text>
+
+                <!-- 保護リレー群 -->
+                <g transform="translate(15, 38)">
+                  <rect class="dev-box" width="190" height="130" stroke="hsl(42, 96%, 60%)" stroke-width="2"/>
+                  <text x="15" y="24" class="dev-title" fill="hsl(42, 96%, 60%)">保護継電器（リレー）</text>
+                  <text x="15" y="46" class="dev-role">● <strong>OVGR</strong>：地絡過電圧継電器</text>
+                  <text x="15" y="64" class="dev-role">● <strong>OCR</strong>：過電流継電器</text>
+                  <text x="15" y="82" class="dev-role">● <strong>DGR</strong>：地絡方向継電器</text>
+                  <text x="15" y="100" class="dev-role">● <strong>UVR / OVR</strong>：電圧リレー</text>
+                  <text x="15" y="120" class="dev-role">異常を察知してVCBへ遮断指令</text>
+                </g>
+
+                <!-- 取引用計量器 -->
+                <g transform="translate(15, 180)">
+                  <rect class="dev-box" width="190" height="74" stroke="hsl(152, 60%, 50%)"/>
+                  <text x="15" y="24" class="dev-title" fill="hsl(152, 60%, 50%)">取引用計量器（売電メーター）</text>
+                  <text x="15" y="46" class="dev-role">一般送配電事業者の資産。</text>
+                  <text x="15" y="62" class="dev-role">売電収入の計算基準となる電力量</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        <!-- ===== SECTION 6: 波及事故防止シーケンス ===== -->
+        <section id="protection-sequence">
+          <h2>保護リレーと「波及事故防止」の仕組み</h2>
+          <p>発電所内でケーブル損傷や地絡（漏電）などの事故が起きたとき、最も恐ろしいのは<strong>「地域の配電線全体を巻き込んで近隣一帯を停電させる波及事故」</strong>です。これを防ぐ防衛ラインを図解します。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 構内事故時の遮断シーケンス</h4>
+            <p class="desc">異常発生からわずかコンマ数秒で回路を遮断し、系統の安全を担保します</p>
+
+            <svg class="svg-diagram" viewBox="0 0 740 180" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .seq-step { rx: 8; stroke-width: 1.5; }
+                .seq-arr { stroke: hsl(205, 85%, 62%); stroke-width: 2.5; fill: none; marker-end: url(#seq-arrow); }
+              </style>
+              <defs>
+                <marker id="seq-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="hsl(205, 85%, 62%)"/>
+                </marker>
+              </defs>
+
+              <!-- Step 1: 事故 -->
+              <g transform="translate(10, 20)">
+                <rect class="seq-step" width="160" height="140" fill="hsl(2, 80%, 62%, 0.12)" stroke="hsl(2, 80%, 62%)"/>
+                <text x="80" y="32" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(2, 80%, 62%)" font-size="13">① 構内事故発生</text>
+                <text x="15" y="60" class="dev-role">・小動物によるケーブル噛み</text>
+                <text x="15" y="80" class="dev-role">・草刈り機の刃でケーブル切断</text>
+                <text x="15" y="100" class="dev-role">・落雷サージによる絶縁破壊</text>
+                <text x="15" y="125" font-size="11" fill="hsl(2, 80%, 75%)" font-weight="700">地絡（漏電）電流が流れる</text>
+              </g>
+
+              <path class="seq-arr" d="M 175 90 L 195 90"/>
+
+              <!-- Step 2: 検出 -->
+              <g transform="translate(200, 20)">
+                <rect class="seq-step" width="160" height="140" fill="hsl(222, 24%, 18%)" stroke="hsl(205, 85%, 62%)"/>
+                <text x="80" y="32" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(205, 85%, 62%)" font-size="13">② センサー検知</text>
+                <text x="15" y="60" class="dev-role"><strong>ZCT（零相変流器）</strong>や</text>
+                <text x="15" y="80" class="dev-role"><strong>ZPD（零相分圧器）</strong>が</text>
+                <text x="15" y="100" class="dev-role">漏れ出たわずかな電流や</text>
+                <text x="15" y="120" class="dev-role">異常電圧を瞬時にキャッチ</text>
+              </g>
+
+              <path class="seq-arr" d="M 365 90 L 385 90"/>
+
+              <!-- Step 3: 指令 -->
+              <g transform="translate(390, 20)">
+                <rect class="seq-step" width="160" height="140" fill="hsl(42, 96%, 60%, 0.1)" stroke="hsl(42, 96%, 60%)"/>
+                <text x="80" y="32" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(42, 96%, 60%)" font-size="13">③ リレーが判定</text>
+                <text x="15" y="60" class="dev-role"><strong>DGR / OVGR</strong> が</text>
+                <text x="15" y="80" class="dev-role">整定値を超えたと判断。</text>
+                <text x="15" y="105" class="dev-role">「構内の事故だ！」と判定し</text>
+                <text x="15" y="125" font-size="12" fill="hsl(42, 96%, 60%)" font-weight="700">VCBへトリップ発令！</text>
+              </g>
+
+              <path class="seq-arr" d="M 555 90 L 575 90"/>
+
+              <!-- Step 4: 遮断 -->
+              <g transform="translate(580, 20)">
+                <rect class="seq-step" width="150" height="140" fill="hsl(152, 60%, 50%, 0.12)" stroke="hsl(152, 60%, 50%)"/>
+                <text x="75" y="32" text-anchor="middle" font-family="sans-serif" font-weight="700" fill="hsl(152, 60%, 50%)" font-size="13">④ VCBトリップ</text>
+                <text x="15" y="60" class="dev-role">真空遮断器（VCB）が</text>
+                <text x="15" y="80" class="dev-role">数十ミリ秒で開放。</text>
+                <text x="15" y="110" font-size="12" fill="hsl(152, 60%, 60%)" font-weight="700">系統から完全隔離！</text>
+                <text x="15" y="130" font-size="11" fill="hsl(152, 60%, 75%)">波及事故を未然防止</text>
+              </g>
+            </svg>
+          </div>
+          <div class="callout warn"><span class="ic">⚠️</span><div><b class="t">波及事故を起こすと損害賠償リスクに</b><p>自社構内の遮断器が動作せず、電力会社の変電所側の遮断器を落としてしまうと、周辺の工場や住宅一帯が停電する「波及事故」になります。年次点検で保護継電器の連動試験を確実に行うのは、この事態を絶対に防ぐためです。</p></div></div>
+        </section>
+
+        <!-- ===== SECTION 7: 電気保安体制 ===== -->
+        <section id="safety-roles">
+          <h2>電気保安体制と電気主任技術者</h2>
+          <p>出力50kW以上の太陽光発電所は「自家用電気工作物」となり、法律上の保安責任が発生します。</p>
+
+          <table>
+            <thead><tr><th>役職・制度</th><th>役割とAMの実務ポイント</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>設置者（発電事業者）</b></td>
+                <td>法律上の保安の最終責任者（SPVや所有会社）。保安規程を定め、経産大臣（産業保安監督部長）へ届出を行う義務がある。</td>
+              </tr>
+              <tr>
+                <td><b>電気主任技術者</b></td>
+                <td>保安規程に基づき、発電所の工事・維持・運用の保安監督を行う国家資格者。高圧案件では第3種以上、特高案件では規模に応じ第1種・第2種が必要。</td>
+              </tr>
+              <tr>
+                <td><b>外部委託承認制度</b></td>
+                <td>高圧連系（一定規模未満）の場合、主任技術者の常駐選任に代えて、電気保安法人（保安協会等）や個人技術者へ保安業務を委託できる制度。</td>
+              </tr>
+              <tr>
+                <td><b>保安規程</b></td>
+                <td>点検の頻度（月次・年次）、組織体制、巡視項目、緊急時連絡網、記録保存を定めた「発電所の憲法」。これに違反すると指導対象となる。</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <section id="checklist">
           <h2>AM視点のチェックリスト</h2>
           <ul class="checklist">
-            <li>単線結線図を読み、主要機器（PCS台数・変圧器・遮断器）の構成を把握しているか</li>
-            <li>主要機器のメーカー・型式・設置年・保証期間を台帳化しているか</li>
-            <li>保安規程・主任技術者（選任／外部委託）の体制を確認しているか</li>
-            <li>年次点検の結果（絶縁抵抗、継電器試験）で指摘事項がないか</li>
-            <li>系統連系契約の条件（力率指定・出力制御方式）を把握しているか</li>
+            <li>単線結線図（スケルトン）を見て、受電点からパネルまでの経路を説明できるか</li>
+            <li>冬期最低気温時のストリング開放電圧（Voc）がPCS許容上限に収まっているか確認したか</li>
+            <li>PCSが集中型かストリング型かを把握し、故障時の予備品確保体制を整えているか</li>
+            <li>年次点検の報告書で、VCBの絶縁抵抗・リレー連動試験が「良」判定になっているか</li>
+            <li>電力会社との連系契約で指定された力率（例：95%遅れ）がPCSに正しく整定されているか</li>
           </ul>
         </section>
 
