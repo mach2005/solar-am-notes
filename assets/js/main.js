@@ -10,17 +10,19 @@
 
   // ---- ページ一覧（追加・並べ替えはここだけ編集すればOK） ----
   var PAGES = [
-    { id: "news",        file: "notes/news.html",        label: "最新ニュース" },
-    { id: "performance", file: "notes/performance.html", label: "発電性能" },
-    { id: "om",          file: "notes/om.html",          label: "O&M" },
-    { id: "policy",      file: "notes/policy.html",      label: "制度・市場" },
-    { id: "finance",     file: "notes/finance.html",     label: "金融・ファイナンス" },
-    { id: "electrical",  file: "notes/electrical.html",  label: "電気設備" },
-    { id: "denken",      file: "notes/denken.html",      label: "電験・主任技術者" },
-    { id: "acts",        file: "notes/acts.html",        label: "重要法令" },
-    { id: "legal",       file: "notes/legal.html",       label: "契約・保険" },
-    { id: "industry",    file: "notes/industry.html",    label: "業界マップ" },
-    { id: "glossary",    file: "notes/glossary.html",    label: "用語集" }
+    { id: "news",          file: "notes/news.html",          label: "最新ニュース" },
+    { id: "performance",   file: "notes/performance.html",   label: "発電性能" },
+    { id: "om",            file: "notes/om.html",            label: "O&M" },
+    { id: "due-diligence", file: "notes/due-diligence.html", label: "ファシリティDD" },
+    { id: "policy",        file: "notes/policy.html",        label: "制度・市場" },
+    { id: "ppa-market",    file: "notes/ppa-market.html",    label: "PPA・市場取引" },
+    { id: "finance",       file: "notes/finance.html",       label: "金融・ファイナンス" },
+    { id: "electrical",    file: "notes/electrical.html",    label: "電気設備" },
+    { id: "denken",        file: "notes/denken.html",        label: "電験・主任技術者" },
+    { id: "acts",          file: "notes/acts.html",          label: "重要法令" },
+    { id: "legal",         file: "notes/legal.html",         label: "契約・保険" },
+    { id: "industry",      file: "notes/industry.html",      label: "業界マップ" },
+    { id: "glossary",      file: "notes/glossary.html",      label: "用語集" }
   ];
 
   var body = document.body;

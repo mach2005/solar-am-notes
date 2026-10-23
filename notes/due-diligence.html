@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>太陽光ファシリティDD・リスクチェックリスト＆事故事例集 | メガソーラーAMノート</title>
+  <meta name="description" content="セカンダリーメガソーラー買収時のテクニカル・リーガルDDチェックシート、事故トラブル事例（土砂崩れ、ホットスポット、PID、パワコン焼損）、健全度スコアリング診断。">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .dd-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .check-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .check-box:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .check-box h4 {
+      margin-top: 0;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .badge-prio {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .prio-critical { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .prio-high { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .prio-std { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+    .trouble-card {
+      background: rgba(20, 26, 40, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .trouble-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .trouble-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* 診断ツールUI */
+    .diag-container {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(23, 37, 84, 0.85));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6);
+    }
+    .diag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .diag-field label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .diag-field select {
+      width: 100%;
+      background: rgba(10, 15, 26, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 0.65rem 0.8rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .diag-field select:focus {
+      border-color: var(--accent);
+    }
+    .diag-output {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      background: rgba(10, 15, 26, 0.65);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .diag-output { grid-template-columns: 1fr; }
+    }
+    .score-circle {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .score-num {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #38bdf8;
+      font-family: monospace;
+      line-height: 1;
+    }
+    .rank-badge {
+      display: inline-block;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.3rem 1.2rem;
+      border-radius: 999px;
+      margin-top: 0.5rem;
+    }
+    .rank-s { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #4ade80; }
+    .rank-a { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+    .rank-b { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+    .rank-c { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #f87171; }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーションバー -->
+  <header class="header">
+    <div class="header-inner container">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">☀️</span>
+        <span class="logo-text">MegaSolar AM Hub</span>
+      </a>
+                  <nav class="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="glossary.html" class="nav-link">用語集</a>
+        <a href="acts.html" class="nav-link">法令詳解</a>
+        <a href="due-diligence.html" class="nav-link active">ファシリティDD</a>
+        <a href="ppa-market.html" class="nav-link">PPA・市場取引</a>
+        <a href="industry.html" class="nav-link">業界マップ</a>
+        <a href="finance.html" class="nav-link">金融・投資</a>
+        <a href="electrical.html" class="nav-link">電気設備</a>
+        <a href="denken.html" class="nav-link">電験・保安</a>
+        <a href="om.html" class="nav-link">O&M保守</a>
+        <a href="policy.html" class="nav-link">政策動向</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="main container">
+    <div class="content-wrapper">
+      
+      <!-- サイドバー目次 -->
+      <aside class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header">
+            <h3>🔍 DD & 事故目次</h3>
+          </div>
+          <ul class="toc-list">
+            <li><a href="#overview" class="toc-link">1. DDの全体像と重要性</a></li>
+            <li><a href="#technical-dd" class="toc-link">2. テクニカルDD重点項目</a></li>
+            <li><a href="#legal-dd" class="toc-link">3. リーガル・許認可DD項目</a></li>
+            <li><a href="#troubles" class="toc-link">4. 重大トラブル・事故事例集</a></li>
+            <li><a href="#scoring-tool" class="toc-link">5. 発電所健全度スコアリング診断</a></li>
+            <li><a href="#reference-pdfs" class="toc-link">6. 点検・安全基準公式原本PDF</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- 記事本体 -->
+      <article class="article">
+        <header class="article-header">
+          <div class="meta-tag">TECHNICAL DUE DILIGENCE & ASSET INTEGRITY</div>
+          <h1>太陽光ファシリティDD・リスクチェックリスト＆事故トラブル事例集</h1>
+          <p class="lead">
+            既設セカンダリー発電所の買収・リファイナンスにおける「技術的・法務的デューデリジェンス（DD）」完全実務指針。土木構造・電気設備劣化の診断手法から、現場で頻発する重大事故事例・予防策までを網羅。
+          </p>
+        </header>
+
+        <!-- インフォグラフィック図解 -->
+        <section class="section" id="overview">
+          <div class="img-container" style="margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+            <img src="../assets/img/due_diligence_inspection.jpg" alt="メガソーラーのテクニカルデューデリジェンス・赤外線点検・土木モニタリング図" style="width: 100%; display: block;">
+            <p class="img-caption" style="padding: 0.75rem 1rem; margin: 0; background: var(--bg-card); font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+              ▲ <b>テクニカルDD＆ファシリティ健全性診断の現場イメージ</b>：ドローン赤外線サーモグラフィによるホットスポット検出、PCSインバータの過熱・波形解析、擁壁・排水路の土木安定性モニタリングを統合し、見えない潜在欠陥を洗い出します。
+            </p>
+          </div>
+        </section>
+
+        <!-- テクニカルDD重点項目 -->
+        <section class="section" id="technical-dd">
+          <h2 class="dd-section-title"><span>🛠️</span> 2. テクニカルDD（技術買収調査）チェックポイント</h2>
+          <p>現場踏査および竣工図書（As-built drawings）の精査により、物理的アセットの健全性と将来の維持管理コスト（CAPEX/OPEX）を評価します。</p>
+
+          <div class="check-grid">
+            <div class="check-box">
+              <h4>土木・造成・排水工 <span class="badge-prio prio-critical">最重要 (致命傷)</span></h4>
+              <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.1rem; line-height: 1.6;">
+                <li><b>法面安定性</b>：切土・盛土法面にクラック、孕み、表層崩壊の兆候がないか。</li>
+                <li><b>雨水排水系統</b>：U字溝の泥詰まり・段差・逆勾配がないか。豪雨時の流出計算書と現況の乖離。</li>
+                <li><b>調整池（遊水池）</b>：堆砂による容量低下、余水吐き・越流堤のクラックの有無。</li>
+              </ul>
+            </div>
+
+            <div class="check-box">
+              <h4>架台・基礎構造 <span class="badge-prio prio-critical">最重要 (倒壊リスク)</span></h4>
+              <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.1rem; line-height: 1.6;">
+                <li><b>設計基準</b>：JIS C 8955（最新設計用荷重算出方法）への適合性、風圧・積雪荷重。</li>
+                <li><b>基礎杭</b>：スクリュー杭の打設深度・地耐力試験（引抜試験・押込試験）の記録。地盤沈下や杭抜け。</li>
+                <li><b>腐食・締結</b>：溶融亜鉛めっき厚（付着量）、異種金属接触腐食（電食）、ボルトトルク抜け。</li>
+              </ul>
+            </div>
+
+            <div class="check-box">
+              <h4>PVモジュール・ストリング <span class="badge-prio prio-high">高重要度 (出力直結)</span></h4>
+              <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.1rem; line-height: 1.6;">
+                <li><b>外観・サーモグラフィ</b>：クラスタ断線、ガラス割れ、スネイルトレイル、ホットスポット。</li>
+                <li><b>特性劣化（PID）</b>：高電圧ストリング末端モジュールの電位誘起劣化（PID）の有無。</li>
+                <li><b>IVカーブ測定</b>：主要ストリングの開放電圧（Voc）、短絡電流（Isc）、最大出力動作点（Pmax）測定。</li>
+              </ul>
+            </div>
+
+            <div class="check-box">
+              <h4>PCS・受変電設備・特高キュービクル <span class="badge-prio prio-high">高重要度 (停止リスク)</span></h4>
+              <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.1rem; line-height: 1.6;">
+                <li><b>PCS稼働環境</b>：内部コンデンサ・冷却ファンの劣化、エアフィルター清掃状態、エラーログ。</li>
+                <li><b>油入変圧器</b>：絶縁油分析（PCB非含有証明書、全酸価、破壊電圧、フルフラール分析）。</li>
+                <li><b>高圧ケーブル</b>：CV/CVTケーブルの水トリー劣化診断（直流漏れ電流試験）。</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- リーガル・許認可DD項目 -->
+        <section class="section" id="legal-dd">
+          <h2 class="dd-section-title"><span>⚖️</span> 3. リーガル・許認可DD（法的権利・規制）チェックポイント</h2>
+          <p>法的瑕疵（欠陥）が存在する場合、売電権利の剥奪や操業停止命令、地域住民との訴訟リスクに直結します。</p>
+
+          <table class="diff-table">
+            <thead>
+              <tr>
+                <th>調査対象法令・分野</th>
+                <th>確認すべき書類・原本</th>
+                <th>AM視点のリスク要因・潜在トラップ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>土地権利・登記</b></td>
+                <td>全部事項証明書、公図、地積測量図、地上権設定契約書原本</td>
+                <td>筆抜け（一部敷地が第三者名義のまま）、登記上の地目不一致、公図と現況境界のズレ。</td>
+              </tr>
+              <tr>
+                <td><b>農地法</b></td>
+                <td>農地法第4条・第5条転用許可書原本、完了届出書</td>
+                <td>許可証原本紛失、一時転用（営農型）の期間満了・再許可申請漏れ。</td>
+              </tr>
+              <tr>
+                <td><b>森林法・林地開発</b></td>
+                <td>林地開発許可通知書、竣工検査済証、防災計画図</td>
+                <td>許可条件（調整池・法面工）の未施工、無許可伐採・越境開発。</td>
+              </tr>
+              <tr>
+                <td><b>盛土規制法</b></td>
+                <td>盛土規制区域指定状況、盛土許可証または既存届出</td>
+                <td>崩落危険盛土とみなされた場合の行政による是正命令（数千万円単位の擁壁改修CAPEX）。</td>
+              </tr>
+              <tr>
+                <td><b>再エネ特措法</b></td>
+                <td>事業計画認定通知書、変更認定通知書、廃棄等費用積立明細</td>
+                <td>名義変更の未完了、標識（看板）掲示義務違反、廃棄等費用の外部積立未達。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 重大トラブル・事故事例集 -->
+        <section class="section" id="troubles">
+          <h2 class="dd-section-title"><span>⚠️</span> 4. メガソーラー重大トラブル・事故事例集</h2>
+
+          <div class="trouble-card">
+            <div class="trouble-header">
+              <span class="trouble-tag">事例 01</span>
+              <h3 style="margin: 0; font-size: 1.1rem; color: #f87171;">集中豪雨による法面崩壊と調整池越流（近隣農地への土砂流出）</h3>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.4rem 0;">
+              <b>【原因メカニズム】</b> 造成時に雨水排水計画の流量計算を過小評価。U字溝の継手ズレから雨水が地中に浸透し、盛土内部の間隙水圧が上昇して円弧すべりが発生。調整池の余水吐きが流木と土砂で閉塞し堤体を越流。
+            </p>
+            <div class="callout caution" style="margin-top: 0.5rem; padding: 0.75rem 1rem;">
+              <span class="ic">💡</span>
+              <div>
+                <b class="t">AM対策・復旧指針</b>
+                <p style="font-size: 0.8rem; margin: 0;">自治体・警察・消防への即時通報。土砂流出防止フェンス・ブルーシート敷設の応急措置。損害賠償保険（施設所有管理者賠償責任保険）の適用申請。恒久復旧として擁壁設置と調整池掘り下げ増量（費用約2,500万円）。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="trouble-card">
+            <div class="trouble-header">
+              <span class="trouble-tag">事例 02</span>
+              <h3 style="margin: 0; font-size: 1.1rem; color: #fbbf24;">ツル性雑草繁茂によるホットスポット・モジュール裏面焼損事故</h3>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.4rem 0;">
+              <b>【原因メカニズム】</b> クズ・アレチウリ等のツル草がモジュール下部を覆い、常時影が発生。影になったセルが電気抵抗となり発熱（ホットスポット現象）。バイパスダイオードが過熱短絡し、バックシートが炭化・焼損。
+            </p>
+            <div class="callout tip" style="margin-top: 0.5rem; padding: 0.75rem 1rem;">
+              <span class="ic">💡</span>
+              <div>
+                <b class="t">AM対策・復旧指針</b>
+                <p style="font-size: 0.8rem; margin: 0;">年間除草計画（年3〜4回）の徹底、防草シートの敷設。年1回のドローン赤外線サーモグラフィ検査により、セル温度異常（ΔT &gt; 15℃）を早期検知・即時ストリング切り離し交換。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="trouble-card">
+            <div class="trouble-header">
+              <span class="trouble-tag">事例 03</span>
+              <h3 style="margin: 0; font-size: 1.1rem; color: #38bdf8;">特別高圧キュービクル内 CVTケーブル水トリー地絡トリップ</h3>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.4rem 0;">
+              <b>【原因メカニズム】</b> 地中埋設配管（ハンドホール）内に雨水が長期間滞留。ケーブル絶縁体の微小空隙に水分と電界が作用し、樹枝状の絶縁破壊パス（水トリー現象）が進展。送電線地絡継電器（67G）が動作し全所停電。
+            </p>
+            <div class="callout note" style="margin-top: 0.5rem; padding: 0.75rem 1rem;">
+              <span class="ic">💡</span>
+              <div>
+                <b class="t">AM対策・復旧指針</b>
+                <p style="font-size: 0.8rem; margin: 0;">ハンドホールの定期排水ポンプアップ。年次点検時の直流耐電圧試験・tanδ（誘電正接）測定による劣化予兆検知。予防保全としてE-Eタイプ（遮水層付き）ケーブルへの布設替え。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 発電所健全度スコアリング診断ツール -->
+        <section class="section" id="scoring-tool">
+          <h2 class="dd-section-title"><span>📊</span> 5. セカンダリー発電所 簡易健全度・DDスコアリング診断</h2>
+          <p>対象発電所の実態を選択すると、総合健全度スコア、リスク等級（ランクS〜C）、買収時推奨CAPEX引当金（円/kW）を瞬時に算出します。</p>
+
+          <div class="diag-container">
+            <div class="diag-grid">
+              <div class="diag-field">
+                <label for="d-age">稼働経過年数 (Age)</label>
+                <select id="d-age">
+                  <option value="25">3年未満（初期不良期終了・新鋭）</option>
+                  <option value="20" selected>3〜7年（安定稼働期）</option>
+                  <option value="12">8〜12年（劣化・PCS更新期）</option>
+                  <option value="5">12年以上（高経年・大規模修繕期）</option>
+                </select>
+              </div>
+
+              <div class="diag-field">
+                <label for="d-terrain">敷地造成形態 (Terrain)</label>
+                <select id="d-terrain">
+                  <option value="25">平坦地・元工場跡地・農地</option>
+                  <option value="18" selected>緩傾斜地（盛土なし・小規模切土）</option>
+                  <option value="8">山林造成地（大規模盛土・調整池あり）</option>
+                  <option value="0">急傾斜地・盛土規制区域内</option>
+                </select>
+              </div>
+
+              <div class="diag-field">
+                <label for="d-inspection">点検・検査実績 (Inspection)</label>
+                <select id="d-inspection">
+                  <option value="25" selected>年次ドローン赤外線 ＋ IVカーブ測定完備</option>
+                  <option value="15">目視巡回 ＋ 法定電気点検のみ</option>
+                  <option value="5">巡回記録が散逸・点検実績不透明</option>
+                </select>
+              </div>
+
+              <div class="diag-field">
+                <label for="d-pcs">PCS・パワコン状態 (Inverter)</label>
+                <select id="d-pcs">
+                  <option value="25">国内大手/実績品・ファン換装済・保証有効</option>
+                  <option value="15" selected>稼働正常だがファン未換装・メーカー撤退なし</option>
+                  <option value="5">メーカー事業撤退品・エラー頻発・保守部品枯渇</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="diag-output">
+              <div class="score-circle">
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; margin-bottom: 0.5rem;">総合ファシリティ健全スコア</div>
+                <div class="score-num" id="out-score">78</div>
+                <div><span class="rank-badge rank-a" id="out-rank">Rank A (良質アセット)</span></div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; justify-content: center;">
+                <div style="margin-bottom: 0.8rem;">
+                  <b style="font-size: 0.85rem; color: var(--text-muted);">買収時 推奨CAPEX引当金（目安）:</b>
+                  <div style="font-size: 1.4rem; font-weight: 800; color: #fff; font-family: monospace;" id="out-capex">5,000 円 / kW</div>
+                </div>
+                <div>
+                  <b style="font-size: 0.85rem; color: var(--text-muted);">AM推奨アクション:</b>
+                  <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.3rem 0;" id="out-action">
+                    標準的な定期修繕計画を維持。PCS冷却ファン予防交換費用を中長期修繕計画に織り込み。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 公式原本PDFアーカイブ -->
+        <section class="section" id="reference-pdfs">
+          <h2 class="dd-section-title"><span>📚</span> 6. DD・点検・構造安全基準 公式原本PDFアーカイブ</h2>
+          <p>Google Drive（<code>01_法令・制度・ガイドライン</code>、<code>02_設備技術・設計施工・保安</code>）に保管されている、DD時に必ず参照すべき公的原本PDF一覧です。</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>文書名 / 発行機関</th>
+                <th>容量</th>
+                <th>フォルダ</th>
+                <th>DDにおける活用ポイント</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>環境省 太陽光発電の環境配慮ガイドライン（本編）</b></td>
+                <td>4.03 MB</td>
+                <td><code>01_法令.../02_事業計画・環境</code></td>
+                <td>動植物生態系、景観、騒音・反射光の影響評価基準</td>
+              </tr>
+              <tr>
+                <td><b>環境省 環境配慮ガイドライン（立地アセスチェックシート）</b></td>
+                <td>1.45 MB</td>
+                <td><code>01_法令.../02_事業計画・環境</code></td>
+                <td>DD現場踏査時の実務チェックリスト原本として利用可能</td>
+              </tr>
+              <tr>
+                <td><b>NEDO/JPEA 地上設置型太陽光発電システム設計施工GL 構造解説</b></td>
+                <td>5.09 MB</td>
+                <td><code>02_設備.../02_太陽電池・PCS</code></td>
+                <td>JIS C 8955準拠の架台断面検定、基礎杭引抜耐力の照査基準</td>
+              </tr>
+              <tr>
+                <td><b>総務省消防庁 リチウムイオン蓄電池火災予防対策検討報告書</b></td>
+                <td>3.26 MB</td>
+                <td><code>02_設備.../01_電気設備技術基準</code></td>
+                <td>蓄電池併設ソーラーの離隔距離、消火設備、消防同意基準</td>
+              </tr>
+              <tr>
+                <td><b>国土交通省 盛土等の安全対策推進ガイドライン及び同解説</b></td>
+                <td>1.42 MB</td>
+                <td><code>01_法令.../01_関係法令・基本計画</code></td>
+                <td>盛土規制法下の造成斜面・擁壁・雨水浸透防止対策の判定基準</td>
+              </tr>
+              <tr>
+                <td><b>林野庁 太陽光発電に係る林地開発許可基準（0.5ha基準の運用）</b></td>
+                <td>0.15 MB</td>
+                <td><code>01_法令.../01_関係法令・基本計画</code></td>
+                <td>林地開発許可の適用対象（0.5ha超）と防災調整池の設置基準</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 MegaSolar AM Hub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function updateDiag() {
+      const age = parseInt(document.getElementById('d-age').value);
+      const terrain = parseInt(document.getElementById('d-terrain').value);
+      const insp = parseInt(document.getElementById('d-inspection').value);
+      const pcs = parseInt(document.getElementById('d-pcs').value);
+
+      const total = age + terrain + insp + pcs;
+      document.getElementById('out-score').innerText = total;
+
+      const rankElem = document.getElementById('out-rank');
+      const capexElem = document.getElementById('out-capex');
+      const actionElem = document.getElementById('out-action');
+
+      if (total >= 85) {
+        rankElem.className = 'rank-badge rank-s';
+        rankElem.innerText = 'Rank S (最優良アセット)';
+        capexElem.innerText = '2,000〜3,000 円 / kW';
+        actionElem.innerText = '瑕疵リスク極小。標準的なO&M保守契約の継続で高いキャッシュフローが期待できます。';
+      } else if (total >= 70) {
+        rankElem.className = 'rank-badge rank-a';
+        rankElem.innerText = 'Rank A (良質アセット)';
+        capexElem.innerText = '4,000〜7,000 円 / kW';
+        actionElem.innerText = '稼働状態良好。PCS冷却ファンやストリング端子の予防保全費用を中長期修繕計画に計上。';
+      } else if (total >= 50) {
+        rankElem.className = 'rank-badge rank-b';
+        rankElem.innerText = 'Rank B (要注記・改善要)';
+        capexElem.innerText = '10,000〜18,000 円 / kW';
+        actionElem.innerText = '土木法面の目視確認・排水路清掃および全ストリングIV測定が必須。買収価格交渉（ディスカウント）の余地あり。';
+      } else {
+        rankElem.className = 'rank-badge rank-c';
+        rankElem.innerText = 'Rank C (ハイリスク・抜本改修)';
+        capexElem.innerText = '25,000〜40,000 円 / kW 以上';
+        actionElem.innerText = '重大な土木崩落リスクまたはPCS枯渇の懸念。詳細な第三者エンジニアリングレポート（IEレポート）が不可欠。';
+      }
+    }
+
+    const selects = document.querySelectorAll('.diag-container select');
+    selects.forEach(s => s.addEventListener('change', updateDiag));
+    updateDiag();
+  </script>
+</body>
+</html>

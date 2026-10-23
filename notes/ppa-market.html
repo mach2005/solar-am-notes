@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コーポレートPPA & FIP電力市場取引 実践マニュアル | メガソーラーAMノート</title>
+  <meta name="description" content="FITからFIPへの移行、コーポレートPPA（オフサイト・バーチャルVPPA・オンサイト）、JEPX電力市場取引、容量市場、バランシングコストの徹底解説と収益シミュレーター。">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .scheme-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .scheme-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .scheme-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+    .scheme-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-onsite { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-physical { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-virtual { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .badge-fip { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .sim-panel {
+      background: linear-gradient(135deg, rgba(20, 26, 40, 0.85), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .sim-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .sim-field label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .sim-field input, .sim-field select {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 0.6rem 0.8rem;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .sim-field input:focus {
+      border-color: var(--accent);
+    }
+    .sim-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      background: rgba(10, 15, 26, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1rem;
+    }
+    .res-card {
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 4px solid var(--accent);
+    }
+    .res-card.highlight {
+      border-left-color: #22c55e;
+      background: rgba(34, 197, 94, 0.06);
+    }
+    .res-card .label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+    .res-card .val { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0.25rem 0; font-family: monospace; }
+    .res-card .sub { font-size: 0.75rem; color: var(--text-muted); }
+
+    .diff-table th, .diff-table td {
+      font-size: 0.85rem;
+      padding: 0.75rem;
+    }
+    .diff-table td:first-child {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビゲーションバー -->
+  <header class="header">
+    <div class="header-inner container">
+      <a href="../index.html" class="logo">
+        <span class="logo-icon">☀️</span>
+        <span class="logo-text">MegaSolar AM Hub</span>
+      </a>
+                  <nav class="nav">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="glossary.html" class="nav-link">用語集</a>
+        <a href="acts.html" class="nav-link">法令詳解</a>
+        <a href="due-diligence.html" class="nav-link">ファシリティDD</a>
+        <a href="ppa-market.html" class="nav-link active">PPA・市場取引</a>
+        <a href="industry.html" class="nav-link">業界マップ</a>
+        <a href="finance.html" class="nav-link">金融・投資</a>
+        <a href="electrical.html" class="nav-link">電気設備</a>
+        <a href="denken.html" class="nav-link">電験・保安</a>
+        <a href="om.html" class="nav-link">O&M保守</a>
+        <a href="policy.html" class="nav-link">政策動向</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="main container">
+    <div class="content-wrapper">
+      
+      <!-- サイドバー目次 -->
+      <aside class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header">
+            <h3>📑 PPA & 市場目次</h3>
+          </div>
+          <ul class="toc-list">
+            <li><a href="#overview" class="toc-link">1. 背景と全体像</a></li>
+            <li><a href="#ppa-schemes" class="toc-link">2. PPAスキーム徹底比較</a></li>
+            <li><a href="#fip-mechanism" class="toc-link">3. FIP制度と収益構造</a></li>
+            <li><a href="#balancing-risk" class="toc-link">4. バランシングとインバランス</a></li>
+            <li><a href="#capacity-market" class="toc-link">5. 容量市場・蓄電池連携</a></li>
+            <li><a href="#simulator" class="toc-link">6. 収益比較シミュレーター</a></li>
+            <li><a href="#gdrive-docs" class="toc-link">7. 公式公的原本PDFアーカイブ</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- 記事本体 -->
+      <article class="article">
+        <header class="article-header">
+          <div class="meta-tag">ENERGY TRANSITION & CORPORATE PPA</div>
+          <h1>コーポレートPPA & FIP電力市場取引 実践マニュアル</h1>
+          <p class="lead">
+            固定価格買取制度（FIT）から市場連動型のFIP制度、そして脱炭素先行企業との長期直接契約（コーポレートPPA）へ。事業主・アセットマネージャーが直面する最新の収益構造、市場リスクヘッジ、バランシング実務を体系化しました。
+          </p>
+        </header>
+
+        <!-- インフォグラフィック図解 -->
+        <section class="section" id="overview">
+          <div class="img-container" style="margin: 2rem 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+            <img src="../assets/img/ppa_market_diagram.jpg" alt="コーポレートPPA・FIP市場取引・系統用蓄電池の統合エコシステム図" style="width: 100%; display: block;">
+            <p class="img-caption" style="padding: 0.75rem 1rem; margin: 0; background: var(--bg-card); font-size: 0.82rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+              ▲ <b>コーポレートPPA・卸電力市場（JEPX）・容量市場・蓄電池（BESS）の統合エコシステム</b>：発電事業者は単なるFIT売電から脱却し、電力（キロワット時）と環境価値（非化石証書等）を分離・統合して需要家や市場へ最適供給する多面的なアセットマネジメントが求められます。
+            </p>
+          </div>
+        </section>
+
+        <!-- PPAスキーム比較 -->
+        <section class="section" id="ppa-schemes">
+          <h2>2. コーポレートPPAスキーム徹底比較</h2>
+          <p>企業のScope 2（電力消費に伴う間接排出）ゼロ化およびRE100達成に向け、需要家と発電事業者が長期固定価格で契約を結ぶ「コーポレートPPA（Power Purchase Agreement）」が主流化しています。</p>
+
+          <div class="scheme-grid">
+            <div class="scheme-card">
+              <span class="scheme-badge badge-onsite">オンサイトPPA</span>
+              <h3>敷地内自家消費型</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.5rem 0;">需要家の工場・ビルの屋根や隣接遊休地に発電事業者が設備を設置・所有し、系統を介さず直接給電。</p>
+              <ul style="font-size: 0.8rem; color: var(--text-muted); padding-left: 1.1rem; margin-top: 0.5rem;">
+                <li><b>託送料金</b>：不要（系統を利用しないためゼロ）</li>
+                <li><b>再エネ賦課金</b>：原則免除（自家消費）</li>
+                <li><b>制約</b>：屋根荷重、設置面積（数十〜数百kW規模が中心）</li>
+              </ul>
+            </div>
+
+            <div class="scheme-card">
+              <span class="scheme-badge badge-physical">フィジカルPPA（オフサイト）</span>
+              <h3>自己託送 / 小売取次型</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.5rem 0;">遠隔地のメガソーラーから一般送配電事業者の送配電ネットワーク（託送）を利用して需要家へ電気と環境価値を供給。</p>
+              <ul style="font-size: 0.8rem; color: var(--text-muted); padding-left: 1.1rem; margin-top: 0.5rem;">
+                <li><b>託送料金</b>：必要（レベニューキャップ託送）</li>
+                <li><b>形態</b>：小売電気事業者を介する「スリーブ契約」が一般的</li>
+                <li><b>規模</b>：数MW〜数十MWの大型開発が可能</li>
+              </ul>
+            </div>
+
+            <div class="scheme-card">
+              <span class="scheme-badge badge-virtual">バーチャルPPA (VPPA)</span>
+              <h3>合成差金決済型</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.5rem 0;">電力そのものは市場（JEPX）に全量売電し、需要家とは「環境価値（トラッキング付非化石証書）」と「固定契約価格との差金決済（CfD）」のみを行う。</p>
+              <ul style="font-size: 0.8rem; color: var(--text-muted); padding-left: 1.1rem; margin-top: 0.5rem;">
+                <li><b>託送手続き</b>：不要（既存の電力調達契約を変更せず導入可能）</li>
+                <li><b>会計処理</b>：デリバティブ会計（時価評価）の論点整理が必須</li>
+                <li><b>グローバル標準</b>：米欧・多国籍企業の主流形態</li>
+              </ul>
+            </div>
+          </div>
+
+          <table class="diff-table" style="margin-top: 1.5rem;">
+            <thead>
+              <tr>
+                <th>比較項目</th>
+                <th>FIT売電</th>
+                <th>FIP市場売電</th>
+                <th>フィジカルPPA</th>
+                <th>バーチャルPPA (VPPA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>価格決定メカニズム</b></td>
+                <td>国による固定価格（FIT買取）</td>
+                <td>JEPX市場価格 ＋ FIPプレミアム</td>
+                <td>需要家との長期相対契約価格</td>
+                <td>固定ストライク価格との差金決済</td>
+              </tr>
+              <tr>
+                <td><b>契約期間</b></td>
+                <td>20年間（法定）</td>
+                <td>最長20年間（交付期間）</td>
+                <td>通常 15〜25年間（相対契約）</td>
+                <td>通常 10〜20年間（相対契約）</td>
+              </tr>
+              <tr>
+                <td><b>市場価格下落リスク</b></td>
+                <td>なし（国が保証）</td>
+                <td>あり（参照価格下落で減収）</td>
+                <td>なし（固定単価合意時）</td>
+                <td>需要家側が差額補填（フロア設計等による）</td>
+              </tr>
+              <tr>
+                <td><b>インバランス責任</b></td>
+                <td>免除（特例）</td>
+                <td><b>事業者が全量負担</b></td>
+                <td>小売事業者または事業者が負担</td>
+                <td><b>発電事業者がJEPX市場で負担</b></td>
+              </tr>
+              <tr>
+                <td><b>環境価値（証書）</b></td>
+                <td>国へ帰属（需要家利用不可）</td>
+                <td><b>発電事業者に帰属（販売可能）</b></td>
+                <td>需要家に電力と共に譲渡</td>
+                <td><b>需要家へ証書のみを直接譲渡</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- FIP制度メカニズム -->
+        <section class="section" id="fip-mechanism">
+          <h2>3. FIP制度（Feed-in Premium）の数理と実務</h2>
+          <p>
+            FIP制度は、再エネ発電事業者を卸電力市場へ統合させるための制度です。発電事業者は市場で電力を売却し、基準価格と参照価格の差額が「プレミアム」として交付されます。
+          </p>
+
+          <div class="callout tip">
+            <span class="ic">📐</span>
+            <div>
+              <b class="t">FIPプレミアム算出基本式</b>
+              <p><code>プレミアム単価（円/kWh） = 基準価格（FIP価格） − 参照価格</code></p>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem;">
+                ※参照価格 ＝ JEPXスポット市場価格の前月実績または前年同月等の加重平均価格 ＋ 非化石価値相当額 − バランシングコスト相当額（経過措置）。
+                <br>※参照価格が基準価格を上回る場合はプレミアムゼロ（マイナス交付＝返還義務は現在の日本のFIPではなし）。
+              </p>
+            </div>
+          </div>
+
+          <h3>ネガティブ価格・0円コマのインパクト</h3>
+          <p>
+            春季やゴールデンウィークなど、好天かつ軽負荷のコマでは、JEPXのスポット価格が0.01円/kWhまで下落（または0円コマが発生）します。この時間帯における市場売電では、FIPプレミアム交付ルール上も交付額がゼロとなる規定（市場価格がゼロ以下の時間帯の交付停止）があり、蓄電池への充電や需要家とのPPAによるフロア価格確保が不可欠となります。
+          </p>
+        </section>
+
+        <!-- バランシングとインバランス -->
+        <section class="section" id="balancing-risk">
+          <h2>4. バランシング実務とインバランスリスク</h2>
+          <p>
+            FITでは免除されていた「計画値同時同量（30分単位での発電計画と実績の一致義務）」が、FIPやオフサイトPPAでは事業者に課されます。
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <h4 style="color: #38bdf8; margin-top: 0;">インバランスペナルティの仕組み</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                計画値よりも実際の発電量が不足した場合（不足インバランス）は、送配電事業者から電力を補填してもらうため、インバランス料金を支払います。逆に発電量が計画を超過した場合（余剰インバランス）は、買い取られますが価格は低減されます。
+              </p>
+            </div>
+
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <h4 style="color: #22c55e; margin-top: 0;">再エネアグリゲーターの活用</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                個別メガソーラー単独では天候予測のブレを吸収できないため、複数の発電所をまとめる「バランシンググループ（BG）」を組成するアグリゲーターへ委託（手数料：約0.5〜1.5円/kWh程度）するのが一般的です。ポートフォリオ効果でインバランス発生率を数%以下に抑えます。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 容量市場・蓄電池連携 -->
+        <section class="section" id="capacity-market">
+          <h2>5. 容量市場・需給調整市場と系統用蓄電池の併設</h2>
+          <p>
+            太陽光発電単体での「昼間の発電過剰と出力抑制」を打開するため、**系統用蓄電池（BESS）の併設やスタンドアローン蓄電池事業**が急拡大しています。
+          </p>
+          <div class="callout note">
+            <span class="ic">🔋</span>
+            <div>
+              <b class="t">マルチストリーム収益モデル（蓄電池マネタイズ）</b>
+              <ul style="font-size: 0.85rem; margin-top: 0.4rem; padding-left: 1.2rem;">
+                <li><b>JEPX スプレッド取引（アービトラージ）</b>：昼間の0.01円コマで充電し、夕方ピーク（20〜30円/kWh）で放電売電。</li>
+                <li><b>容量市場（メインオークション・長期脱炭素電源オークション LTDA）</b>：kW容量をOCCTOに提供し、年間固定kW対価（数千円〜1万円台/kW/年）を20年間長期固定で獲得。</li>
+                <li><b>需給調整市場（一次〜三次調整力）</b>：周波数調整（デルタkW）をOCCTOに提供し、待機料と供出料を獲得。</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 収益シミュレーター -->
+        <section class="section" id="simulator">
+          <h2>6. FIT vs FIP vs コーポレートPPA 収益・リスク比較シミュレーター</h2>
+          <p>対象太陽光発電所の諸元を入力すると、FIT継続時、FIP移行時、コーポレートPPA（固定価格＋証書）契約時の年間キャッシュフローとリスク指標を瞬時に比較試算します。</p>
+
+          <div class="sim-panel">
+            <h3 style="margin-top: 0; color: #38bdf8; display: flex; align-items: center; gap: 0.5rem;">
+              <span>⚡</span> 太陽光アセット収益比較エンジン
+            </h3>
+            <div class="sim-inputs">
+              <div class="sim-field">
+                <label for="p-cap">発電設備容量 (kW-AC)</label>
+                <input type="number" id="p-cap" value="2000" step="100">
+              </div>
+              <div class="sim-field">
+                <label for="p-gen">年間予想発電量 (万kWh/年)</label>
+                <input type="number" id="p-gen" value="240" step="10">
+              </div>
+              <div class="sim-field">
+                <label for="p-fit">FIT買取単価 (円/kWh)</label>
+                <input type="number" id="p-fit" value="14.0" step="0.5">
+              </div>
+              <div class="sim-field">
+                <label for="p-jepx">想定JEPX平均単価 (円/kWh)</label>
+                <input type="number" id="p-jepx" value="11.5" step="0.5">
+              </div>
+              <div class="sim-field">
+                <label for="p-fip-base">FIP基準価格 (円/kWh)</label>
+                <input type="number" id="p-fip-base" value="14.0" step="0.5">
+              </div>
+              <div class="sim-field">
+                <label for="p-ppa-rate">PPA契約単価 (円/kWh)</label>
+                <input type="number" id="p-ppa-rate" value="15.5" step="0.5">
+              </div>
+              <div class="sim-field">
+                <label for="p-curtail">年間出力抑制率 (%)</label>
+                <input type="number" id="p-curtail" value="8.0" step="0.5">
+              </div>
+              <div class="sim-field">
+                <label for="p-agg-fee">アグリゲーション委託費 (円/kWh)</label>
+                <input type="number" id="p-agg-fee" value="0.8" step="0.1">
+              </div>
+            </div>
+
+            <div class="sim-results">
+              <div class="res-card" id="card-fit">
+                <div class="label">【FIT方式】年間売電収入</div>
+                <div class="val" id="res-fit">3,091 万円</div>
+                <div class="sub">抑制考慮後実効売電量: <span id="kwh-fit">220.8</span> 万kWh</div>
+              </div>
+              <div class="res-card" id="card-fip">
+                <div class="label">【FIP市場売電】ネット収入</div>
+                <div class="val" id="res-fip">2,914 万円</div>
+                <div class="sub">市場売電＋プレミアム − 委託費</div>
+              </div>
+              <div class="res-card highlight" id="card-ppa">
+                <div class="label">【コーポレートPPA】年間収益</div>
+                <div class="val" id="res-ppa" style="color: #4ade80;">3,422 万円</div>
+                <div class="sub">固定PPA売電＋非化石価値還元</div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+              ※本シミュレーションは簡略試算です。FITは出力抑制時無補償、FIPはインバランス・アグリゲーション費用控除後、コーポレートPPAは長期固定オフサイト/VPPAでの需要家買取単価をモデル化しています。
+            </div>
+          </div>
+        </section>
+
+        <!-- Google Drive原本PDFアーカイブ -->
+        <section class="section" id="gdrive-docs">
+          <h2>7. Google Drive格納 公的原本PDF資料アーカイブ</h2>
+          <p>
+            当ノートのナレッジベース（Google Drive「<code>01_法令・制度・ガイドライン</code>」「<code>03_事業性評価・金融・タックス</code>」）に保管されている公式原本PDFの一覧です。
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>文書名 / 発行機関</th>
+                <th>容量</th>
+                <th>格納フォルダ</th>
+                <th>実務活用ポイント</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>OCCTO 系統の接続及び利用ルールについて ～系統用蓄電池～</b><br><small style="color:var(--text-muted);">電力広域的運営推進機関（2025年9月版公式）</small></td>
+                <td>2.93 MB</td>
+                <td><code>01_法令.../03_系統連系・電力市場</code></td>
+                <td>順潮流混雑制御、N-1充電停止装置の要件、系統アクセス手続き基準</td>
+              </tr>
+              <tr>
+                <td><b>OCCTO 系統用蓄電池の新規連系における課題と対応（混雑制御）</b><br><small style="color:var(--text-muted);">第97回広域系統整備委員会 資料</small></td>
+                <td>1.66 MB</td>
+                <td><code>01_法令.../03_系統連系・電力市場</code></td>
+                <td>リアルタイム制御と計画値制御の比較、市場連動時の充電制約ルール</td>
+              </tr>
+              <tr>
+                <td><b>OCCTO 容量市場制度説明会資料（最新版）</b><br><small style="color:var(--text-muted);">電力広域的運営推進機関</small></td>
+                <td>6.77 MB</td>
+                <td><code>03_事業性.../02_コーポレートPPA・電力市場</code></td>
+                <td>容量市場メインオークション、変動電源・蓄電池のリクワイアメント詳細</td>
+              </tr>
+              <tr>
+                <td><b>OCCTO 容量市場 実需給期間リクワイアメント説明会</b><br><small style="color:var(--text-muted);">電力広域的運営推進機関</small></td>
+                <td>5.16 MB</td>
+                <td><code>03_事業性.../02_コーポレートPPA・電力市場</code></td>
+                <td>実需給期間における期待容量確認、ペナルティ回避のための運用基準</td>
+              </tr>
+              <tr>
+                <td><b>調達価格等算定委員会 令和7年度以降の調達価格等に関する意見</b><br><small style="color:var(--text-muted);">経済産業省 資源エネルギー庁（2025年2月公表）</small></td>
+                <td>10.67 MB</td>
+                <td><code>01_法令.../02_事業計画・環境・地域共生GL</code></td>
+                <td>最新FIP基準価格、入札対象規模、バランシングコスト算定根拠</td>
+              </tr>
+              <tr>
+                <td><b>OCCTO 自然変動電源出力抑制の検証（東京・関西エリア）</b><br><small style="color:var(--text-muted);">電力広域的運営推進機関</small></td>
+                <td>計2.29 MB</td>
+                <td><code>01_法令.../03_系統連系・電力市場</code></td>
+                <td>エリア別出力制御実績、優先給電ルールに基づく再エネ制御率の検証</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 MegaSolar AM Hub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // PPA収益シミュレーションスクリプト
+    function calcSim() {
+      const cap = parseFloat(document.getElementById('p-cap').value) || 0;
+      const genWan = parseFloat(document.getElementById('p-gen').value) || 0;
+      const fit = parseFloat(document.getElementById('p-fit').value) || 0;
+      const jepx = parseFloat(document.getElementById('p-jepx').value) || 0;
+      const fipBase = parseFloat(document.getElementById('p-fip-base').value) || 0;
+      const ppaRate = parseFloat(document.getElementById('p-ppa-rate').value) || 0;
+      const curtailPct = parseFloat(document.getElementById('p-curtail').value) || 0;
+      const aggFee = parseFloat(document.getElementById('p-agg-fee').value) || 0;
+
+      const genKwh = genWan * 10000;
+      const effectiveKwh = genKwh * (1 - (curtailPct / 100));
+
+      // 1. FIT収入
+      const fitRevenue = (effectiveKwh * fit) / 10000;
+
+      // 2. FIP収入 (市場売電 + プレミアム - アグリゲーション費)
+      // プレミアム = max(0, fipBase - jepx)
+      const premium = Math.max(0, fipBase - jepx);
+      const fipNetUnit = (jepx + premium) - aggFee;
+      const fipRevenue = (effectiveKwh * fipNetUnit) / 10000;
+
+      // 3. PPA収入 (PPA契約単価で全量買取り想定 - アグリ費用差引)
+      const ppaRevenue = (effectiveKwh * (ppaRate - 0.2)) / 10000;
+
+      document.getElementById('kwh-fit').innerText = (effectiveKwh / 10000).toFixed(1);
+      document.getElementById('res-fit').innerText = Math.round(fitRevenue).toLocaleString() + ' 万円';
+      document.getElementById('res-fip').innerText = Math.round(fipRevenue).toLocaleString() + ' 万円';
+      document.getElementById('res-ppa').innerText = Math.round(ppaRevenue).toLocaleString() + ' 万円';
+    }
+
+    const inputs = document.querySelectorAll('.sim-panel input');
+    inputs.forEach(inp => inp.addEventListener('input', calcSim));
+    calcSim();
+  </script>
+</body>
+</html>
