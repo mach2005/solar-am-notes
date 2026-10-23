@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Solar AM Notes - 最新ニュース・政策動向 自動収集スクリプト
-経済産業省、資源エネルギー庁、スマートジャパン（再エネ・電力専門メディア）等の
-公式フィードから、メガソーラー・再エネ関連情報を抽出して data/news.json に保存します。
-※Python標準ライブラリのみで動作します（外部パッケージ不要）。
+Solar AM Notes - 最新ニュース・政策動向 自動収集スクリプト (ワイド拡充版)
+・経済産業省 / 資源エネルギー庁 公式新着 (Atom)
+・スマートジャパン（再エネ・電力システム専門）
+・Google News RSS（メガソーラー・政策・規制・条例・市場・PPA・盗難・事故・ファイナンス）
+などから、アセットマネージャーに関わる最新情報を多角的に収集し data/news.json に保存します。
+※Python標準ライブラリのみで動作します。
 """
 
 import json
 import os
 import re
 import sys
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
@@ -18,14 +21,20 @@ from datetime import datetime, timezone, timedelta
 # JSTタイムゾーン
 JST = timezone(timedelta(hours=9))
 
-# 収集対象のフィード定義
+def build_gnews_url(query):
+    """Google News RSS URLを生成"""
+    encoded = urllib.parse.quote(query)
+    return f"https://news.google.com/rss/search?hl=ja&gl=JP&ceid=JP:ja&q={encoded}"
+
+# 収集フィード定義（広範囲カバー）
 FEEDS = [
+    # 1. 経産省公式
     {
         "name": "経済産業省 / 資源エネルギー庁",
         "url": "https://www.meti.go.jp/ml_index_release_atom.xml",
         "type": "atom",
         "category": "meti",
-        "filter_keywords": True,  # 再エネ・電力・太陽光関連を抽出
+        "filter_keywords": True,
     },
     {
         "name": "経済産業省 METI Journal",
@@ -34,16 +43,49 @@ FEEDS = [
         "category": "meti",
         "filter_keywords": True,
     },
+    # 2. 専門メディア
     {
-        "name": "スマートジャパン（再エネ・電力専門）",
+        "name": "スマートジャパン",
         "url": "https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml",
         "type": "rss2",
         "category": "media",
-        "filter_keywords": False,  # 専門メディアなので全件対象
+        "filter_keywords": False,
+    },
+    # 3. Google News：政策・規制・条例・行政指導
+    {
+        "name": "Google News（政策・自治体条例）",
+        "url": build_gnews_url('メガソーラー OR "太陽光発電" (経産省 OR 環境省 OR 規制 OR 条例 OR ガイドライン OR 指導 OR 訴訟 OR 盛土)'),
+        "type": "gnews",
+        "category": "policy",
+        "filter_keywords": False,
+    },
+    # 4. Google News：FIT/FIP・市場・出力制御・PPA・蓄電池
+    {
+        "name": "Google News（制度・市場・PPA）",
+        "url": build_gnews_url('("FIT" OR "FIP" OR "出力制御" OR "系統用蓄電池" OR "オフサイトPPA" OR "コーポレートPPA" OR "JEPX" OR "廃棄等費用") (太陽光 OR 再エネ)'),
+        "type": "gnews",
+        "category": "market",
+        "filter_keywords": False,
+    },
+    # 5. Google News：O&M・事故・盗難・現場トラブル
+    {
+        "name": "Google News（O&M・保安・事故・盗難）",
+        "url": build_gnews_url('太陽光発電 (ケーブル盗難 OR 銅線盗難 OR 火災 OR 土砂 OR 点検 OR 保安 OR パワコン OR ドローン)'),
+        "type": "gnews",
+        "category": "om_tech",
+        "filter_keywords": False,
+    },
+    # 6. Google News：投資・ファンド・M&A・セカンダリー
+    {
+        "name": "Google News（投資・ファイナンス）",
+        "url": build_gnews_url('太陽光発電所 (インフラファンド OR 買収 OR 売却 OR セカンダリー OR 出資 OR ファンド OR GK-TK)'),
+        "type": "gnews",
+        "category": "finance",
+        "filter_keywords": False,
     },
 ]
 
-# メガソーラーAM関連キーワード（経産省などの絞り込み用）
+# 経産省などの汎用フィード用キーワード
 KEYWORDS = [
     "太陽光", "メガソーラー", "再エネ", "再生可能エネルギー", "FIT", "FIP",
     "調達価格", "出力制御", "系統連系", "系統", "蓄電池", "電力市場", "JEPX",
@@ -54,7 +96,6 @@ KEYWORDS = [
 ]
 
 def is_relevant(text):
-    """テキストに太陽光・再エネ関連キーワードが含まれているか判定"""
     text_lower = text.lower()
     for kw in KEYWORDS:
         if kw.lower() in text_lower:
@@ -62,41 +103,40 @@ def is_relevant(text):
     return False
 
 def determine_category(title, summary, default_cat):
-    """ニュース内容からカテゴリタグを決定"""
+    """ニュース内容から最適なカテゴリを決定"""
     comb = f"{title} {summary}"
-    if any(k in comb for k in ["FIT", "FIP", "調達価格", "算定委員会", "特措法", "法改正", "ガイドライン", "廃棄等", "説明会"]):
-        return "policy"  # 制度・法改正
-    elif any(k in comb for k in ["出力制御", "JEPX", "市場", "インバランス", "系統", "連系線", "代理制御", "需給"]):
-        return "market"  # 市場・出力制御
-    elif any(k in comb for k in ["O&M", "点検", "故障", "火災", "盗難", "ドローン", "パワコン", "モジュール", "保安", "劣化"]):
-        return "om_tech" # O&M・技術
-    elif default_cat == "meti":
-        return "meti"    # 経産省・エネ庁
+    if any(k in comb for k in ["インフラファンド", "買収", "売却", "セカンダリー", "融資", "出資", "ファンド", "GK-TK", "TK出資", "IRR", "DSCR", "プロジェクトファイナンス"]):
+        return "finance"
+    elif any(k in comb for k in ["ケーブル盗難", "銅線", "盗難", "火災", "土砂", "法面", "点検", "故障", "ドローン", "パワコン", "モジュール", "保安規程", "電気保安", "電気主任技術者"]):
+        return "om_tech"
+    elif any(k in comb for k in ["出力制御", "JEPX", "市場", "インバランス", "系統連系", "連系線", "代理制御", "系統用蓄電池", "PPA", "オフサイトPPA", "需給"]):
+        return "market"
+    elif any(k in comb for k in ["FIT", "FIP", "調達価格", "算定委員会", "特措法", "法改正", "ガイドライン", "廃棄等費用", "条例", "規制", "説明会", "森林法", "林地開発", "盛土"]):
+        return "policy"
+    elif default_cat in ["meti", "policy", "market", "finance", "om_tech"]:
+        return default_cat
     else:
-        return "industry"# 業界動向
+        return "industry"
 
 def fetch_feed(url):
-    """URLからXMLデータを取得（タイムアウト・User-Agent設定）"""
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) SolarAMNewsBot/1.0"}
+        headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 SolarAMNewsBot/2.0"}
     )
     try:
         with urllib.request.urlopen(req, timeout=15) as res:
             return res.read()
     except Exception as e:
-        print(f"[WARN] フィード取得失敗: {url} ({e})", file=sys.stderr)
+        print(f"[WARN] フィード取得失敗: {url[:60]}... ({e})", file=sys.stderr)
         return None
 
 def clean_html(raw_html):
-    """簡単なHTMLタグ除去"""
     if not raw_html:
         return ""
     clean = re.sub(r"<[^>]+>", "", raw_html)
-    return clean.strip().replace("\n", " ").replace("\r", "")
+    return clean.strip().replace("\n", " ").replace("\r", "").replace("&quot;", '"').replace("&amp;", "&")
 
 def parse_date(date_str):
-    """各種日付文字列を標準フォーマット (YYYY-MM-DD) に変換"""
     if not date_str:
         return datetime.now(JST).strftime("%Y-%m-%d")
     date_str = date_str.strip()
@@ -111,8 +151,16 @@ def parse_date(date_str):
         pass
     return datetime.now(JST).strftime("%Y-%m-%d")
 
+def split_gnews_title(raw_title):
+    """Google News の 'タイトル - 配信元' を分離"""
+    if not raw_title:
+        return "", "Google News"
+    parts = raw_title.rsplit(" - ", 1)
+    if len(parts) == 2 and len(parts[1]) < 30:
+        return parts[0].strip(), parts[1].strip()
+    return raw_title.strip(), "ニュース"
+
 def parse_feed(feed_def, data):
-    """XMLをパースしてアイテムリストを返す（Element bool評価のトラップを回避）"""
     items = []
     if not data:
         return items
@@ -131,13 +179,11 @@ def parse_feed(feed_def, data):
             entry_tags = root.findall("entry")
 
         for entry in entry_tags:
-            # title
             title_el = entry.find("atom:title", ns)
             if title_el is None:
                 title_el = entry.find("title")
             title = title_el.text if (title_el is not None and title_el.text) else ""
 
-            # summary
             summary_el = entry.find("atom:summary", ns)
             if summary_el is None:
                 summary_el = entry.find("atom:content", ns)
@@ -145,7 +191,6 @@ def parse_feed(feed_def, data):
                 summary_el = entry.find("summary")
             summary = summary_el.text if (summary_el is not None and summary_el.text) else ""
 
-            # link
             link_el = entry.find("atom:link", ns)
             if link_el is None:
                 link_el = entry.find("link")
@@ -153,7 +198,6 @@ def parse_feed(feed_def, data):
             if link_el is not None:
                 link = link_el.get("href") or link_el.text or ""
 
-            # date
             date_el = entry.find("atom:updated", ns)
             if date_el is None:
                 date_el = entry.find("atom:published", ns)
@@ -161,7 +205,6 @@ def parse_feed(feed_def, data):
                 date_el = entry.find("updated")
             date = parse_date(date_el.text if date_el is not None else "")
 
-            # フィルタリング
             comb = f"{title} {summary}"
             if feed_def["filter_keywords"] and not is_relevant(comb):
                 continue
@@ -175,21 +218,31 @@ def parse_feed(feed_def, data):
                 "category": determine_category(title, summary, feed_def["category"])
             })
 
-    elif ftype == "rss2":
+    elif ftype in ["rss2", "gnews"]:
         channel = root.find("channel")
         item_tags = channel.findall("item") if channel is not None else root.findall(".//item")
         for item in item_tags:
-            title_el = item.find("title")
-            title = title_el.text if (title_el is not None and title_el.text) else ""
-
+            raw_title = item.find("title").text if item.find("title") is not None else ""
             desc_el = item.find("description")
             summary = desc_el.text if (desc_el is not None and desc_el.text) else ""
-
             link_el = item.find("link")
             link = link_el.text if (link_el is not None and link_el.text) else ""
-
             date_el = item.find("pubDate")
             date = parse_date(date_el.text if date_el is not None else "")
+
+            if ftype == "gnews":
+                title, src = split_gnews_title(raw_title)
+                # 「写真・画像」「フォト」等の画像専用リンクは除外
+                if any(x in title for x in ["写真・画像", "フォトギャラリー", "写真(1/"]):
+                    continue
+                summary = clean_html(summary)
+                # 概要がソース名と同じか極端に短い場合は空白に
+                if summary == src or len(summary) < 5 or summary.startswith("&nbsp;"):
+                    summary = ""
+            else:
+                title = raw_title
+                src = feed_def["name"]
+                summary = clean_html(summary)
 
             comb = f"{title} {summary}"
             if feed_def["filter_keywords"] and not is_relevant(comb):
@@ -200,14 +253,14 @@ def parse_feed(feed_def, data):
                 "summary": clean_html(summary)[:160],
                 "link": link.strip(),
                 "date": date,
-                "source": feed_def["name"],
+                "source": src,
                 "category": determine_category(title, summary, feed_def["category"])
             })
 
     return items
 
 def load_curated_seed_topics():
-    """アセットマネージャーとして押さえるべき重要政策・直近トピック（シードデータ）"""
+    """アセットマネージャーとして押さえるべき最重要政策・審議会トピック"""
     today_str = datetime.now(JST).strftime("%Y-%m-%d")
     return [
         {
@@ -243,7 +296,7 @@ def load_curated_seed_topics():
             "link": "https://www.meti.go.jp/shingikai/santeii/index.html",
             "date": today_str,
             "source": "経済産業省 審議会",
-            "category": "meti",
+            "category": "policy",
             "featured": True
         },
         {
@@ -258,33 +311,34 @@ def load_curated_seed_topics():
     ]
 
 def main():
-    print(f"[{datetime.now(JST)}] ニュース・政策情報の収集を開始します...")
+    print(f"[{datetime.now(JST)}] 最新ニュース・政策情報の広域収集を開始します...")
     all_items = []
 
     for f in FEEDS:
-        print(f"-> 取得中: {f['name']} ({f['url']})")
+        print(f"-> 取得中: {f['name']}")
         raw = fetch_feed(f["url"])
         parsed = parse_feed(f, raw)
         print(f"   取得件数: {len(parsed)} 件")
         all_items.extend(parsed)
 
-    # シード（重要固定トピック）をマージ
     seeds = load_curated_seed_topics()
     all_items = seeds + all_items
 
-    # タイトルによる重複排除
+    # タイトルの正規化による重複排除（類似タイトルの除外）
     seen_titles = set()
     unique_items = []
     for item in all_items:
-        t = item["title"].strip()
-        if not t or t in seen_titles:
+        t = re.sub(r"[\s\u3000\-_|:：【】［］（）()]+", "", item["title"]).lower()
+        if not t or len(t) < 5 or t in seen_titles:
             continue
         seen_titles.add(t)
         unique_items.append(item)
 
     # 日付降順でソート（featured は最上位）
     unique_items.sort(key=lambda x: (not x.get("featured", False), x.get("date", "")), reverse=True)
-    unique_items = unique_items[:60]
+
+    # 上限を120件に拡張
+    unique_items = unique_items[:120]
 
     result = {
         "updated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M JST"),
@@ -299,7 +353,7 @@ def main():
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
 
-    print(f"[{datetime.now(JST)}] 収集完了: {len(unique_items)} 件を {out_file} に保存しました。")
+    print(f"[{datetime.now(JST)}] 収集完了: 合計 {len(unique_items)} 件を {out_file} に保存しました。")
 
 if __name__ == "__main__":
     main()

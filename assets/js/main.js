@@ -197,10 +197,11 @@
 
     var catLabels = {
       meti: "経産省・エネ庁",
-      policy: "制度・法改正",
-      market: "市場・出力制御",
-      om_tech: "O&M・技術",
-      industry: "業界動向"
+      policy: "制度・法改正・条例",
+      market: "市場・出力制御・PPA",
+      finance: "投資・ファイナンス",
+      om_tech: "O&M・保安・事故",
+      industry: "業界・技術"
     };
 
     function escapeHtml(s) {

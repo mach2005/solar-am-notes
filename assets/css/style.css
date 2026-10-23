@@ -463,8 +463,9 @@ td.num, th.num { text-align: right; font-family: var(--font-en); }
 .news-cat.cat-meti { background: hsl(205 85% 62% / 0.15); color: var(--sky); }
 .news-cat.cat-policy { background: hsl(42 96% 60% / 0.15); color: var(--gold); }
 .news-cat.cat-market { background: hsl(152 60% 50% / 0.15); color: var(--green); }
+.news-cat.cat-finance { background: hsl(285 70% 65% / 0.15); color: hsl(285 85% 78%); }
 .news-cat.cat-om_tech { background: hsl(26 96% 56% / 0.15); color: var(--orange); }
-.news-cat.cat-industry { background: hsl(270 60% 70% / 0.15); color: hsl(270 70% 80%); }
+.news-cat.cat-industry { background: hsl(210 20% 70% / 0.15); color: hsl(210 25% 82%); }
 .news-featured-tag { background: var(--grad-sun); color: #1a1206; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; }
 .news-title { margin: 0; font-size: 17px; line-height: 1.5; font-weight: 700; }
 .news-title a { color: var(--text); display: inline-flex; align-items: baseline; gap: 6px; }
