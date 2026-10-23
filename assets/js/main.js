@@ -19,6 +19,7 @@
     { id: "denken",      file: "notes/denken.html",      label: "電験・主任技術者" },
     { id: "acts",        file: "notes/acts.html",        label: "重要法令" },
     { id: "legal",       file: "notes/legal.html",       label: "契約・保険" },
+    { id: "industry",    file: "notes/industry.html",    label: "業界マップ" },
     { id: "glossary",    file: "notes/glossary.html",    label: "用語集" }
   ];
 
