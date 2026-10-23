@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>電気設備（モジュール・PCS・受変電・保安）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーの電気設備ノート。システム構成、太陽電池モジュールとIV特性、PCSの役割と方式、電圧区分と連系区分、保護継電器、電気保安体制と電気主任技術者、力率制御を解説。">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-page="electrical">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>05 電気設備</span></nav>
+        <h1>電気設備</h1>
+        <p>パネルで生まれた直流が、交流に変換され、昇圧されて系統へ届くまで。O&amp;M報告や故障報告を正しく理解するための設備知識。</p>
+        <div class="meta"><span class="tag">モジュール</span><span class="tag">PCS</span><span class="tag">受変電設備</span><span class="tag">保護継電器</span><span class="tag">電気主任技術者</span></div>
+      </div>
+    </section>
+
+    <div class="article-wrap">
+      <details class="toc" id="toc" open>
+        <summary>Contents <span aria-hidden="true">▾</span></summary>
+        <ol id="toc-list"></ol>
+      </details>
+
+      <article class="prose">
+        <section id="system">
+          <h2>システム構成</h2>
+          <div class="flow">
+            <div class="node">モジュール<small>直流（DC）発電</small></div><div class="arrow">→</div>
+            <div class="node">接続箱・集電箱<small>ストリングを束ねる</small></div><div class="arrow">→</div>
+            <div class="node">PCS<small>DC→AC変換</small></div><div class="arrow">→</div>
+            <div class="node">昇圧変圧器<small>低圧→高圧/特高</small></div><div class="arrow">→</div>
+            <div class="node">受変電設備<small>計量・保護</small></div><div class="arrow">→</div>
+            <div class="node">電力系統<small>送配電網</small></div>
+          </div>
+          <ul>
+            <li><b>ストリング</b>：モジュールを直列に接続した単位。直列数で電圧が決まる。</li>
+            <li><b>アレイ</b>：ストリングを並列に組み合わせ、架台に設置したまとまり。</li>
+            <li><b>接続箱</b>：複数ストリングを並列に束ね、逆流防止・ヒューズ・開閉器を備える。</li>
+            <li><b>受変電設備</b>：高圧連系ではキュービクル、特別高圧連系では変電所（開閉所）を設け、遮断器・保護継電器・取引用メーターを設置。</li>
+          </ul>
+        </section>
+
+        <section id="module">
+          <h2>太陽電池モジュール</h2>
+          <table>
+            <thead><tr><th>種類</th><th>特徴</th></tr></thead>
+            <tbody>
+              <tr><td><b>単結晶シリコン</b></td><td>変換効率が高く、現在の主流。PERC・TOPCon・HJTなどの高効率セル技術がある</td></tr>
+              <tr><td><b>多結晶シリコン</b></td><td>制度初期の案件で多く採用。単結晶より効率はやや低い</td></tr>
+              <tr><td><b>薄膜系（CIS・CdTe等）</b></td><td>温度上昇による出力低下が比較的小さい。面積あたりの出力は低め</td></tr>
+              <tr><td><b>両面発電（バイフェイシャル）</b></td><td>裏面でも反射光を受けて発電。地面の反射率（アルベド）が効く</td></tr>
+            </tbody>
+          </table>
+
+          <h3>IV特性（電流−電圧特性）</h3>
+          <div class="kp-grid">
+            <div class="kp"><b>Voc（開放電圧）</b><p>電流ゼロ時の電圧。低温ほど高くなるため、冬の最低気温でPCSの最大入力電圧を超えない設計が必要</p></div>
+            <div class="kp"><b>Isc（短絡電流）</b><p>電圧ゼロ時の電流。日射量にほぼ比例</p></div>
+            <div class="kp"><b>Pmax（最大出力）</b><p>Vpm × Ipm。STC条件での値がモジュールの公称出力（W）</p></div>
+            <div class="kp"><b>FF（曲線因子）</b><p>Pmax ÷（Voc × Isc）。IVカーブの「角張り具合」。劣化や抵抗増加で低下</p></div>
+          </div>
+          <div class="callout info"><span class="ic">ℹ️</span><div><b class="t">バイパスダイオード</b><p>モジュール内のセルの一部が影になると、その部分が抵抗となり発熱（ホットスポット）します。バイパスダイオードは影になったセル群を迂回させて損失と発熱を抑えます。故障するとホットスポットや出力低下の原因に。</p></div></div>
+        </section>
+
+        <section id="pcs">
+          <h2>PCS（パワーコンディショナ）</h2>
+          <h3>主な役割</h3>
+          <ul>
+            <li><b>DC→AC変換</b>：インバータで直流を系統と同じ周波数（東日本50Hz／西日本60Hz）の交流に変換。</li>
+            <li><b>MPPT（最大電力点追従）</b>：日射・温度で変わる最大出力点を追いかけ、常に最大電力を取り出す。</li>
+            <li><b>系統連系保護</b>：系統異常を検知して停止。単独運転を防止。</li>
+            <li><b>出力・力率制御</b>：出力制御指示への対応、力率一定制御、電圧上昇抑制。</li>
+          </ul>
+          <h3>集中型とストリング型（分散型）</h3>
+          <table>
+            <thead><tr><th>項目</th><th>集中型</th><th>ストリング型（分散型）</th></tr></thead>
+            <tbody>
+              <tr><td>容量</td><td>1台あたり数百kW〜数MW</td><td>1台あたり数十kW〜百数十kW程度</td></tr>
+              <tr><td>故障時の影響</td><td>1台停止の影響が大きい</td><td>影響が小さく、全体の稼働率を維持しやすい</td></tr>
+              <tr><td>保守</td><td>専門メーカーによる現地修理が中心</td><td>本体交換で対応しやすい</td></tr>
+              <tr><td>MPPT</td><td>多数のストリングをまとめて制御</td><td>きめ細かく制御でき、影・ミスマッチに強い</td></tr>
+            </tbody>
+          </table>
+          <div class="formula">
+            <span class="label">過積載率</span>
+            <div class="eq">過積載率 ＝ <span class="frac"><span>モジュール容量（DC, kWp）</span><span>PCS容量（AC, kW）</span></span></div>
+            <p class="note">朝夕・曇天の発電量を増やせる一方、晴天時にはクリッピングが発生。経済性で最適値を決める。なお、FIT認定後のパネル増設は調達価格の変更対象となるルールがあるため注意。</p>
+          </div>
+        </section>
+
+        <section id="voltage">
+          <h2>電圧区分と連系区分</h2>
+          <table>
+            <thead><tr><th>区分</th><th>交流</th><th>直流</th></tr></thead>
+            <tbody>
+              <tr><td><b>低圧</b></td><td>600V以下</td><td>750V以下</td></tr>
+              <tr><td><b>高圧</b></td><td>600V超 7,000V以下</td><td>750V超 7,000V以下</td></tr>
+              <tr><td><b>特別高圧</b></td><td colspan="2">7,000V超</td></tr>
+            </tbody>
+          </table>
+          <table>
+            <thead><tr><th>連系区分（原則）</th><th>発電設備の出力</th><th>受変電設備の例</th></tr></thead>
+            <tbody>
+              <tr><td>低圧連系</td><td>50kW未満</td><td>—</td></tr>
+              <tr><td>高圧連系（6.6kV）</td><td>50kW以上 2,000kW未満</td><td>キュービクル</td></tr>
+              <tr><td>特別高圧連系（22kV・66kV等）</td><td>2,000kW以上</td><td>特高変電所（主変圧器・ガス遮断器等）</td></tr>
+            </tbody>
+          </table>
+          <div class="callout tip"><span class="ic">✅</span><div><b class="t">「メガソーラー」の連系</b><p>1MW級は高圧連系、2MW以上は特別高圧連系が原則。特高案件は変電所設備の保守費用・停電点検の調整が大きくなるため、O&amp;M費の構造も変わります。</p></div></div>
+        </section>
+
+        <section id="protection">
+          <h2>保護装置</h2>
+          <p>発電所の事故を系統に波及させない、また系統異常時に発電所を安全に切り離すため、各種の保護継電器（リレー）を設置します。</p>
+          <table>
+            <thead><tr><th>略称</th><th>名称</th><th>役割</th></tr></thead>
+            <tbody>
+              <tr><td><b>OVR / UVR</b></td><td>過電圧／不足電圧継電器</td><td>系統電圧の異常を検出して解列</td></tr>
+              <tr><td><b>OFR / UFR</b></td><td>周波数上昇／低下継電器</td><td>周波数の異常を検出して解列</td></tr>
+              <tr><td><b>OVGR</b></td><td>地絡過電圧継電器</td><td>系統側の地絡を零相電圧で検出</td></tr>
+              <tr><td><b>DGR / GR</b></td><td>地絡方向継電器／地絡継電器</td><td>構内の地絡事故を検出し、波及事故を防ぐ</td></tr>
+              <tr><td><b>OCR</b></td><td>過電流継電器</td><td>短絡・過負荷を検出</td></tr>
+              <tr><td><b>単独運転検出</b></td><td>受動的方式／能動的方式</td><td>系統が停電しているのに発電所だけが送電し続ける状態を検出して停止（PCSに内蔵されることが多い）</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><b>VCB（真空遮断器）</b>・<b>LBS（負荷開閉器）</b>：高圧回路の開閉・遮断装置。</li>
+            <li><b>SPD（避雷器）</b>：雷サージから機器を保護。落雷後は動作・劣化状況を確認。</li>
+            <li>保護継電器は年次点検で<b>動作試験（継電器試験）</b>を行い、整定値通りに動作するか確認する。</li>
+          </ul>
+        </section>
+
+        <section id="safety">
+          <h2>電気保安体制</h2>
+          <table>
+            <thead><tr><th>区分</th><th>対象（太陽電池発電設備）</th><th>主な義務</th></tr></thead>
+            <tbody>
+              <tr><td><b>小規模事業用電気工作物</b></td><td>10kW以上 50kW未満</td><td>技術基準適合維持、基礎情報の届出、使用前自己確認</td></tr>
+              <tr><td><b>自家用電気工作物</b></td><td>50kW以上（高圧・特高連系）</td><td>保安規程の届出、電気主任技術者の選任（または外部委託承認）、技術基準適合維持</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><b>電気主任技術者</b>：事業用電気工作物の工事・維持・運用の保安監督者。第三種は電圧5万V未満（出力5,000kW以上の発電所を除く）を監督できる。</li>
+            <li><b>外部委託承認制度</b>：一定規模以下の設備では、電気保安法人や個人の電気管理技術者に保安業務を委託できる（規模要件は改正されることがあるので最新を確認）。</li>
+            <li>太陽電池発電設備には専用の技術基準（発電用太陽電池設備に関する技術基準を定める省令）があり、架台・基礎の強度なども規定されている。</li>
+          </ul>
+        </section>
+
+        <section id="powerquality">
+          <h2>力率・電圧の管理</h2>
+          <ul>
+            <li>高圧・特高連系では、系統の電圧上昇を抑えるため、電力会社から<b>力率一定制御</b>（例：力率95%など）を求められることが多い。</li>
+            <li>力率を下げると有効電力（売電量）の上限がPCS容量の範囲で圧迫される場合がある。</li>
+            <li><b>FRT要件</b>：系統の瞬時的な電圧低下・周波数変動時に、すぐに解列せず運転を継続する能力。大量の再エネが一斉に脱落するのを防ぐ。</li>
+          </ul>
+        </section>
+
+        <section id="checklist">
+          <h2>AM視点のチェックリスト</h2>
+          <ul class="checklist">
+            <li>単線結線図を読み、主要機器（PCS台数・変圧器・遮断器）の構成を把握しているか</li>
+            <li>主要機器のメーカー・型式・設置年・保証期間を台帳化しているか</li>
+            <li>保安規程・主任技術者（選任／外部委託）の体制を確認しているか</li>
+            <li>年次点検の結果（絶縁抵抗、継電器試験）で指摘事項がないか</li>
+            <li>系統連系契約の条件（力率指定・出力制御方式）を把握しているか</li>
+          </ul>
+        </section>
+
+        <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 法令上の区分・要件は改正されることがあります。経済産業省（電力安全課）等の最新情報を確認してください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

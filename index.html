@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Solar AM Notes｜メガソーラー・アセットマネジメント学習ノート</title>
+  <meta name="description" content="メガソーラーのアセットマネージャーのための個人学習ノート。発電性能分析、O&amp;M、FIT/FIP制度・電力市場、プロジェクトファイナンス、電気設備、法令・契約、用語集をまとめています。">
+  <meta name="theme-color" content="#0b0f17">
+  <meta property="og:title" content="Solar AM Notes">
+  <meta property="og:description" content="メガソーラー・アセットマネジメントの学習ノート">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-root="" data-page="home">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-bg" role="img" aria-label="夕暮れのメガソーラー発電所"></div>
+      <div class="hero-inner">
+        <span class="eyebrow">Personal Study Notes</span>
+        <h1>メガソーラーを<br><span class="grad-text">“資産”として読み解く。</span></h1>
+        <p class="lead">発電性能・O&amp;M・制度・ファイナンス・電気設備・法務。アセットマネージャーに必要な知識を、スマホでいつでも復習できる学習ノートにまとめました。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#topics" id="btn-start">ノートを読む
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="notes/glossary.html" id="btn-glossary">用語集で調べる</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Stats ===== -->
+    <div class="section" style="padding-top:0;padding-bottom:0">
+      <div class="stats reveal">
+        <div class="stat"><b class="grad-text">7</b><span>学習テーマ</span></div>
+        <div class="stat"><b class="grad-text">60+</b><span>収録用語</span></div>
+        <div class="stat"><b class="grad-text">PR</b><span>性能評価の基本指標</span></div>
+        <div class="stat"><b class="grad-text">DSCR</b><span>融資管理の基本指標</span></div>
+      </div>
+    </div>
+
+    <!-- ===== Topics ===== -->
+    <section class="section" id="topics" aria-labelledby="topics-title">
+      <div class="section-head reveal">
+        <span class="kicker">Topics</span>
+        <h2 id="topics-title">テーマ別ノート</h2>
+        <p>気になるテーマから読み進められます。各ノートには公式・計算例・実務ポイントを収録しています。</p>
+      </div>
+
+      <div class="cards">
+        <a class="card reveal" href="notes/performance.html" id="card-performance">
+          <span class="num">01</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+          <h3>発電性能分析</h3>
+          <p>PR・比発電量・設備利用率の計算、損失要因の分解、予実分析とP50/P90の考え方。</p>
+          <div class="tags"><span class="tag">PR</span><span class="tag">損失要因</span><span class="tag">予実分析</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/om.html" id="card-om">
+          <span class="num">02</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span>
+          <h3>O&amp;M（運転・保守）</h3>
+          <p>定期点検、遠隔監視とアラーム対応、除草・洗浄、IVカーブ・サーモ点検、盗難対策、KPI管理。</p>
+          <div class="tags"><span class="tag">点検</span><span class="tag">稼働率</span><span class="tag">予防保全</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/policy.html" id="card-policy">
+          <span class="num">03</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10M19 21V10M9 21V10M15 21V10M2 10l10-6 10 6"/></svg></span>
+          <h3>FIT/FIP・電力市場・出力制御</h3>
+          <p>FITとFIPの仕組み、プレミアムの考え方、JEPX、出力制御ルール、廃棄等費用積立制度。</p>
+          <div class="tags"><span class="tag">FIT</span><span class="tag">FIP</span><span class="tag">JEPX</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/finance.html" id="card-finance">
+          <span class="num">04</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l6 8 6-8M12 12v8M7 13h10M7 17h10"/></svg></span>
+          <h3>ファイナンス</h3>
+          <p>SPV・GK-TKスキーム、プロジェクトファイナンス、IRR・NPV・DSCR、キャッシュウォーターフォール。</p>
+          <div class="tags"><span class="tag">IRR</span><span class="tag">DSCR</span><span class="tag">SPV</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/electrical.html" id="card-electrical">
+          <span class="num">05</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <h3>電気設備</h3>
+          <p>モジュール・PCS・変圧器・受変電設備の構成、電圧区分、保護継電器、保安体制と主任技術者。</p>
+          <div class="tags"><span class="tag">PCS</span><span class="tag">高圧連系</span><span class="tag">保安規程</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/legal.html" id="card-legal">
+          <span class="num">06</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span>
+          <h3>法令・契約</h3>
+          <p>電気事業法・再エネ特措法・森林法・農地法、EPC/O&amp;M/AM契約、土地権原と保険。</p>
+          <div class="tags"><span class="tag">EPC</span><span class="tag">地上権</span><span class="tag">保険</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/glossary.html" id="card-glossary">
+          <span class="num">07</span>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>
+          <h3>用語集</h3>
+          <p>現場・会議・レポートで頻出する用語を検索＆カテゴリで絞り込み。スマホでサッと確認。</p>
+          <div class="tags"><span class="tag">検索</span><span class="tag">カテゴリ別</span></div>
+          <span class="more">用語集を開く →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Roadmap ===== -->
+    <section class="section" aria-labelledby="road-title">
+      <div class="section-head reveal">
+        <span class="kicker">Roadmap</span>
+        <h2 id="road-title">おすすめの学習順</h2>
+        <p>「設備がどう動くか」→「どれだけ稼いでいるか」→「お金と契約でどう守るか」の順に積み上げます。</p>
+      </div>
+      <div class="roadmap">
+        <div class="road reveal"><h4>設備と用語を知る</h4><p>電気設備の構成と用語集で、現場・報告書の言葉に慣れる。</p></div>
+        <div class="road reveal"><h4>性能を測る</h4><p>PRと損失要因を理解し、月次レポートの数字を自分で説明できるようにする。</p></div>
+        <div class="road reveal"><h4>運用で守る</h4><p>O&amp;Mと制度・出力制御を押さえ、売電収入の毀損リスクを管理する。</p></div>
+        <div class="road reveal"><h4>資産価値を高める</h4><p>ファイナンス指標と契約条項を理解し、投資家・レンダーと対話する。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 制度・法令は改正されます。実務では必ず最新の一次情報（経済産業省・資源エネルギー庁 等）を確認してください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

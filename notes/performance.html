@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>発電性能分析（PR・損失要因・予実分析）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーの発電性能分析ノート。PR（性能比）・比発電量・設備利用率の計算方法、温度補正、損失要因の分解、予実分析、P50/P90、劣化の考え方を計算例付きで解説。">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-page="performance">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>01 発電性能分析</span></nav>
+        <h1>発電性能分析</h1>
+        <p>「今月の発電量は良かったのか、悪かったのか」を天候の影響と設備の影響に切り分けて説明できるようになるためのノート。</p>
+        <div class="meta"><span class="tag">PR</span><span class="tag">比発電量</span><span class="tag">設備利用率</span><span class="tag">損失要因</span><span class="tag">P50/P90</span></div>
+      </div>
+    </section>
+
+    <div class="article-wrap">
+      <details class="toc" id="toc" open>
+        <summary>Contents <span aria-hidden="true">▾</span></summary>
+        <ol id="toc-list"></ol>
+      </details>
+
+      <article class="prose">
+        <section id="indicators">
+          <h2>基本の3指標</h2>
+          <p>発電所の性能は「発電量の絶対値」だけでは比較できません。規模や日射条件の違いを取り除いた<strong>規格化された指標</strong>で見るのが基本です。</p>
+
+          <h3>① 比発電量（Specific Yield）</h3>
+          <div class="formula">
+            <span class="label">Formula</span>
+            <div class="eq">比発電量 [kWh/kWp] = <span class="frac"><span>発電量 [kWh]</span><span>モジュール定格容量 [kWp]</span></span></div>
+            <p class="note">1kWpあたり何kWh発電したか。規模の異なる発電所同士を比較できる。日本の年間値は地域・設計により概ね 1,100〜1,400 kWh/kWp 程度。</p>
+          </div>
+
+          <h3>② PR：性能比（Performance Ratio）</h3>
+          <div class="formula">
+            <span class="label">Formula</span>
+            <div class="eq">PR = <span class="frac"><span>実発電量 [kWh]</span><span>定格容量 [kWp] × 傾斜面日射量 [kWh/m²] ÷ 1 [kW/m²]</span></span></div>
+            <p class="note">分母は「標準試験条件（STC：1,000W/m²・25℃）の性能がそのまま出たら得られたはずの発電量」。日射の多寡を取り除くので、<b>設備の健全性</b>を見る指標になる。一般的な目安は 75〜85% 程度。</p>
+          </div>
+
+          <h3>③ 設備利用率（Capacity Factor）</h3>
+          <div class="formula">
+            <span class="label">Formula</span>
+            <div class="eq">設備利用率 = <span class="frac"><span>年間発電量 [kWh]</span><span>定格出力 [kW] × 8,760 [h]</span></span></div>
+            <p class="note">分母の「定格出力」をDC（モジュール容量）にするかAC（PCS容量・連系出力）にするかで値が大きく変わる。比較時は必ず基準を揃える。</p>
+          </div>
+
+          <div class="callout am"><span class="ic">💡</span><div><b class="t">AMの着眼点</b><p>レポートでは「日射が少なかった（天候要因）」のか「PRが落ちた（設備要因）」のかを最初に切り分けます。発電量が計画未達でもPRが平常なら、設備側には大きな問題がない可能性が高いと判断できます。</p></div></div>
+        </section>
+
+        <section id="example">
+          <h2>計算例で確認する</h2>
+          <div class="example">
+            <span class="label">例題：DC 2,000kWp／AC 1,500kW の発電所（ある月）</span>
+            <ul>
+              <li>傾斜面日射量（月間）：150 kWh/m²</li>
+              <li>実発電量（月間）：240,000 kWh</li>
+            </ul>
+          </div>
+          <ol>
+            <li><b>基準発電時間（Reference Yield）</b>：150 kWh/m² ÷ 1 kW/m² = 150 h</li>
+            <li><b>理論発電量</b>：2,000 kWp × 150 h = 300,000 kWh</li>
+            <li><b>PR</b>：240,000 ÷ 300,000 = <strong>80.0%</strong></li>
+            <li><b>比発電量</b>：240,000 ÷ 2,000 = <strong>120 kWh/kWp</strong></li>
+          </ol>
+
+          <div class="example">
+            <span class="label">例題：年間発電量 2,500,000 kWh の場合の設備利用率</span>
+            <ul>
+              <li>AC基準：2,500,000 ÷（1,500 × 8,760）= <b>約19.0%</b></li>
+              <li>DC基準：2,500,000 ÷（2,000 × 8,760）= <b>約14.3%</b></li>
+            </ul>
+            <p>同じ発電所でも基準次第で約5ポイント違う。過積載（DC/AC比が大きい）案件ほど差が開く。</p>
+          </div>
+        </section>
+
+        <section id="losses">
+          <h2>損失要因の分解</h2>
+          <p>PRが100%にならないのは、日射がモジュールに届いてから系統に送り出されるまでに様々な損失があるためです。PR低下の原因を探るときは、以下を上流から順に疑います。</p>
+
+          <div class="flow">
+            <div class="node">日射<small>傾斜面日射量</small></div><div class="arrow">→</div>
+            <div class="node">モジュール<small>温度・汚れ・影・劣化</small></div><div class="arrow">→</div>
+            <div class="node">直流回路<small>配線・ミスマッチ</small></div><div class="arrow">→</div>
+            <div class="node">PCS<small>変換・クリッピング</small></div><div class="arrow">→</div>
+            <div class="node">変圧器・送電<small>受電点</small></div>
+          </div>
+
+          <table>
+            <thead><tr><th>損失要因</th><th>目安・特徴</th><th>確認方法</th></tr></thead>
+            <tbody>
+              <tr><td><b>温度損失</b></td><td>結晶系は温度係数 約 −0.3〜−0.45%/℃。夏季はモジュール温度が60℃超にもなり、数％〜10％超の損失</td><td>モジュール裏面温度・気温データ、温度補正PR</td></tr>
+              <tr><td><b>汚れ（ソイリング）</b></td><td>砂ぼこり・鳥の糞・花粉・黄砂。降雨で回復することが多い</td><td>降雨前後のPR比較、目視・ドローン</td></tr>
+              <tr><td><b>影</b></td><td>草木の成長、周辺建物、アレイ間の影（冬季に増大）</td><td>時間帯別の出力カーブ、ストリング電流</td></tr>
+              <tr><td><b>積雪</b></td><td>寒冷地では冬季に大きな損失。架台角度・高さで差</td><td>カメラ・気象データ</td></tr>
+              <tr><td><b>ミスマッチ・直流損失</b></td><td>モジュール特性のばらつき、ケーブル抵抗損（概ね1〜2％）</td><td>設計値との比較、IVカーブ測定</td></tr>
+              <tr><td><b>PCS変換損失</b></td><td>最大効率は概ね95〜98％台。低負荷時は効率低下</td><td>DC入力とAC出力の比較</td></tr>
+              <tr><td><b>クリッピング（ピークカット）</b></td><td>DC出力がPCS定格を超えた分がカットされる。過積載設計では想定内の損失</td><td>晴天日の出力カーブ頭打ち</td></tr>
+              <tr><td><b>変圧器・交流損失</b></td><td>昇圧変圧器の鉄損・銅損、交流ケーブル損失</td><td>PCS出力合計と受電点メーター値の比較</td></tr>
+              <tr><td><b>停止・故障</b></td><td>PCS停止、ストリング断線、地絡、系統停電</td><td>アラーム履歴、稼働率</td></tr>
+              <tr><td><b>出力制御</b></td><td>電力会社指示による出力抑制。設備要因とは分けて管理</td><td>制御スケジュール・実績ログ</td></tr>
+              <tr><td><b>経年劣化</b></td><td>年0.5％前後の出力低下が一般的な想定</td><td>年次の温度補正PR推移</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout tip"><span class="ic">✅</span><div><b class="t">切り分けのコツ</b><p>「出力制御」と「系統停電」は発電所の性能とは無関係な外部要因です。PR評価では、これらの影響を除いた<b>補正後PR</b>と、全部込みの<b>実績PR</b>を並べて報告すると説明がクリアになります。</p></div></div>
+        </section>
+
+        <section id="temp-pr">
+          <h2>温度補正PR</h2>
+          <p>通常のPRは夏に下がり、冬に上がる季節変動があります（温度損失のため）。月ごとの変化から設備劣化だけを見たい場合は、温度の影響を取り除いた<strong>温度補正PR</strong>を使います。</p>
+          <div class="formula">
+            <span class="label">Formula（簡易版）</span>
+            <div class="eq">温度補正PR = <span class="frac"><span>PR</span><span>1 + γ × (T<sub>cell</sub> − 25)</span></span></div>
+            <p class="note">γ：Pmaxの温度係数（例 −0.0040/℃）、T<sub>cell</sub>：モジュール温度（日射量で加重平均したもの）。厳密にはIEC 61724-1 の考え方に従い時間ごとに補正する。</p>
+          </div>
+          <div class="example">
+            <span class="label">例：夏季 PR 76%、加重平均モジュール温度 50℃、γ = −0.40%/℃</span>
+            <p>補正係数 = 1 + (−0.004) × (50 − 25) = 0.90 → 温度補正PR = 76% ÷ 0.90 ≒ <b>84.4%</b>。冬季の値と同水準なら、夏のPR低下は温度要因でほぼ説明できる。</p>
+          </div>
+        </section>
+
+        <section id="budget">
+          <h2>予実分析（計画 vs 実績）</h2>
+          <p>計画発電量（バジェット）は、過去の気象データを用いたシミュレーションで作成されます。実績との差異は次のように<strong>要因分解</strong>すると説明しやすくなります。</p>
+          <div class="formula">
+            <span class="label">差異分解の考え方</span>
+            <div class="eq">実績 ÷ 計画 ＝（実日射 ÷ 計画日射）×（実PR ÷ 計画PR）</div>
+            <p class="note">左辺が「計画達成率」。右辺の第1項が<b>天候要因</b>、第2項が<b>性能要因</b>（設備・停止・出力制御など）。</p>
+          </div>
+          <div class="example">
+            <span class="label">例：計画達成率 92%</span>
+            <ul>
+              <li>日射比率 = 95%（日照不足）</li>
+              <li>PR比率 = 92% ÷ 95% ≒ 96.8%</li>
+            </ul>
+            <p>→ 未達8%のうち、約5%が天候、約3%が性能要因。性能要因の中身（出力制御・停止・汚れ等）をさらに分解する。</p>
+          </div>
+          <div class="callout info"><span class="ic">ℹ️</span><div><b class="t">日射データの品質に注意</b><p>現地日射計は汚れ・校正ずれで誤差が出ます。衛星日射データや近隣の気象観測値と突き合わせ、日射計の異常をPR異常と誤認しないようにします。</p></div></div>
+        </section>
+
+        <section id="p50p90">
+          <h2>P50 / P90 の考え方</h2>
+          <p>年間発電量の予測値には不確実性（気象の年変動、日射データ、シミュレーションモデル、劣化など）があります。これを確率分布として表したものが P値 です。</p>
+          <div class="kp-grid">
+            <div class="kp"><b>P50</b><p>50%の確率で上回る発電量。「中央値」の予測で、エクイティ側の基本ケースに使われることが多い。</p></div>
+            <div class="kp"><b>P90</b><p>90%の確率で上回る保守的な発電量。レンダーが返済能力（DSCR）を評価する際によく使う。</p></div>
+            <div class="kp"><b>1年P90 と 10年P90</b><p>単年は年変動が大きいため1年P90の方が低い。長期平均では年変動が平準化され10年P90は高めになる。</p></div>
+          </div>
+          <div class="formula">
+            <span class="label">Formula（正規分布を仮定）</span>
+            <div class="eq">P90 ≒ P50 × (1 − 1.282 × σ)</div>
+            <p class="note">σ：不確実性の合計（相対標準偏差）。例えば σ = 6% なら P90 ≒ P50 × 92.3%。</p>
+          </div>
+        </section>
+
+        <section id="degradation">
+          <h2>劣化と長期トレンド</h2>
+          <ul>
+            <li>結晶系モジュールの出力劣化は、計画上<strong>年0.5%前後</strong>を見込むことが多い（メーカーの出力保証は「25年後に80%以上」等の形が一般的）。</li>
+            <li>初期劣化（LID：光誘起劣化）や、高電圧下で起きる<strong>PID（電圧誘起劣化）</strong>は通常劣化より大きな低下を招くことがある。</li>
+            <li>劣化の評価には、季節変動を除いた<b>温度補正PRの年次推移</b>や、同じ日射条件で比較したデータを用いる。</li>
+            <li>ストリング単位の電流比較で、特定ストリングだけの低下（ホットスポット・断線など）を早期発見できる。</li>
+          </ul>
+        </section>
+
+        <section id="checklist">
+          <h2>月次レポートのチェックリスト</h2>
+          <ul class="checklist">
+            <li>発電量・日射量・PR・比発電量を前月／前年同月／計画と比較したか</li>
+            <li>計画差異を「天候要因」と「性能要因」に分解したか</li>
+            <li>出力制御・系統停電による逸失発電量を別建てで集計したか</li>
+            <li>PCS・ストリングの停止履歴と逸失量、復旧までの時間を確認したか</li>
+            <li>日射計データの異常（ゼロ値・欠測・汚れ）がないか確認したか</li>
+            <li>PRの低下がある場合、温度補正後でも低下しているか確認したか</li>
+            <li>売電収入（FIT単価×発電量、FIPなら市場価格＋プレミアム）への影響額を算出したか</li>
+          </ul>
+        </section>
+
+        <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 数値は一般的な目安です。実案件では設計資料・契約・最新の一次情報を確認してください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

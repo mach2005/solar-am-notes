@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>O&amp;M（運転・保守）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーのO&amp;Mノート。電気保安と定期点検、遠隔監視とアラーム対応、IVカーブ・赤外線サーモ診断、除草・洗浄、PCS更新、盗難・災害対策、稼働率などのKPI管理を解説。">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-page="om">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>02 O&amp;M</span></nav>
+        <h1>O&amp;M（運転・保守）</h1>
+        <p>20年以上にわたって発電所を「止めない・壊さない・劣化させない」ための運用。AMはO&amp;M事業者を管理・評価する立場として全体像を押さえる。</p>
+        <div class="meta"><span class="tag">電気保安</span><span class="tag">遠隔監視</span><span class="tag">予防保全</span><span class="tag">稼働率</span></div>
+      </div>
+    </section>
+
+    <div class="article-wrap">
+      <details class="toc" id="toc" open>
+        <summary>Contents <span aria-hidden="true">▾</span></summary>
+        <ol id="toc-list"></ol>
+      </details>
+
+      <article class="prose">
+        <section id="overview">
+          <h2>O&amp;Mの全体像</h2>
+          <p>O&amp;M（Operation &amp; Maintenance）は、発電所の運転監視と保守点検の総称です。業務は大きく次のように分けられます。</p>
+          <div class="kp-grid">
+            <div class="kp"><b>電気保安</b><p>電気事業法に基づく保安規程に沿った点検。電気主任技術者（選任または外部委託）が担う。</p></div>
+            <div class="kp"><b>監視・駆けつけ</b><p>遠隔監視システムでの異常検知、現地出動、一次復旧。</p></div>
+            <div class="kp"><b>修繕・部品交換</b><p>故障機器の修理・交換、予備品管理、メーカー保証対応。</p></div>
+            <div class="kp"><b>サイト管理</b><p>除草、パネル洗浄、フェンス・排水路・法面の維持、防犯。</p></div>
+          </div>
+
+          <h3>保全の3つの考え方</h3>
+          <table>
+            <thead><tr><th>方式</th><th>内容</th><th>例</th></tr></thead>
+            <tbody>
+              <tr><td><b>事後保全（CM）</b></td><td>故障してから修理する</td><td>PCS停止後の部品交換</td></tr>
+              <tr><td><b>予防保全（PM / TBM）</b></td><td>時間・周期を決めて点検・交換する</td><td>年次点検、PCSファン・フィルタの定期交換</td></tr>
+              <tr><td><b>状態基準保全（CBM）</b></td><td>データで劣化兆候を捉えて手当てする</td><td>ストリング電流の低下傾向から不良モジュールを特定</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="inspection">
+          <h2>電気保安と定期点検</h2>
+          <p>出力50kW以上の太陽電池発電設備は<strong>自家用電気工作物</strong>に該当し、設置者は保安規程の届出と電気主任技術者の選任（または外部委託承認）が必要です。点検内容・頻度は保安規程で定めます。</p>
+          <table>
+            <thead><tr><th>点検種別</th><th>頻度の例</th><th>主な内容</th></tr></thead>
+            <tbody>
+              <tr><td><b>月次点検（巡視）</b></td><td>保安規程に定める頻度（毎月〜数か月ごと）</td><td>目視による外観点検、異音・異臭・発熱、計器指示値、PCS表示の確認</td></tr>
+              <tr><td><b>年次点検</b></td><td>年1回程度</td><td>停電を伴う精密点検。絶縁抵抗測定、保護継電器試験、接地抵抗測定、受変電設備の清掃・増し締め</td></tr>
+              <tr><td><b>臨時点検</b></td><td>事故・異常・災害時</td><td>台風・落雷・地震後の被害確認、事故原因調査</td></tr>
+            </tbody>
+          </table>
+          <div class="callout warn"><span class="ic">⚠️</span><div><b class="t">電気事故の報告義務</b><p>感電死傷・電気火災・波及事故（構内事故が系統に影響）などは、電気関係報告規則に基づく所轄産業保安監督部への報告対象になります。O&amp;M事業者と報告フローを事前に確認しておきましょう。</p></div></div>
+        </section>
+
+        <section id="monitoring">
+          <h2>遠隔監視とアラーム対応</h2>
+          <p>監視システムは、PCS・ストリング・受電点メーター・気象計などのデータを収集し、異常時にアラームを発報します。</p>
+          <div class="flow">
+            <div class="node">検知<small>アラーム発報</small></div><div class="arrow">→</div>
+            <div class="node">一次判断<small>遠隔で原因推定</small></div><div class="arrow">→</div>
+            <div class="node">出動<small>駆けつけ</small></div><div class="arrow">→</div>
+            <div class="node">復旧<small>リセット・交換</small></div><div class="arrow">→</div>
+            <div class="node">報告<small>原因・逸失量・再発防止</small></div>
+          </div>
+          <h3>よくあるアラームと原因</h3>
+          <table>
+            <thead><tr><th>アラーム</th><th>考えられる原因</th></tr></thead>
+            <tbody>
+              <tr><td>PCS停止・故障</td><td>内部部品の故障、過熱、冷却ファン不良、制御基板異常</td></tr>
+              <tr><td>系統異常による停止</td><td>系統側の電圧・周波数変動、停電で保護継電器が動作（多くは自動復帰）</td></tr>
+              <tr><td>地絡・絶縁低下</td><td>ケーブル損傷（小動物・草刈り機）、浸水、コネクタ劣化</td></tr>
+              <tr><td>ストリング電流低下</td><td>断線、ヒューズ切れ、モジュール破損、影・汚れ</td></tr>
+              <tr><td>通信断</td><td>通信機器・回線の不具合、停電。<b>発電は継続している場合もある</b></td></tr>
+            </tbody>
+          </table>
+          <div class="callout am"><span class="ic">💡</span><div><b class="t">AMの着眼点</b><p>同じアラームの繰り返しは根本原因が未解決のサイン。「件数」「逸失発電量」「復旧までの時間」を月次で集計し、O&amp;M事業者に再発防止策を求めます。</p></div></div>
+        </section>
+
+        <section id="diagnostics">
+          <h2>診断技術</h2>
+          <table>
+            <thead><tr><th>手法</th><th>わかること</th><th>ポイント</th></tr></thead>
+            <tbody>
+              <tr><td><b>IVカーブ測定</b></td><td>ストリングの電流−電圧特性。開放電圧（Voc）、短絡電流（Isc）、曲線因子（FF）の異常</td><td>断線・バイパスダイオード故障・劣化の特定に有効</td></tr>
+              <tr><td><b>赤外線サーモグラフィ</b></td><td>ホットスポット（局所発熱）、クラスタ故障、接続部の発熱</td><td>ドローン搭載で大規模サイトを短時間で点検可能。日射が十分な時間帯に実施</td></tr>
+              <tr><td><b>絶縁抵抗測定</b></td><td>直流回路・交流回路の絶縁状態</td><td>年次点検の基本項目。雨天後は値が下がりやすい</td></tr>
+              <tr><td><b>EL検査</b></td><td>セル内部のマイクロクラック（目に見えない割れ）</td><td>暗所・夜間で実施。輸送・施工時の損傷確認にも</td></tr>
+              <tr><td><b>ストリング監視データ分析</b></td><td>ストリング間の電流ばらつき</td><td>常時データで異常を早期発見（CBMの基本）</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="site">
+          <h2>植生管理・パネル洗浄</h2>
+          <h3>除草</h3>
+          <ul>
+            <li>雑草はパネルへの影、ケーブル損傷、火災、害虫・小動物の住処の原因になる。</li>
+            <li>生育期を中心に<strong>年2〜3回程度</strong>の除草が一般的だが、地域・植生により大きく異なる。</li>
+            <li>対策：機械除草、防草シート、砂利敷き、除草剤（周辺環境・近隣への配慮が必要）、羊の放牧など。</li>
+            <li>草刈り機によるケーブル・モジュール損傷、飛び石によるガラス割れに注意。</li>
+          </ul>
+          <h3>パネル洗浄</h3>
+          <ul>
+            <li>汚れによる損失と洗浄コストを比較して実施判断（費用対効果）。</li>
+            <li>鳥の糞の局所的な汚れはホットスポットの原因にもなる。</li>
+            <li>洗浄方法（水質・圧力・洗剤）はメーカー保証の条件を確認する。</li>
+          </ul>
+        </section>
+
+        <section id="lifecycle">
+          <h2>主要機器の寿命と更新</h2>
+          <table>
+            <thead><tr><th>機器</th><th>更新・交換の目安</th><th>備考</th></tr></thead>
+            <tbody>
+              <tr><td>PCS（パワコン）</td><td>10〜15年程度で主要部品交換または本体更新を検討</td><td>冷却ファン・電解コンデンサ・フィルタなど消耗部品は定期交換。メーカーの保守部品供給期限に注意</td></tr>
+              <tr><td>太陽電池モジュール</td><td>25〜30年以上</td><td>出力保証期間内の不具合はメーカー保証請求を検討</td></tr>
+              <tr><td>変圧器・受変電設備</td><td>20〜30年程度</td><td>油入変圧器は絶縁油の劣化診断</td></tr>
+              <tr><td>監視・通信機器</td><td>5〜10年程度</td><td>通信規格の終了（停波）による更新が発生することがある</td></tr>
+              <tr><td>架台・基礎</td><td>事業期間全体</td><td>腐食・ボルト緩み・基礎の沈下を定期確認</td></tr>
+            </tbody>
+          </table>
+          <div class="callout tip"><span class="ic">✅</span><div><b class="t">長期修繕計画</b><p>PCS更新のような大型支出は、事業計画上の修繕積立（リザーブ）で手当てします。更新時期・費用を長期修繕計画に落とし込み、キャッシュフローとの整合を確認します。</p></div></div>
+        </section>
+
+        <section id="security">
+          <h2>盗難・災害対策</h2>
+          <ul>
+            <li><strong>ケーブル盗難</strong>：近年、銅線ケーブルの盗難被害が各地で多発。長期停止と高額な復旧費用につながる。防犯カメラ、センサー、フェンス強化、警備会社との連携を検討。</li>
+            <li><strong>台風・強風</strong>：モジュール飛散、架台倒壊。設計風速と施工品質の確認。</li>
+            <li><strong>豪雨・土砂</strong>：法面崩壊、排水路の詰まり、浸水。斜面立地は特に重点管理。</li>
+            <li><strong>落雷</strong>：PCS・監視装置の故障。避雷器（SPD）の点検・交換。</li>
+            <li><strong>積雪</strong>：架台の変形・倒壊、パネル破損。</li>
+            <li>再エネ特措法の事業計画策定ガイドラインでは、<b>柵塀の設置や標識の掲示</b>などが求められている。</li>
+          </ul>
+        </section>
+
+        <section id="kpi">
+          <h2>KPIと報告</h2>
+          <div class="formula">
+            <span class="label">時間ベース稼働率</span>
+            <div class="eq">稼働率 = <span class="frac"><span>対象時間 − 停止時間</span><span>対象時間</span></span></div>
+            <p class="note">対象時間は「日射のある時間帯」に限定することが多い。PCS台数・容量で加重して算出する。</p>
+          </div>
+          <div class="formula">
+            <span class="label">エネルギーベース稼働率</span>
+            <div class="eq">稼働率 = <span class="frac"><span>実発電量</span><span>実発電量 + 停止による逸失発電量</span></span></div>
+            <p class="note">日射の多い時間の停止ほど重く評価される。売電収入への影響を直接反映できる。</p>
+          </div>
+          <table>
+            <thead><tr><th>KPI</th><th>見る目的</th></tr></thead>
+            <tbody>
+              <tr><td>稼働率（時間・エネルギー）</td><td>停止の少なさ。O&amp;M契約で保証値を設定することもある</td></tr>
+              <tr><td>PR（補正後）</td><td>設備性能の健全性</td></tr>
+              <tr><td>一次対応時間／復旧時間</td><td>駆けつけ・修理のスピード</td></tr>
+              <tr><td>点検計画の実施率</td><td>予防保全が計画通り行われているか</td></tr>
+              <tr><td>O&amp;Mコスト（円/kW）</td><td>コスト水準の他サイト比較</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="checklist">
+          <h2>AM視点のチェックリスト</h2>
+          <ul class="checklist">
+            <li>O&amp;M契約の業務範囲（含まれる作業・別途費用の作業）を把握しているか</li>
+            <li>保安規程・点検計画と、実際の点検報告書が一致しているか</li>
+            <li>アラームの件数・原因・逸失量・復旧時間を月次で確認しているか</li>
+            <li>予備品（PCS部品・ヒューズ・モジュール等）の在庫と保管場所を把握しているか</li>
+            <li>メーカー保証の期間・条件と、保証請求の手順を整理しているか</li>
+            <li>長期修繕計画と修繕積立の残高が整合しているか</li>
+            <li>防犯・災害対策（カメラ・フェンス・排水）と保険の補償範囲を確認しているか</li>
+          </ul>
+        </section>
+
+        <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 点検頻度・更新時期は一般的な目安です。実案件では保安規程・契約・メーカー資料を確認してください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FIT/FIP制度・電力市場・出力制御｜Solar AM Notes</title>
+  <meta name="description" content="FIT/FIP制度・電力市場・出力制御の学習ノート。制度の変遷、FIPプレミアムの仕組みと計算例、JEPXと計画値同時同量、出力制御ルール、廃棄等費用積立制度、地域共生の規律強化を整理。">
+  <meta name="theme-color" content="#0b0f17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-root="../" data-page="policy">
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Solar AM Notes ホーム">
+        <span class="brand-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1206" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+        <span>Solar AM Notes<small>MEGA SOLAR ASSET MANAGEMENT</small></span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+      <nav class="nav" id="site-nav" aria-label="メインナビゲーション"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>03 制度・市場</span></nav>
+        <h1>FIT/FIP・電力市場・出力制御</h1>
+        <p>売電収入の「ルール」を決める制度と市場の仕組み。収入の安定性とリスクを理解するための土台。</p>
+        <div class="meta"><span class="tag">再エネ特措法</span><span class="tag">FIT</span><span class="tag">FIP</span><span class="tag">JEPX</span><span class="tag">出力制御</span></div>
+      </div>
+    </section>
+
+    <div class="article-wrap">
+      <details class="toc" id="toc" open>
+        <summary>Contents <span aria-hidden="true">▾</span></summary>
+        <ol id="toc-list"></ol>
+      </details>
+
+      <article class="prose">
+        <section id="history">
+          <h2>制度の変遷</h2>
+          <table>
+            <thead><tr><th>時期</th><th>出来事</th></tr></thead>
+            <tbody>
+              <tr><td>2012年7月</td><td><b>FIT制度開始</b>（再エネ特措法）。事業用太陽光の導入が急拡大</td></tr>
+              <tr><td>2017年4月</td><td><b>改正FIT法施行</b>。「設備認定」から「事業計画認定」へ。事業計画策定ガイドラインの遵守、接続契約の締結が認定要件に。大規模太陽光の入札制度導入</td></tr>
+              <tr><td>2018年10月</td><td>九州エリアで離島以外では初の再エネ<b>出力制御</b>を実施</td></tr>
+              <tr><td>2022年4月</td><td><b>FIP制度開始</b>（エネルギー供給強靱化法による再エネ特措法改正）。長期未稼働案件の認定失効制度も導入</td></tr>
+              <tr><td>2022年7月</td><td><b>廃棄等費用積立制度</b>の積立開始（10kW以上の太陽光）</td></tr>
+              <tr><td>2024年4月</td><td>GX脱炭素電源法による改正。<b>地域への事前周知（説明会等）の認定要件化</b>、違反時の交付金の一時留保など規律を強化</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="fit">
+          <h2>FIT（固定価格買取制度）</h2>
+          <ul>
+            <li>再エネで発電した電気を、国が定めた<strong>調達価格</strong>で一定期間買い取ることを電気事業者に義務付ける制度。</li>
+            <li>10kW以上の太陽光の<strong>調達期間は20年間</strong>。</li>
+            <li>買取費用は電気の使用者が負担する<b>再エネ賦課金</b>で賄われる。</li>
+            <li>価格は認定の年度などで決まり、案件ごとに固定。初期案件ほど高単価。</li>
+          </ul>
+          <h3>10kW以上 太陽光の調達価格（税抜・主な年度）</h3>
+          <table>
+            <thead><tr><th>年度</th><th class="num">調達価格（円/kWh）</th><th>備考</th></tr></thead>
+            <tbody>
+              <tr><td>2012年度</td><td class="num">40</td><td>制度初年度</td></tr>
+              <tr><td>2013年度</td><td class="num">36</td><td></td></tr>
+              <tr><td>2014年度</td><td class="num">32</td><td></td></tr>
+              <tr><td>2015年度</td><td class="num">29 → 27</td><td>7月から27円</td></tr>
+              <tr><td>2016年度</td><td class="num">24</td><td></td></tr>
+              <tr><td>2017年度</td><td class="num">21</td><td>2,000kW以上は入札に移行</td></tr>
+            </tbody>
+          </table>
+          <div class="callout info"><span class="ic">ℹ️</span><div><b class="t">価格の決まり方は時期によって異なる</b><p>調達価格がいつの時点で確定するか（認定時・接続契約時など）、運転開始期限を過ぎた場合の価格・期間の扱いは、時期ごとにルールが変遷しています。個別案件は認定通知書と当時のルールで確認します。</p></div></div>
+        </section>
+
+        <section id="fip">
+          <h2>FIP（フィード・イン・プレミアム）</h2>
+          <p>FIPは、発電事業者が電気を<strong>市場などで自ら販売</strong>し、その売電収入に<strong>プレミアム（補助額）</strong>を上乗せする制度です。電力市場への統合を促すことが目的です。</p>
+          <div class="formula">
+            <span class="label">Formula</span>
+            <div class="eq">プレミアム単価 = 基準価格（FIP価格） − 参照価格</div>
+            <div class="eq">収入 = 市場等での売電収入 + プレミアム × 売電量</div>
+            <p class="note">参照価格は市場価格の平均などから算定され、一定期間ごとに更新される（非化石価値相当額やバランシングコストも考慮）。</p>
+          </div>
+          <div class="example">
+            <span class="label">例：基準価格 10円、参照価格 7円 → プレミアム 3円/kWh</span>
+            <ul>
+              <li>ある時間帯に市場で <b>9円</b> で売れた → 9 + 3 = <b>12円/kWh</b></li>
+              <li>ある時間帯に市場で <b>5円</b> でしか売れない → 5 + 3 = <b>8円/kWh</b></li>
+            </ul>
+            <p>プレミアムは平均的な市場価格を基準に決まるため、<b>市場価格が高い時間帯に売るほど有利</b>。蓄電池併設による時間シフトのインセンティブが生まれる。</p>
+          </div>
+          <h3>FITとの比較</h3>
+          <table>
+            <thead><tr><th>項目</th><th>FIT</th><th>FIP</th></tr></thead>
+            <tbody>
+              <tr><td>販売先</td><td>送配電事業者等が固定価格で買取</td><td>市場・小売電気事業者・相対契約などで自ら販売</td></tr>
+              <tr><td>収入の変動</td><td>ほぼ固定（発電量のみに依存）</td><td>市場価格に連動して変動</td></tr>
+              <tr><td>計画値同時同量（バランシング）</td><td>特例制度により原則不要</td><td>発電事業者側の責任（アグリゲーター活用が一般的）</td></tr>
+              <tr><td>環境価値（非化石価値）</td><td>発電事業者に帰属しない</td><td>発電事業者が販売可能</td></tr>
+            </tbody>
+          </table>
+          <div class="callout am"><span class="ic">💡</span><div><b class="t">AMの着眼点</b><p>FIP案件やFIT→FIP移行の検討では、市場価格の見通し、アグリゲーター手数料、インバランスリスク、出力制御時間帯の価格（市場価格が極めて低いコマではプレミアムが交付されないルールがある）を織り込んで収支を比較します。</p></div></div>
+        </section>
+
+        <section id="market">
+          <h2>電力市場の基礎</h2>
+          <table>
+            <thead><tr><th>市場</th><th>取引されるもの</th><th>ポイント</th></tr></thead>
+            <tbody>
+              <tr><td><b>スポット市場（JEPX）</b></td><td>翌日に受け渡す電力量</td><td>1日を30分×48コマに分け、コマごとに約定価格が決まる。昼間は太陽光の増加で価格が下がりやすい</td></tr>
+              <tr><td><b>時間前市場（JEPX）</b></td><td>当日の電力量</td><td>計画のずれを実需給の直前まで調整</td></tr>
+              <tr><td><b>非化石価値取引市場</b></td><td>非化石証書（環境価値）</td><td>小売事業者の非化石電源比率の達成や需要家のRE100対応に使われる</td></tr>
+              <tr><td><b>容量市場</b></td><td>将来の供給力（kW）</td><td>数年後の供給力を確保するための市場</td></tr>
+              <tr><td><b>需給調整市場</b></td><td>調整力（ΔkW）</td><td>一般送配電事業者が周波数調整等の調整力を調達</td></tr>
+            </tbody>
+          </table>
+          <h3>計画値同時同量とインバランス</h3>
+          <p>発電事業者（発電BG）は、30分ごとの発電計画を提出し、実績を計画に一致させる義務があります（<strong>計画値同時同量</strong>）。計画と実績のずれ（<strong>インバランス</strong>）は、インバランス料金で精算されます。太陽光は天候で出力が変わるため、発電予測の精度が収支に直結します。</p>
+        </section>
+
+        <section id="curtailment">
+          <h2>出力制御</h2>
+          <p>電気は需要と供給を常に一致させる必要があります。春・秋の晴れた休日など、需要が少なく太陽光の発電が多い時間帯は、供給が需要を上回るおそれがあるため、<strong>優先給電ルール</strong>に沿って発電を抑制します。</p>
+          <div class="flow">
+            <div class="node">① 火力の抑制<small>揚水発電の汲み上げ</small></div><div class="arrow">→</div>
+            <div class="node">② 連系線の活用<small>他エリアへ送電</small></div><div class="arrow">→</div>
+            <div class="node">③ バイオマスの抑制</div><div class="arrow">→</div>
+            <div class="node">④ 太陽光・風力の抑制</div>
+          </div>
+          <h3>出力制御のルール</h3>
+          <table>
+            <thead><tr><th>ルール</th><th>内容</th></tr></thead>
+            <tbody>
+              <tr><td><b>旧ルール（30日ルール）</b></td><td>年間30日まで無補償の出力制御（日単位）。初期の500kW以上の案件が対象</td></tr>
+              <tr><td><b>新ルール（360時間ルール）</b></td><td>年間360時間まで無補償（時間単位）。遠隔出力制御システムへの対応が必要</td></tr>
+              <tr><td><b>指定ルール（無制限・無補償）</b></td><td>上限なく無補償で出力制御を受ける。近年の新規接続は全国でこのルールが基本</td></tr>
+            </tbody>
+          </table>
+          <h3>オンライン制御とオフライン制御</h3>
+          <ul>
+            <li><b>オンライン</b>：遠隔で自動制御。当日の需給に応じて必要な時間・量だけ抑制できる。</li>
+            <li><b>オフライン</b>：前日の指示に基づき現地で手動停止。1日単位の停止となり逸失が大きくなりやすい。</li>
+            <li><b>オンライン代理制御</b>：オフライン事業者の制御をオンライン事業者が代わりに行い、経済的に精算する仕組み（2022年度から導入）。</li>
+          </ul>
+          <div class="callout warn"><span class="ic">⚠️</span><div><b class="t">収入リスクとして年々重要に</b><p>出力制御は九州エリアから始まり、その後ほかのエリアにも広がっています。事業計画の想定制御率と実績の乖離、制御ルールの適用状況、オンライン化の可否を定期的に確認しましょう。</p></div></div>
+        </section>
+
+        <section id="decommission">
+          <h2>廃棄等費用積立制度</h2>
+          <ul>
+            <li>事業終了後の太陽光パネルの放置・不法投棄を防ぐため、<strong>撤去・廃棄費用の積立を義務化</strong>。</li>
+            <li>対象：10kW以上の太陽光のFIT/FIP認定案件。</li>
+            <li>積立期間：<b>調達期間（交付期間）終了前の10年間</b>。</li>
+            <li>原則は<b>外部積立</b>（交付金・買取代金から差し引かれ、電力広域的運営推進機関に積み立て）。一定の要件を満たす場合は内部積立も可能。</li>
+            <li>取り戻しは、廃棄等の実施時など要件を満たした場合に可能。</li>
+          </ul>
+          <div class="callout tip"><span class="ic">✅</span><div><b class="t">キャッシュフローへの影響</b><p>積立期間中は手取り収入が減少します。制度初期に運転開始した案件はすでに積立期間に入っているものが多いため、各案件の積立開始時期と事業計画・DSCRへの反映を確認します。</p></div></div>
+        </section>
+
+        <section id="discipline">
+          <h2>規律強化と地域共生</h2>
+          <ul>
+            <li><b>認定失効制度</b>：運転開始期限を過ぎた長期未稼働案件について、一定期間経過で認定が失効する。</li>
+            <li><b>地域への事前周知</b>：説明会の開催など、周辺地域への事前周知が認定要件に（2024年4月〜）。</li>
+            <li><b>交付金の一時留保</b>：関係法令違反などがある場合、FIT/FIPの交付金を一時的に留保し、解消されれば交付する仕組み。</li>
+            <li><b>事業譲渡時の手続き</b>：認定事業者の変更にも説明会等が求められるケースがあり、M&amp;A・セカンダリー取引で要確認。</li>
+          </ul>
+        </section>
+
+        <section id="checklist">
+          <h2>AM視点のチェックリスト</h2>
+          <ul class="checklist">
+            <li>認定ID・調達価格・調達期間の終了日・出力制御ルールを一覧化しているか</li>
+            <li>廃棄等費用積立の開始時期と積立額を事業計画に反映しているか</li>
+            <li>出力制御の実績（回数・時間・逸失量）を想定値と比較しているか</li>
+            <li>事業計画策定ガイドライン（標識・柵塀・保守点検等）を遵守しているか</li>
+            <li>FIP移行や卒FIT後の売電戦略（相対PPA・市場売電）を検討しているか</li>
+            <li>制度改正情報（資源エネルギー庁の審議会資料など）を定期的にウォッチしているか</li>
+          </ul>
+        </section>
+
+        <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© Solar AM Notes — 個人の学習用ノート</p>
+      <p>※ 制度は頻繁に改正されます。必ず資源エネルギー庁「なっとく！再生可能エネルギー」等の一次情報で最新内容を確認してください。</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
