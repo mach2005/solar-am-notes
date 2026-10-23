@@ -10,6 +10,7 @@
 
   // ---- ページ一覧（追加・並べ替えはここだけ編集すればOK） ----
   var PAGES = [
+    { id: "news",        file: "notes/news.html",        label: "最新ニュース" },
     { id: "performance", file: "notes/performance.html", label: "発電性能" },
     { id: "om",          file: "notes/om.html",          label: "O&M" },
     { id: "policy",      file: "notes/policy.html",      label: "制度・市場" },
@@ -181,5 +182,92 @@
       });
     });
     apply();
+  }
+
+  // ---- 最新ニュース：非同期読み込み・検索・カテゴリ絞り込み ----
+  var newsContainer = document.getElementById("news-cards");
+  if (newsContainer) {
+    var newsSearch = document.getElementById("news-search");
+    var newsChips = document.querySelectorAll(".news-chip");
+    var newsCount = document.getElementById("news-count");
+    var newsUpdated = document.getElementById("news-updated");
+    var newsEmpty = document.getElementById("news-empty");
+    var newsItems = [];
+    var currentNewsCat = "all";
+
+    var catLabels = {
+      meti: "経産省・エネ庁",
+      policy: "制度・法改正",
+      market: "市場・出力制御",
+      om_tech: "O&M・技術",
+      industry: "業界動向"
+    };
+
+    function escapeHtml(s) {
+      if (!s) return "";
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function renderNews() {
+      var kw = newsSearch ? newsSearch.value.trim().toLowerCase() : "";
+      var filtered = newsItems.filter(function (it) {
+        var matchCat = currentNewsCat === "all" || it.category === currentNewsCat;
+        var text = (it.title + " " + it.summary + " " + it.source).toLowerCase();
+        var matchKw = !kw || text.indexOf(kw) !== -1;
+        return matchCat && matchKw;
+      });
+
+      if (newsCount) newsCount.textContent = filtered.length + " 件の記事";
+      if (newsEmpty) newsEmpty.style.display = filtered.length ? "none" : "block";
+
+      var html = "";
+      filtered.forEach(function (it) {
+        var catName = catLabels[it.category] || "情報";
+        var featTag = it.featured ? '<span class="news-featured-tag">★ 注目トピック</span>' : '';
+        var linkTag = it.link
+          ? '<a href="' + escapeHtml(it.link) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(it.title) +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>'
+          : escapeHtml(it.title);
+
+        html += '<article class="news-card">' +
+                  '<div class="news-meta-row">' +
+                    featTag +
+                    '<span class="news-cat cat-' + escapeHtml(it.category) + '">' + escapeHtml(catName) + '</span>' +
+                    '<span class="news-source">' + escapeHtml(it.source) + '</span>' +
+                    '<span class="news-date">' + escapeHtml(it.date) + '</span>' +
+                  '</div>' +
+                  '<h3 class="news-title">' + linkTag + '</h3>' +
+                  (it.summary ? '<p class="news-summary">' + escapeHtml(it.summary) + '</p>' : '') +
+                '</article>';
+      });
+      newsContainer.innerHTML = html;
+    }
+
+    fetch(root + "data/news.json")
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.updated_at && newsUpdated) {
+          newsUpdated.textContent = "最終更新: " + data.updated_at;
+        }
+        newsItems = data.items || [];
+        renderNews();
+      })
+      .catch(function (err) {
+        console.warn("ニュース読み込みエラー:", err);
+        newsContainer.innerHTML = '<p style="color:var(--text-sub);padding:20px;">最新ニュースの取得中またはオフラインです。上の公的機関リンク集から最新情報をご確認いただけます。</p>';
+      });
+
+    if (newsSearch) newsSearch.addEventListener("input", renderNews);
+    newsChips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        newsChips.forEach(function (x) { x.classList.remove("active"); });
+        c.classList.add("active");
+        currentNewsCat = c.getAttribute("data-filter");
+        renderNews();
+      });
+    });
   }
 })();
