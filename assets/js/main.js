@@ -14,7 +14,7 @@
     { id: "performance", file: "notes/performance.html", label: "発電性能" },
     { id: "om",          file: "notes/om.html",          label: "O&M" },
     { id: "policy",      file: "notes/policy.html",      label: "制度・市場" },
-    { id: "finance",     file: "notes/finance.html",     label: "ファイナンス" },
+    { id: "finance",     file: "notes/finance.html",     label: "金融・ファイナンス" },
     { id: "electrical",  file: "notes/electrical.html",  label: "電気設備" },
     { id: "legal",       file: "notes/legal.html",       label: "法令・契約" },
     { id: "glossary",    file: "notes/glossary.html",    label: "用語集" }

@@ -465,6 +465,53 @@ td.num, th.num { text-align: right; font-family: var(--font-en); }
 .diagram-step strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 2px; }
 .diagram-step p { margin: 0; color: var(--text-sub); line-height: 1.6; }
 
+/* Financial Simulator */
+.sim-container {
+  margin: 24px 0; padding: 26px; border-radius: var(--radius);
+  background: linear-gradient(180deg, hsl(222 28% 14%), hsl(222 30% 9%));
+  border: 1px solid hsl(42 96% 60% / 0.35);
+  box-shadow: 0 16px 40px -15px hsl(222 60% 2% / 0.8);
+}
+.sim-head { margin-bottom: 20px; }
+.sim-head h3 { margin: 0 0 6px; font-size: 19px; color: var(--gold); display: flex; align-items: center; gap: 8px; }
+.sim-head p { margin: 0; font-size: 13.5px; color: var(--text-sub); }
+.sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
+@media (max-width: 820px) { .sim-grid { grid-template-columns: 1fr; } }
+.sim-inputs { display: grid; gap: 14px; }
+.sim-group { display: flex; flex-direction: column; gap: 6px; }
+.sim-label-row { display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; color: var(--text-sub); }
+.sim-val { font-family: var(--font-mono); font-weight: 700; color: var(--gold); font-size: 15px; }
+.sim-range {
+  width: 100%; height: 6px; border-radius: 3px;
+  background: var(--surface-2); outline: none; -webkit-appearance: none; appearance: none;
+  cursor: pointer;
+}
+.sim-range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--grad-sun); cursor: pointer;
+  box-shadow: 0 0 8px hsl(34 98% 58% / 0.6);
+}
+.sim-results {
+  display: grid; gap: 12px; align-content: start;
+  padding: 20px; border-radius: var(--radius-sm);
+  background: hsl(222 30% 7% / 0.85); border: 1px solid var(--border-soft);
+}
+.sim-res-row { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1px solid var(--border-soft); font-size: 13.5px; }
+.sim-res-row.highlight { padding: 12px 0 6px; border-bottom: 0; }
+.sim-res-row b { font-family: var(--font-mono); font-size: 16px; color: var(--text); }
+.sim-dscr-box {
+  margin-top: 8px; padding: 16px; border-radius: 12px;
+  background: hsl(222 24% 12%); border: 1.5px solid var(--border);
+  text-align: center;
+}
+.sim-dscr-label { font-size: 12px; color: var(--text-sub); letter-spacing: .1em; text-transform: uppercase; font-family: var(--font-en); }
+.sim-dscr-value { font-family: var(--font-mono); font-size: 38px; font-weight: 800; line-height: 1.2; margin: 4px 0; }
+.sim-dscr-status { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 999px; }
+.sim-dscr-status.safe { background: hsl(152 60% 50% / 0.15); color: var(--green); border: 1px solid hsl(152 60% 50% / 0.3); }
+.sim-dscr-status.warn { background: hsl(42 96% 60% / 0.15); color: var(--gold); border: 1px solid hsl(42 96% 60% / 0.3); }
+.sim-dscr-status.danger { background: hsl(2 80% 62% / 0.15); color: var(--red); border: 1px solid hsl(2 80% 62% / 0.3); }
+
 /* Interactive tabs / comparisons */
 .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
 @media (max-width: 640px) { .compare-grid { grid-template-columns: 1fr; } }

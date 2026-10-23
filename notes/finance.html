@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>ファイナンス（SPV・IRR・DSCR）｜Solar AM Notes</title>
-  <meta name="description" content="メガソーラーのファイナンス学習ノート。SPV・GK-TKスキーム、プロジェクトファイナンス、収支構造、キャッシュウォーターフォール、IRR・NPV・DSCR・LLCRの計算、リザーブ口座、減価償却と税務、資産評価を解説。">
+  <title>金融・ファイナンス（SPV・DSCR・IRR・金融シミュレーター）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラーのアセットマネジメントにおける金融実務。GK-TKスキーム、プロジェクトファイナンス、キャッシュウォーターフォール、コベナンツ管理、リアルタイムDSCR・IRRシミュレーターを完全網羅。">
   <meta name="theme-color" content="#0b0f17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body data-root="../" data-page="finance">
@@ -29,10 +29,13 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>04 ファイナンス</span></nav>
-        <h1>ファイナンス</h1>
-        <p>発電所は「20年間キャッシュを生む金融資産」。投資家・レンダーの言葉で事業を語れるようになるためのノート。</p>
-        <div class="meta"><span class="tag">SPV</span><span class="tag">GK-TK</span><span class="tag">プロジェクトファイナンス</span><span class="tag">IRR</span><span class="tag">DSCR</span></div>
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>04 金融・ファイナンス</span></nav>
+        <h1>金融・ファイナンス（実践ノート）</h1>
+        <p>発電所を「20年間キャッシュを生み続ける金融資産」としてマネジメントする。投資家（エクイティ）と銀行（レンダー）双方の言葉で事業価値を語るための金融実務。</p>
+        <div class="meta">
+          <span class="tag" style="border-color:var(--gold);color:var(--gold)">シミュレーター搭載</span>
+          <span class="tag">SPV構造</span><span class="tag">GK-TK</span><span class="tag">プロジェクトファイナンス</span><span class="tag">ウォーターフォール</span><span class="tag">DSCR管理</span>
+        </div>
       </div>
     </section>
 
@@ -43,157 +46,299 @@
       </details>
 
       <article class="prose">
+
+        <!-- ===== SECTION 1: 金融ストラクチャー全体図 ===== -->
         <section id="structure">
-          <h2>事業ストラクチャー（SPV・GK-TK）</h2>
-          <p>メガソーラーは、発電事業だけを行う<strong>SPV（特別目的会社）</strong>を設立して保有するのが一般的です。事業のリスクとキャッシュフローを他の事業から切り離す（倒産隔離）ことで、資金調達をしやすくします。</p>
-          <div class="flow">
-            <div class="node">一般社団法人<small>GKの持分を保有（倒産隔離）</small></div><div class="arrow">→</div>
-            <div class="node">合同会社（GK）<small>発電事業者・SPV</small></div><div class="arrow">←</div>
-            <div class="node">投資家<small>匿名組合（TK）出資</small></div>
+          <h2>金融ストラクチャーと資金の流れ</h2>
+          <p>メガソーラー事業は、巨額の初期投資（数十億〜数百億円）を<strong>自己資金（出資金：エクイティ）</strong>と<strong>銀行借入（融資：デット）</strong>を組み合わせて調達し、20年の売電収入から元利金を返済して残余利益を出資者に分配する金融ビジネスです。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> 太陽光プロジェクトファイナンスの立体相関図</h4>
+            <p class="desc">SPVを中心に、投資家出資・銀行融資・売電収入・キャッシュウォーターフォールが連動する仕組み</p>
+            <div class="diagram-figure">
+              <img src="../assets/img/finance_structure.jpg" alt="太陽光プロジェクトファイナンスの立体相関図（SPV、投資家、銀行、発電所、ウォーターフォール）" loading="lazy">
+            </div>
+
+            <div class="diagram-steps">
+              <div class="diagram-step">
+                <b>ACTOR 01 【事業主体】</b>
+                <strong>SPV（合同会社 / GK）</strong>
+                <p>発電事業のみを行う箱（資産保有主体）。親会社の倒産リスクから資産を隔離する「倒産隔離」を実現。</p>
+              </div>
+              <div class="diagram-step">
+                <b>ACTOR 02 【出資者】</b>
+                <strong>TK投資家（エクイティ）</strong>
+                <p>匿名組合契約により事業資金の10〜25%を出資。事業リスクを最も負う分、高いリターン（IRR）を狙う。</p>
+              </div>
+              <div class="diagram-step">
+                <b>ACTOR 03 【融資団】</b>
+                <strong>シニアレンダー（銀行）</strong>
+                <p>資金の75〜90%をプロジェクトファイナンスで融資。発電資産や売電債権に第一順位の担保を設定。</p>
+              </div>
+              <div class="diagram-step">
+                <b>ACTOR 04 【運用受託】</b>
+                <strong>AM会社（あなた）</strong>
+                <p>SPVから委託を受け、予算策定・O&amp;M管理・決算・レンダー報告・コベナンツ遵守・投資家配当を一括統括。</p>
+              </div>
+            </div>
           </div>
-          <ul>
-            <li><b>GK-TKスキーム</b>：SPVを合同会社（GK）とし、投資家は匿名組合（TK）契約で出資。一定の要件のもとで利益をTK投資家に分配でき、SPV段階での課税を抑えられる。</li>
-            <li><b>AM（アセットマネージャー）</b>：SPVからの委託（AM契約）で、O&amp;M管理、予算・決算、レポーティング、契約管理、レンダー対応などを担う。</li>
-            <li>他に、上場インフラファンド（投資法人）や事業会社の自社保有など、保有形態は多様。</li>
-          </ul>
         </section>
 
-        <section id="pf">
-          <h2>プロジェクトファイナンス</h2>
-          <p>スポンサー（出資者）の信用ではなく、<strong>事業そのもののキャッシュフローを返済原資</strong>とする融資です。スポンサーへの遡求が限定される（ノンリコース／リミテッドリコース）のが特徴です。</p>
+        <!-- ===== SECTION 2: GK-TKスキーム図解 ===== -->
+        <section id="gktk-scheme">
+          <h2>GK-TKスキームの法的・税務的仕組み</h2>
+          <p>日本のインフラファンドや再エネ投資で最も広く使われるのが<strong>「GK-TKスキーム（合同会社−匿名組合）」</strong>です。なぜ株式会社ではなくこの形が選ばれるのか、その理由と関係性を図解します。</p>
+
+          <div class="diagram-card">
+            <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> GK-TK 関係相関図（契約と資金の流れ）</h4>
+            <p class="desc">「倒産隔離」と「導管性（二重課税の回避）」を両立させる洗練された仕組み</p>
+
+            <svg class="svg-diagram" viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg">
+              <style>
+                .s-box { rx: 8; stroke-width: 1.5; }
+                .s-title { font-family: sans-serif; font-size: 13px; font-weight: 700; fill: #fff; }
+                .s-txt { font-family: sans-serif; font-size: 11px; fill: hsl(220, 12%, 75%); }
+                .s-line { stroke-width: 2; fill: none; }
+              </style>
+              <defs>
+                <marker id="m-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="hsl(42, 96%, 60%)"/>
+                </marker>
+                <marker id="m-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="hsl(205, 85%, 62%)"/>
+                </marker>
+              </defs>
+
+              <!-- 一般社団法人 (左上) -->
+              <g transform="translate(30, 20)">
+                <rect class="s-box" width="180" height="75" fill="hsl(222, 24%, 16%)" stroke="hsl(220, 20%, 40%)"/>
+                <text x="90" y="26" text-anchor="middle" class="s-title">一般社団法人</text>
+                <text x="90" y="46" text-anchor="middle" class="s-txt">（親族・無関係者）</text>
+                <text x="90" y="62" text-anchor="middle" class="s-txt" fill="hsl(42,96%,60%)">倒産隔離（株主破産を防ぐ）</text>
+              </g>
+
+              <!-- 矢印: 社団 -> GK持分 -->
+              <path class="s-line" stroke="hsl(220, 20%, 40%)" d="M 120 95 L 120 145" marker-end="url(#m-gold)"/>
+              <text x="130" y="125" font-size="10" fill="hsl(220, 12%, 68%)">100%社員権出資</text>
+
+              <!-- 合同会社 (SPV) (中央左) -->
+              <g transform="translate(30, 145)">
+                <rect class="s-box" width="200" height="150" fill="hsl(222, 28%, 20%)" stroke="hsl(42, 96%, 60%)" stroke-width="2"/>
+                <text x="100" y="28" text-anchor="middle" class="s-title" fill="hsl(42, 96%, 60%)" font-size="15">合同会社（GK / SPV）</text>
+                <text x="15" y="55" class="s-txt">・発電事業の主体（FIT/FIP認定）</text>
+                <text x="15" y="75" class="s-txt">・太陽光資産・地上権を保有</text>
+                <text x="15" y="95" class="s-txt">・売電債権の帰属主体</text>
+                <text x="15" y="118" class="s-txt" fill="hsl(152,60%,60%)">★ TK分配金を損金算入でき、</text>
+                <text x="15" y="134" class="s-txt" fill="hsl(152,60%,60%)">　法人税の二重課税を回避！</text>
+              </g>
+
+              <!-- TK投資家 (右上) -->
+              <g transform="translate(480, 20)">
+                <rect class="s-box" width="230" height="85" fill="hsl(222, 26%, 18%)" stroke="hsl(42, 96%, 60%)"/>
+                <text x="115" y="26" text-anchor="middle" class="s-title" fill="hsl(42, 96%, 60%)">TK投資家（出資者）</text>
+                <text x="115" y="46" text-anchor="middle" class="s-txt">インフラファンド / 事業会社 / 機関投資家</text>
+                <text x="115" y="66" text-anchor="middle" class="s-txt" fill="hsl(34,98%,58%)">匿名組合（TK）契約を出資</text>
+              </g>
+
+              <!-- 矢印: TK出資 & 分配金 -->
+              <path class="s-line" stroke="hsl(42, 96%, 60%)" d="M 480 80 L 230 180" marker-end="url(#m-gold)"/>
+              <text x="330" y="120" font-size="11" fill="hsl(42, 96%, 60%)" font-weight="700">① TK出資（自己資本）</text>
+              <text x="330" y="136" font-size="11" fill="hsl(152, 60%, 60%)" font-weight="700">② 余剰CFの分配（配当）</text>
+
+              <!-- レンダー (右中央) -->
+              <g transform="translate(480, 130)">
+                <rect class="s-box" width="230" height="75" fill="hsl(222, 26%, 18%)" stroke="hsl(205, 85%, 62%)"/>
+                <text x="115" y="26" text-anchor="middle" class="s-title" fill="hsl(205, 85%, 62%)">レンダー（銀行協調融資団）</text>
+                <text x="115" y="46" text-anchor="middle" class="s-txt">メガバンク・地銀・信託銀行</text>
+                <text x="115" y="64" text-anchor="middle" class="s-txt">プロジェクトファイナンス融資契約</text>
+              </g>
+
+              <!-- 矢印: シニアローン -->
+              <path class="s-line" stroke="hsl(205, 85%, 62%)" d="M 480 170 L 230 210" marker-end="url(#m-blue)"/>
+              <text x="320" y="180" font-size="11" fill="hsl(205, 85%, 62%)" font-weight="700">① プロジェクト融資</text>
+              <text x="320" y="196" font-size="11" fill="hsl(220, 12%, 75%)">② 元利金返済（P&amp;I）</text>
+
+              <!-- AM会社 (右下) -->
+              <g transform="translate(480, 230)">
+                <rect class="s-box" width="230" height="70" fill="hsl(222, 26%, 18%)" stroke="hsl(34, 98%, 58%)"/>
+                <text x="115" y="26" text-anchor="middle" class="s-title" fill="hsl(34, 98%, 58%)">アセットマネージャー（AM）</text>
+                <text x="115" y="46" text-anchor="middle" class="s-txt">AM業務委託契約（運用・管理・報告）</text>
+                <text x="115" y="62" text-anchor="middle" class="s-txt" fill="hsl(34,98%,58%)">資産価値の維持向上・コベナンツ管理</text>
+              </g>
+
+              <!-- 矢印: AM委託 -->
+              <path class="s-line" stroke="hsl(34, 98%, 58%)" d="M 480 265 L 230 250" marker-end="url(#m-gold)"/>
+            </svg>
+          </div>
+        </section>
+
+        <!-- ===== SECTION 3: キャッシュウォーターフォール ===== -->
+        <section id="waterfall-logic">
+          <h2>キャッシュウォーターフォール（資金分配の優先順位）</h2>
+          <p>プロジェクトファイナンスの基本ルールは、<strong>「お金を使う順番を融資契約で完全に縛る」</strong>ことです。売電収入はSPVの自由にはならず、以下のステップ順に機械的に配分されます。</p>
+
+          <div class="waterfall">
+            <div class="wf-row">
+              <span style="font-weight:700;color:var(--gold)">① 売電収入（Top Line）</span>
+              <div class="wf-bar" style="width:100%;background:var(--grad-sun)">総収入 100%（FIT/FIP売電代金）</div>
+            </div>
+            <div class="wf-row">
+              <span style="color:hsl(205 85% 62%)">② 運営費用（OPEX）</span>
+              <div class="wf-bar" style="width:25%;background:hsl(205 85% 62%)">最優先：O&amp;M費、AM報酬、保険料、土地代、固定資産税</div>
+            </div>
+            <div class="wf-row">
+              <span style="color:hsl(270 70% 75%)">③ シニア元利金（P&amp;I）</span>
+              <div class="wf-bar" style="width:50%;background:hsl(270 60% 70%)">第2優先：銀行への元金返済＋借入利息</div>
+            </div>
+            <div class="wf-row">
+              <span style="color:var(--green)">④ リザーブ積立</span>
+              <div class="wf-bar" style="width:10%;min-width:70px;background:hsl(152 60% 50%)">第3優先：DSRA・MRA・廃棄等積立</div>
+            </div>
+            <div class="wf-row">
+              <span style="color:var(--orange)">⑤ 投資家分配（残余）</span>
+              <div class="wf-bar" style="width:15%;min-width:60px;background:var(--gold)">最後：残った利益だけが配当に回る</div>
+            </div>
+          </div>
+
+          <div class="callout warn"><span class="ic">⚠️</span><div><b class="t">配当ロックアップ（Distribution Lock-up）の恐怖</b><p>日照不足や機器故障、出力制御によって発電量が想定より落ち、DSCRが契約上の基準値（例：1.15倍）を下回ると、<strong>投資家への配当は即座にストップ</strong>され、資金は口座内に強制留保されます。AMにとって「ロックアップを起こさない運用」は至上命題です。</p></div></div>
+        </section>
+
+        <!-- ===== SECTION 4: リアルタイム金融シミュレーター ===== -->
+        <section id="simulator">
+          <h2>【実務ツール】収支・DSCR・IRR リアルタイムシミュレーター</h2>
+          <p>発電規模、売電単価、借入条件、発電量の変動を入力すると、<strong>年間売電収入、返済額、DSCR（安全度）、投資家配当利回り</strong>を瞬時に計算します。現場や会議での試算にご活用ください。</p>
+
+          <div class="sim-container">
+            <div class="sim-head">
+              <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg> Solar Financial Modeling Simulator</h3>
+              <p>スライダーを動かすと、リアルタイムで収支と財務指標が再計算されます。</p>
+            </div>
+
+            <div class="sim-grid">
+              <!-- 入力側 -->
+              <div class="sim-inputs">
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>① パネル容量（DC容量）</span><span class="sim-val" id="val-cap">2.0 MW</span></div>
+                  <input class="sim-range" id="input-cap" type="range" min="0.5" max="20" step="0.1" value="2.0">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>② 年間比発電量（天候・立地）</span><span class="sim-val" id="val-yield">1,250 kWh/kWp</span></div>
+                  <input class="sim-range" id="input-yield" type="range" min="900" max="1500" step="10" value="1250">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>③ 売電単価（FIT/FIP）</span><span class="sim-val" id="val-tariff">32 円/kWh</span></div>
+                  <input class="sim-range" id="input-tariff" type="range" min="8" max="40" step="1" value="32">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>④ 年間OPEX（O&amp;M・AM・保険・地代）</span><span class="sim-val" id="val-opex">1,500 万円/年</span></div>
+                  <input class="sim-range" id="input-opex" type="range" min="200" max="5000" step="50" value="1500">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>⑤ 総事業費（CAPEX）</span><span class="sim-val" id="val-capex">5.0 億円</span></div>
+                  <input class="sim-range" id="input-capex" type="range" min="1.0" max="50" step="0.5" value="5.0">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>⑥ 借入比率（LTV / レバレッジ）</span><span class="sim-val" id="val-ltv">80 %</span></div>
+                  <input class="sim-range" id="input-ltv" type="range" min="50" max="95" step="5" value="80">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>⑦ 借入金利（年利）</span><span class="sim-val" id="val-rate">1.5 %</span></div>
+                  <input class="sim-range" id="input-rate" type="range" min="0.5" max="4.0" step="0.1" value="1.5">
+                </div>
+
+                <div class="sim-group">
+                  <div class="sim-label-row"><span>⑧ 融資返済期間</span><span class="sim-val" id="val-tenor">18 年</span></div>
+                  <input class="sim-range" id="input-tenor" type="range" min="10" max="20" step="1" value="18">
+                </div>
+              </div>
+
+              <!-- 出力側 -->
+              <div class="sim-results">
+                <div class="sim-res-row"><span>年間予想発電量</span><b id="res-gen">2,500,000 kWh</b></div>
+                <div class="sim-res-row"><span>年間売電収入</span><b id="res-rev">8,000 万円</b></div>
+                <div class="sim-res-row"><span>年間EBITDA（営業CF）</span><b id="res-ebitda" style="color:var(--gold)">6,500 万円</b></div>
+                <div class="sim-res-row"><span>銀行借入額 / 自己資金（出資）</span><b id="res-cap">4.0億 / 1.0億円</b></div>
+                <div class="sim-res-row"><span>年間元利金返済額（P&amp;I）</span><b id="res-debt">2,544 万円</b></div>
+                <div class="sim-res-row"><span>投資家への年間配当可能額</span><b id="res-div" style="color:var(--green)">3,956 万円</b></div>
+                <div class="sim-res-row highlight"><span>初年度配当利回り（CoC）</span><b id="res-coc" style="color:var(--green);font-size:18px">39.6 %</b></div>
+
+                <!-- DSCR判定ボックス -->
+                <div class="sim-dscr-box" id="dscr-card">
+                  <span class="sim-dscr-label">元利金返済カバー率（DSCR）</span>
+                  <div class="sim-dscr-value" id="res-dscr">2.55 倍</div>
+                  <span class="sim-dscr-status safe" id="res-dscr-tag">優良（レンダー安全圏）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== SECTION 5: コベナンツ実務 ===== -->
+        <section id="covenants">
+          <h2>コベナンツ管理とレンダー対応実務</h2>
+          <p>プロジェクトファイナンス融資契約（ローンアグリーメント）には、事業者が守るべき約束事（コベナンツ）が数十条にわたり定められています。</p>
+
+          <table>
+            <thead><tr><th>コベナンツ分類</th><th>主な約束事項</th><th>違反時のペナルティ</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>財務制限条項（DSCR）</b></td>
+                <td>単年度および過去実績のDSCRが一定水準（例：1.10〜1.15倍）を下回らないこと。</td>
+                <td>配当の停止（ロックアップ）、積立金の追加拠出、期限の利益喪失（デフォルト）。</td>
+              </tr>
+              <tr>
+                <td><b>追加借入・担保の禁止</b></td>
+                <td>レンダーの事前書面承諾なく、新たな借入や第三者への担保提供を行ってはならない。</td>
+                <td>契約違反による一括繰り上げ返済請求の事由。</td>
+              </tr>
+              <tr>
+                <td><b>主要契約の維持・変更禁止</b></td>
+                <td>EPC契約、O&amp;M契約、地上権契約、保険契約を一方的に変更・解除してはならない。</td>
+                <td>契約上の地位の回復請求、是正要求。</td>
+              </tr>
+              <tr>
+                <td><b>報告義務（情報提供）</b></td>
+                <td>月次発電レポート（翌月15日等）、四半期財務諸表、年次監査報告書、事故発生時の即時通知。</td>
+                <td>怠るとコベナンツ違反通知が発行され、融資関係が悪化。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ===== SECTION 6: インフラファンドと税務 ===== -->
+        <section id="funds-tax">
+          <h2>インフラファンド・税務とバリュエーション</h2>
           <div class="kp-grid">
-            <div class="kp"><b>担保パッケージ</b><p>発電設備、売電債権、預金口座、SPVの持分・TK出資持分、主要契約上の地位など</p></div>
-            <div class="kp"><b>コベナンツ</b><p>財務制限条項（DSCR等）、報告義務、事前承諾事項（契約変更・追加借入など）</p></div>
-            <div class="kp"><b>ステップイン</b><p>事業が悪化した場合にレンダーが契約上の地位を引き継ぎ、事業を継続させる権利</p></div>
-            <div class="kp"><b>デューデリジェンス</b><p>技術（TA）、法務、保険、会計・税務、モデルの各DDで事業リスクを評価</p></div>
+            <div class="kp">
+              <b>利益超過分配（減価償却の活用）</b>
+              <p>太陽光設備は巨額の減価償却費（非現金支出）が発生します。会計上の利益は小さくても手元キャッシュは豊富に残るため、出資の払戻し（利益超過分配）として非課税で投資家に還元できます。</p>
+            </div>
+            <div class="kp">
+              <b>導管性要件（パス・スルー）</b>
+              <p>上場インフラファンド（投資法人）やGK-TKスキームでは、配当可能利益の90%超を分配するなどの要件を満たすことで、法人税を実質非課税にして投資家へパス・スルーします。</p>
+            </div>
+            <div class="kp">
+              <b>DCF法による資産査定（価格決定）</b>
+              <p>セカンダリー市場での売買価格は「将来20年の純キャッシュフローを割引率（WACC: 4〜6%等）で割り引いた現在価値」で決まります。PR改善やOPEX削減は売却価格（バリュエーション）を直接引き上げます。</p>
+            </div>
           </div>
         </section>
 
-        <section id="pl">
-          <h2>収支構造</h2>
-          <div class="example">
-            <span class="label">売電収入の概算（FIT案件の例）</span>
-            <p>DC 2,000kWp × 比発電量 1,250kWh/kWp ＝ 年間 2,500,000kWh<br>2,500,000kWh × 36円/kWh ＝ <b>年間 約9,000万円</b>（税抜）</p>
-          </div>
-          <table>
-            <thead><tr><th>区分</th><th>主な項目</th></tr></thead>
-            <tbody>
-              <tr><td><b>収入</b></td><td>売電収入（FIT：調達価格×発電量／FIP：市場売電収入＋プレミアム）、保険金収入（事故時）</td></tr>
-              <tr><td><b>運営費用（OPEX）</b></td><td>O&amp;M費、電気主任技術者費用、AM報酬、保険料、土地賃借料・地上権料、固定資産税（償却資産税）、除草・修繕費、通信・監視費、SPV管理費（会計・税務・事務）</td></tr>
-              <tr><td><b>金融費用</b></td><td>借入利息、元本返済、エージェントフィー</td></tr>
-              <tr><td><b>積立</b></td><td>修繕積立、元利金返済積立、廃棄等費用積立</td></tr>
-            </tbody>
-          </table>
-          <div class="formula">
-            <span class="label">キーとなる利益指標</span>
-            <div class="eq">EBITDA ＝ 売電収入 − 運営費用</div>
-            <div class="eq">CFADS ＝ EBITDA − 税金 ± 運転資金・積立の増減など</div>
-            <p class="note">CFADS（Cash Flow Available for Debt Service）＝元利金返済に充当可能なキャッシュフロー。DSCRの分子になる。</p>
-          </div>
-        </section>
-
-        <section id="waterfall">
-          <h2>キャッシュウォーターフォール</h2>
-          <p>プロジェクトファイナンスでは、入ってきたお金を<strong>支払う順番</strong>が融資契約で厳格に決められています。上から順に満たされ、最後に残った分だけが投資家への配当に回ります。</p>
-          <div class="waterfall" role="img" aria-label="キャッシュウォーターフォールの例">
-            <div class="wf-row"><span>① 売電収入</span><div class="wf-bar" style="width:100%;background:var(--grad-sun)">100</div></div>
-            <div class="wf-row"><span>② 運営費用・税金</span><div class="wf-bar" style="width:30%;background:hsl(205 85% 62%)">▲30</div></div>
-            <div class="wf-row"><span>③ 利息・元本返済</span><div class="wf-bar" style="width:50%;background:hsl(270 60% 70%)">▲50</div></div>
-            <div class="wf-row"><span>④ リザーブ積立</span><div class="wf-bar" style="width:5%;min-width:44px;background:hsl(152 60% 50%)">▲5</div></div>
-            <div class="wf-row"><span>⑤ 投資家への分配</span><div class="wf-bar" style="width:15%;min-width:44px;background:var(--gold)">15</div></div>
-          </div>
-          <div class="callout info"><span class="ic">ℹ️</span><div><b class="t">配当はレバレッジの“残余”</b><p>エクイティ（出資者）は最も後順位。発電量が数％落ちるだけで、配当は大きく減少します（レバレッジ効果）。上の例で収入が10%減ると、配当は15→5へと3分の1になります。</p></div></div>
-        </section>
-
-        <section id="irr">
-          <h2>投資指標：IRR・NPV</h2>
-          <div class="formula">
-            <span class="label">NPV（正味現在価値）</span>
-            <div class="eq">NPV ＝ Σ <span class="frac"><span>CF<sub>t</sub></span><span>(1 + r)<sup>t</sup></span></span> − 初期投資</div>
-            <p class="note">r：割引率（期待収益率）。NPV &gt; 0 なら投資価値あり。</p>
-          </div>
-          <div class="formula">
-            <span class="label">IRR（内部収益率）</span>
-            <div class="eq">NPV ＝ 0 となる割引率 r</div>
-            <p class="note">Excelでは <code>=IRR(範囲)</code>、日付不定期なら <code>=XIRR(値, 日付)</code> で計算できる。</p>
-          </div>
-          <table>
-            <thead><tr><th>指標</th><th>対象となるキャッシュフロー</th><th>見る人</th></tr></thead>
-            <tbody>
-              <tr><td><b>プロジェクトIRR</b></td><td>借入を考慮しない事業全体のCF（総投資額 vs 事業CF）</td><td>事業そのものの収益力評価</td></tr>
-              <tr><td><b>エクイティIRR</b></td><td>出資額 vs 投資家への分配</td><td>投資家（レバレッジ後のリターン）</td></tr>
-            </tbody>
-          </table>
-          <p>借入金利がプロジェクトIRRより低ければ、レバレッジによりエクイティIRRはプロジェクトIRRより高くなります（その分リスクも増加）。</p>
-        </section>
-
-        <section id="dscr">
-          <h2>DSCR・LLCR</h2>
-          <div class="formula">
-            <span class="label">DSCR（元利金返済カバー率）</span>
-            <div class="eq">DSCR ＝ <span class="frac"><span>CFADS（返済原資となるCF）</span><span>元利金返済額</span></span></div>
-            <p class="note">期間ごと（半期・年次）に計算。1.0倍を下回ると、事業CFだけでは返済できない状態。</p>
-          </div>
-          <div class="example">
-            <span class="label">例：CFADS 1億2,000万円、元利金返済 1億円</span>
-            <p>DSCR ＝ 1.2億 ÷ 1.0億 ＝ <b>1.20倍</b></p>
-          </div>
-          <table>
-            <thead><tr><th>典型的な設定（例）</th><th>意味</th></tr></thead>
-            <tbody>
-              <tr><td>ベースケースの目標DSCR</td><td>融資額を決める基準（例：P50やP90で1.2〜1.3倍程度など、案件・レンダーにより異なる）</td></tr>
-              <tr><td>配当停止（ロックアップ）水準</td><td>DSCRが一定水準を下回ると、投資家への分配が停止されSPV内にキャッシュが留保される</td></tr>
-              <tr><td>期限の利益喪失（デフォルト）水準</td><td>さらに下回ると債務不履行事由となり得る</td></tr>
-            </tbody>
-          </table>
-          <div class="formula">
-            <span class="label">LLCR（融資期間返済カバー率）</span>
-            <div class="eq">LLCR ＝ <span class="frac"><span>融資残存期間のCFADSの現在価値</span><span>借入残高</span></span></div>
-            <p class="note">単期のDSCRに対し、残存期間全体での返済余力を見る指標。</p>
-          </div>
-        </section>
-
-        <section id="reserve">
-          <h2>リザーブ口座</h2>
-          <table>
-            <thead><tr><th>口座</th><th>目的</th></tr></thead>
-            <tbody>
-              <tr><td><b>DSRA</b>（元利金返済積立）</td><td>一時的な発電不振でも返済できるよう、次回返済の一定期間分（例：6か月分）を積立</td></tr>
-              <tr><td><b>MRA</b>（修繕積立）</td><td>PCS更新など将来の大規模修繕に備えた積立</td></tr>
-              <tr><td>廃棄等費用積立</td><td>撤去・廃棄費用（制度上の外部積立とは別に内部で積む場合も）</td></tr>
-            </tbody>
-          </table>
-        </section>
-
-        <section id="tax">
-          <h2>減価償却と税務</h2>
-          <ul>
-            <li>売電目的の太陽光発電設備の<strong>法定耐用年数は17年</strong>（電気業用設備）が一般的な扱い。</li>
-            <li>会計上・税務上の償却方法や年数は会社の方針・設備区分によって異なるため、会計事務所と確認。</li>
-            <li><b>固定資産税（償却資産税）</b>：発電設備は償却資産として毎年課税（標準税率1.4%）。評価額が年々下がるため税額も逓減。一定の再エネ設備には課税標準の特例が設けられたことがある。</li>
-            <li>土地を保有する場合は土地の固定資産税、借地の場合は賃料・地上権料がOPEXとなる。</li>
-          </ul>
-        </section>
-
-        <section id="valuation">
-          <h2>資産評価とセカンダリー取引</h2>
-          <ul>
-            <li>評価の基本は<strong>DCF法</strong>：残存期間の将来CFを割引率で現在価値に換算。</li>
-            <li>主な前提：発電量（P50/P90）、劣化率、出力制御率、OPEX、PCS更新費、調達期間終了後の売電単価、撤去費用、割引率。</li>
-            <li>FIT期間終了後（卒FIT）の収益をどう見るかで評価が大きく変わる。</li>
-            <li>買い手のDD論点：認定・権原・系統連系の確認、発電実績とPRの推移、O&amp;M履歴、訴訟・近隣トラブル、契約の譲渡制限条項。</li>
-          </ul>
-        </section>
-
+        <!-- チェックリスト -->
         <section id="checklist">
-          <h2>AM視点のチェックリスト</h2>
+          <h2>AM金融実務のチェックリスト</h2>
           <ul class="checklist">
-            <li>融資契約のコベナンツ（DSCR水準、報告期限、事前承諾事項）を一覧化しているか</li>
-            <li>DSCRの実績と予測を定期的に計算し、ロックアップ水準との余裕を把握しているか</li>
-            <li>予算（バジェット）と実績の差異を項目別に説明できるか</li>
-            <li>リザーブ口座の残高が契約上の必要額を満たしているか</li>
-            <li>大規模修繕・PCS更新の時期と資金手当てを長期計画に反映しているか</li>
-            <li>投資家・レンダー向けレポートの提出スケジュールを管理しているか</li>
+            <li>自社案件のローン契約書（LMA）に記載されたDSCRトリガー水準（ロックアップ値・デフォルト値）を暗記しているか</li>
+            <li>月次・四半期ごとのレンダー向けレポーティング期限をカレンダー管理しているか</li>
+            <li>DSRA（返済積立）口座の残高が、次回元利金返済額の6か月分を常に維持しているか</li>
+            <li>天候不良や出力制御発生時に、DSCRがどう推移するかシミュレーションできているか</li>
+            <li>FIT期間終了後（卒FIT）の売電計画（コーポレートPPA移行や蓄電池併設）をモデルに織り込んでいるか</li>
           </ul>
         </section>
 
@@ -205,11 +350,109 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>© Solar AM Notes — 個人の学習用ノート</p>
-      <p>※ 指標の水準・税務処理は一般的な説明です。実案件では契約書・専門家の見解を確認してください。</p>
+      <p>※ 本シミュレーションおよび解説は学習用の概算モデルです。実案件のファイナンスでは契約書および会計・税務の専門家にご確認ください。</p>
     </div>
   </footer>
 
   <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   <script src="../assets/js/main.js"></script>
+
+  <!-- 金融シミュレーター専用スクリプト -->
+  <script>
+    (function() {
+      var inCap = document.getElementById('input-cap');
+      var inYield = document.getElementById('input-yield');
+      var inTariff = document.getElementById('input-tariff');
+      var inOpex = document.getElementById('input-opex');
+      var inCapex = document.getElementById('input-capex');
+      var inLtv = document.getElementById('input-ltv');
+      var inRate = document.getElementById('input-rate');
+      var inTenor = document.getElementById('input-tenor');
+
+      if (!inCap) return;
+
+      function fmt(n) { return Math.round(n).toLocaleString(); }
+
+      function calc() {
+        var capMW = parseFloat(inCap.value);
+        var specYield = parseFloat(inYield.value);
+        var tariff = parseFloat(inTariff.value);
+        var opex = parseFloat(inOpex.value);
+        var capexOku = parseFloat(inCapex.value);
+        var ltv = parseFloat(inLtv.value) / 100;
+        var rate = parseFloat(inRate.value) / 100;
+        var tenor = parseInt(inTenor.value, 10);
+
+        // ラベル更新
+        document.getElementById('val-cap').textContent = capMW.toFixed(1) + " MW";
+        document.getElementById('val-yield').textContent = fmt(specYield) + " kWh/kWp";
+        document.getElementById('val-tariff').textContent = tariff + " 円/kWh";
+        document.getElementById('val-opex').textContent = fmt(opex) + " 万円/年";
+        document.getElementById('val-capex').textContent = capexOku.toFixed(1) + " 億円";
+        document.getElementById('val-ltv').textContent = (ltv * 100).toFixed(0) + " %";
+        document.getElementById('val-rate').textContent = (rate * 100).toFixed(1) + " %";
+        document.getElementById('val-tenor').textContent = tenor + " 年";
+
+        // 発電量・収入
+        var gen = capMW * 1000 * specYield; // kWh
+        var rev = (gen * tariff) / 10000; // 万円
+        var ebitda = rev - opex; // 万円
+
+        // 資本構成
+        var totalCost = capexOku * 10000; // 万円
+        var debt = totalCost * ltv; // 万円
+        var equity = totalCost * (1 - ltv); // 万円
+
+        // 元利均等年間返済額
+        // P * { r / (1 - (1+r)^-n) }
+        var annualDebtService = 0;
+        if (rate > 0) {
+          annualDebtService = debt * (rate / (1 - Math.pow(1 + rate, -tenor)));
+        } else {
+          annualDebtService = debt / tenor;
+        }
+
+        // DSCR
+        var dscr = annualDebtService > 0 ? (ebitda / annualDebtService) : 0;
+
+        // 投資家分配
+        var dividend = Math.max(0, ebitda - annualDebtService);
+        var coc = equity > 0 ? (dividend / equity) * 100 : 0;
+
+        // 出力更新
+        document.getElementById('res-gen').textContent = fmt(gen) + " kWh";
+        document.getElementById('res-rev').textContent = fmt(rev) + " 万円";
+        document.getElementById('res-ebitda').textContent = fmt(ebitda) + " 万円";
+        document.getElementById('res-cap').textContent = (debt / 10000).toFixed(2) + "億 / " + (equity / 10000).toFixed(2) + "億円";
+        document.getElementById('res-debt').textContent = fmt(annualDebtService) + " 万円";
+        document.getElementById('res-div').textContent = fmt(dividend) + " 万円";
+        document.getElementById('res-coc').textContent = coc.toFixed(1) + " %";
+
+        // DSCR表示
+        var dscrEl = document.getElementById('res-dscr');
+        var tagEl = document.getElementById('res-dscr-tag');
+        dscrEl.textContent = dscr.toFixed(2) + " 倍";
+
+        tagEl.className = 'sim-dscr-status';
+        if (dscr >= 1.25) {
+          dscrEl.style.color = "var(--green)";
+          tagEl.classList.add('safe');
+          tagEl.textContent = "優良（レンダー安全圏：融資適格）";
+        } else if (dscr >= 1.10) {
+          dscrEl.style.color = "var(--gold)";
+          tagEl.classList.add('warn');
+          tagEl.textContent = "注意（配当ロックアップ警戒水準）";
+        } else {
+          dscrEl.style.color = "var(--red)";
+          tagEl.classList.add('danger');
+          tagEl.textContent = "危険（元利金返済逼迫・デフォルト懸念）";
+        }
+      }
+
+      var inputs = [inCap, inYield, inTariff, inOpex, inCapex, inLtv, inRate, inTenor];
+      inputs.forEach(function(el) { el.addEventListener('input', calc); });
+      calc();
+    })();
+  </script>
 </body>
 </html>
