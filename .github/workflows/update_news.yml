@@ -2,8 +2,14 @@ name: Update Solar AM News
 
 on:
   schedule:
-    # 毎日 日本時間 06:00 (UTC 21:00) に自動実行
-    - cron: '0 21 * * *'
+    # 毎日 日本時間 08:30 (UTC 23:30 前日)
+    - cron: '30 23 * * *'
+    # 毎日 日本時間 12:00 (UTC 03:00)
+    - cron: '0 3 * * *'
+    # 毎日 日本時間 15:00 (UTC 06:00)
+    - cron: '0 6 * * *'
+    # 毎日 日本時間 18:00 (UTC 09:00)
+    - cron: '0 9 * * *'
   workflow_dispatch: # GitHubの画面から手動実行も可能
 
 permissions:
