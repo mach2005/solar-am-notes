@@ -66,44 +66,277 @@
       </div>
       <p class="empty" id="news-empty">該当するニュースが見つかりませんでした。</p>
 
-      <!-- 公的機関・審議会リンク集 -->
-      <section style="margin-top:72px">
+      <!-- 実務情報収集ポータル 完全マップ -->
+      <section style="margin-top:72px" id="monitoring-sources">
         <div class="section-head">
-          <span class="kicker">Official Sources</span>
-          <h2>AM必見：定点観測すべき公的情報源</h2>
-          <p>制度設計や買取価格・出力制御ルールの決定過程を追うための重要リンク集です。</p>
+          <span class="kicker" style="color: #38bdf8;">Comprehensive Monitoring Hub</span>
+          <h2>太陽光・蓄電池 実務情報収集ポータル（公式一次情報源完全網羅）</h2>
+          <p>アセットマネジメント（AM）・発電所運営で毎日・定期的に定点観測すべき、全国10エリア「でんき予報・出力制御情報」、政府各省庁・重要審議会、卸電力市場・気象データへの直行ハブです。</p>
         </div>
 
-        <div class="sources-grid">
-          <a class="source-card" href="https://www.meti.go.jp/shingikai/santeii/index.html" target="_blank" rel="noopener noreferrer">
-            <b>調達価格等算定委員会 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>翌年度のFIT調達価格・FIP基準価格、適正利潤率（IRR設定）、入札規模を決定する最重要委員会。</p>
-          </a>
+        <!-- カテゴリ1: でんき予報・再エネ出力制御（全国10エリア） -->
+        <div style="margin-top: 36px;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span>⚡</span> 【でんき予報 ＆ 再生可能エネルギー出力制御速報】全国10送配電エリア
+          </h3>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 18px;">
+            売電収入に直結する出力制御の翌日・当日見通し、オフライン/オンライン制御スケジュール、エリア需給バランス実績を毎朝確認するための公式ポータルです。
+          </p>
 
-          <a class="source-card" href="https://www.meti.go.jp/shingikai/enecho/denki_gas/saisei_kano/index.html" target="_blank" rel="noopener noreferrer">
-            <b>再エネ大量導入・次世代電力NW小委 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>系統接続、ノンファーム連系、出力制御ルール、再エネ主力電源化に向けた政策論点。</p>
-          </a>
+          <div class="sources-grid">
+            <!-- 送配電網協議会 -->
+            <a class="source-card" href="https://www.tdgc.jp/" target="_blank" rel="noopener noreferrer">
+              <b>送配電網協議会（TDGC） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(56,189,248,0.15); color: #38bdf8;">全国統合</span>
+              <p>全国の再エネ出力制御見通し統合情報、出力制御抑制に向けた広域連系・揚水運転の総合取組レポート。</p>
+            </a>
 
-          <a class="source-card" href="https://www.enecho.meti.go.jp/category/saving_and_new/saiene/kaitori/index.html" target="_blank" rel="noopener noreferrer">
-            <b>なっとく！再生可能エネルギー <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>資源エネルギー庁公式ポータル。事業計画認定申請の手引き、ガイドライン、廃棄等費用積立の詳細。</p>
-          </a>
+            <!-- 東京電力PG -->
+            <a class="source-card" href="https://www.tepco.co.jp/forecast/" target="_blank" rel="noopener noreferrer">
+              <b>東京電力パワーグリッド でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">東京エリア</span>
+              <p>需給状況・使用率グラフ、再エネ出力制御の見通し（3日先・前日・当日）、事業者向け指示情報。</p>
+            </a>
 
-          <a class="source-card" href="https://www.occto.or.jp/" target="_blank" rel="noopener noreferrer">
-            <b>電力広域的運営推進機関（OCCTO） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>出力制御見通し・実績、容量市場、マスタープラン（系統増強）、廃棄等費用の積立機関。</p>
-          </a>
+            <!-- 関西電力送配電 -->
+            <a class="source-card" href="https://www.kansai-td.co.jp/denkiyoho/" target="_blank" rel="noopener noreferrer">
+              <b>関西電力送配電 でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">関西エリア</span>
+              <p>当日の電力需給実績・予備率速報、再生可能エネルギー出力制御の見通し・高圧特高指示実績。</p>
+            </a>
 
-          <a class="source-card" href="https://www.meti.go.jp/policy/safety_security/industrial_safety/sangyo/electric/index.html" target="_blank" rel="noopener noreferrer">
-            <b>経産省 産業保安グループ（電力安全課） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>電気事業法に基づく技術基準、電気事故報告の統計・再発防止策、保安規程・使用前自己確認。</p>
-          </a>
+            <!-- 九州電力送配電 -->
+            <a class="source-card" href="https://www.kyuden.co.jp/td_power_usages/pc.html" target="_blank" rel="noopener noreferrer">
+              <b>九州電力送配電 でんき予報・出力制御 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(239,68,68,0.15); color: #ef4444;">最頻出エリア</span>
+              <p>全国最大の抑制実績。翌日出力制御指示速報、オンライン制御スケジュール、関門連系線潮流状況。</p>
+            </a>
 
-          <a class="source-card" href="http://www.jepx.org/" target="_blank" rel="noopener noreferrer">
-            <b>日本卸電力取引所（JEPX） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
-            <p>スポット市場価格（30分コマ）、時間前市場、非化石価値取引市場の約定結果。</p>
-          </a>
+            <!-- 中部電力PG -->
+            <a class="source-card" href="https://powergrid.chubu.co.jp/denkiyoho/" target="_blank" rel="noopener noreferrer">
+              <b>中部電力パワーグリッド でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">中部エリア</span>
+              <p>需給状況グラフ、再エネ出力制御の見通し、50/60Hz周波数変換所（FC）連系線活用状況。</p>
+            </a>
+
+            <!-- 東北電力NW -->
+            <a class="source-card" href="https://nw.tohoku-epco.co.jp/forecast/" target="_blank" rel="noopener noreferrer">
+              <b>東北電力ネットワーク でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">東北エリア</span>
+              <p>東北エリア電力需給実績、太陽光・風力出力制御の可能性および実施判断速報。</p>
+            </a>
+
+            <!-- 中国電力NW -->
+            <a class="source-card" href="https://www.energia.co.jp/nw/jukyuu/" target="_blank" rel="noopener noreferrer">
+              <b>中国電力ネットワーク 需給状況・でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">中国エリア</span>
+              <p>需給実績データ、再エネ出力制御見通し、オフライン事業者向けスケジュール配信。</p>
+            </a>
+
+            <!-- 四国電力送配電 -->
+            <a class="source-card" href="https://www.yonden.co.jp/nw/denkiyoho/index.html" target="_blank" rel="noopener noreferrer">
+              <b>四国電力送配電 でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">四国エリア</span>
+              <p>四国エリア需給実績、本四連系線（直流送電）の活用と再エネ出力制御判断公表。</p>
+            </a>
+
+            <!-- 北陸電力送配電 -->
+            <a class="source-card" href="https://www.rikuden.co.jp/nw/denki-yoho/index.html" target="_blank" rel="noopener noreferrer">
+              <b>北陸電力送配電 でんき予報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">北陸エリア</span>
+              <p>電力需給実績速報、軽負荷期における再エネ出力制御見通しおよび代理制御情報。</p>
+            </a>
+
+            <!-- 北海道電力NW -->
+            <a class="source-card" href="https://www.hepco.co.jp/network/renewable_energy/fixedprice_purchase/syutsuryokuseigyo.html" target="_blank" rel="noopener noreferrer">
+              <b>北海道電力ネットワーク 出力制御・需給情報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">北海道エリア</span>
+              <p>北本連系線を踏まえた需給調整、大規模太陽光・風力に対する出力制御運用方針。</p>
+            </a>
+
+            <!-- 沖縄電力 -->
+            <a class="source-card" href="https://www.okiden.co.jp/denki/" target="_blank" rel="noopener noreferrer">
+              <b>沖縄電力 でんき予報・出力制御情報 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(247,147,30,0.15); color: #f7931e;">沖縄エリア</span>
+              <p>本土連系線のない独立系統における再エネ受入限界、バイオマス・太陽光出力制御。</p>
+            </a>
+
+            <!-- OCCTO需給 -->
+            <a class="source-card" href="https://www.occto.or.jp/" target="_blank" rel="noopener noreferrer">
+              <b>OCCTO 電力需給状況・広域予備率公表 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(56,189,248,0.15); color: #38bdf8;">広域機関</span>
+              <p>全国10エリアの予備率ブロック監視、需給ひっ迫注意報/警報、融通指示の速報。</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- カテゴリ2: 政府・官公庁・審議会（政策・制度設計の最上流） -->
+        <div style="margin-top: 48px;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: #4ade80; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span>🏛️</span> 【政府・官公庁・重要審議会】政策・FIT/FIP・保安・環境規制の意思決定一次情報
+          </h3>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 18px;">
+            次年度の買取価格、法改正、保安解釈改訂、環境アセス・盛土規制などの制度変更が「決定される前」の議論プロセスを追うための公式リンクです。
+          </p>
+
+          <div class="sources-grid">
+            <!-- 算定委 -->
+            <a class="source-card" href="https://www.meti.go.jp/shingikai/santeii/index.html" target="_blank" rel="noopener noreferrer">
+              <b>調達価格等算定委員会（経済産業省） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">経産省・年次決定</span>
+              <p>翌年度のFIT調達価格・FIP基準価格、入札対象規模、適正利潤率（IRR設定）、廃棄等費用積立基準を決定。</p>
+            </a>
+
+            <!-- 再エネ大量導入小委 -->
+            <a class="source-card" href="https://www.meti.go.jp/shingikai/enecho/denki_gas/saisei_kano/index.html" target="_blank" rel="noopener noreferrer">
+              <b>再エネ大量導入・次世代電力NW小委員会 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">系統・制度改革</span>
+              <p>ノンファーム型接続の拡大、出力制御の公平性指針見直し、系統用蓄電池の連系ルール、次世代グリッド政策。</p>
+            </a>
+
+            <!-- 電力・ガス基本政策小委 -->
+            <a class="source-card" href="https://www.meti.go.jp/shingikai/enecho/denki_gas/denki_gas/index.html" target="_blank" rel="noopener noreferrer">
+              <b>電力・ガス基本政策小委員会 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">市場構造改革</span>
+              <p>容量市場、需給調整市場、ベースロード市場の設計、卸電力取引の流動性確保、電力システム改革の検証。</p>
+            </a>
+
+            <!-- 産業保安 電力安全小委 -->
+            <a class="source-card" href="https://www.meti.go.jp/policy/safety_security/industrial_safety/sangyo/electric/index.html" target="_blank" rel="noopener noreferrer">
+              <b>経産省 産業保安グループ（電力安全課） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">保安基準・安全規制</span>
+              <p>電気事業法電技解釈、小規模事業用電気工作物の使用前自己確認届出、太陽電池安全WG、サイバーセキュリティ基準。</p>
+            </a>
+
+            <!-- なっとく！再エネ -->
+            <a class="source-card" href="https://www.enecho.meti.go.jp/category/saving_and_new/saiene/kaitori/index.html" target="_blank" rel="noopener noreferrer">
+              <b>資源エネルギー庁「なっとく！再生可能エネルギー」 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">公式ポータル</span>
+              <p>FIT/FIP事業計画認定基準、説明会ガイドライン、廃棄等費用積立制度、定期報告電子申請システム。</p>
+            </a>
+
+            <!-- 内閣府 タスクフォース -->
+            <a class="source-card" href="https://www8.cao.go.jp/kisei-kaikaku/kisei/conference/energy/energy-index.html" target="_blank" rel="noopener noreferrer">
+              <b>内閣府 再生可能エネルギー規制総点検TF <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">内閣府・規制緩和</span>
+              <p>系統接続拒否・高額負担金問題、自治体条例規制、農地転用規制緩和など、規制改革の最前線議論録。</p>
+            </a>
+
+            <!-- 環境省 脱炭素ポータル -->
+            <a class="source-card" href="https://www.env.go.jp/earth/ondanka/index.html" target="_blank" rel="noopener noreferrer">
+              <b>環境省 地球環境局（脱炭素ポータル・PPA） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">環境省・PPA</span>
+              <p>自治体・企業向けPPA導入手引き、ソーラーカーポート事例集、環境配慮GL、太陽光パネルリサイクル第三版。</p>
+            </a>
+
+            <!-- 農水省 営農型太陽光 -->
+            <a class="source-card" href="https://www.maff.go.jp/j/nousin/noukei/totiriyo/einogata.html" target="_blank" rel="noopener noreferrer">
+              <b>農林水産省 営農型太陽光発電（農地転用） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">農水省・農地法</span>
+              <p>農地法に基づく一時転用許可基準（令和6年施行新ガイドライン）、営農継続確認、下部農地単収8割基準。</p>
+            </a>
+
+            <!-- 林野庁 林地開発 -->
+            <a class="source-card" href="https://www.rinya.maff.go.jp/j/tisan/tisan/attach/pdf/con_4_6_1-51.pdf" target="_blank" rel="noopener noreferrer">
+              <b>林野庁 太陽光発電に係る林地開発許可基準 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">林野庁・森林法</span>
+              <p>0.5ha超の太陽光林地開発許可基準、流出係数算定、防災調整池・残置森林配置要件通達。</p>
+            </a>
+
+            <!-- 国交省 盛土法 -->
+            <a class="source-card" href="https://www.mlit.go.jp/toshi/toshi_tobou_fr_000049.html" target="_blank" rel="noopener noreferrer">
+              <b>国土交通省 盛土規制法ポータル <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">国交省・盛土法</span>
+              <p>宅地造成及び特定盛土等規制法の規制区域指定状況、盛土等技術基準マニュアル、安全対策推進指針。</p>
+            </a>
+
+            <!-- 消防庁 蓄電池安全 -->
+            <a class="source-card" href="https://www.fdma.go.jp/singi_kento/kento/post-108.html" target="_blank" rel="noopener noreferrer">
+              <b>総務省消防庁 リチウムイオン蓄電池火災予防 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(74,222,128,0.15); color: #4ade80;">消防庁・BESS安全</span>
+              <p>コンテナ型系統用蓄電池の火災予防安全対策検討報告書、危険物規制・消防同意運用基準。</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- カテゴリ3: 電力市場・取引・価格データ -->
+        <div style="margin-top: 48px;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: #fbbf24; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span>📈</span> 【電力市場・取引指標・約定データ】売電収益・FIP・非化石価値・容量市場
+          </h3>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 18px;">
+            市場価格連動型売電（FIP）、コーポレートPPA、アグリゲーション取引で毎日追跡すべき市場価格データ公開元です。
+          </p>
+
+          <div class="sources-grid">
+            <!-- JEPX スポット -->
+            <a class="source-card" href="http://www.jepx.org/" target="_blank" rel="noopener noreferrer">
+              <b>日本卸電力取引所（JEPX） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">卸電力価格</span>
+              <p>スポット市場（DA：前日30分コマ値決め）、時間前市場（ID）、インバランス精算価格速報。</p>
+            </a>
+
+            <!-- JEPX 非化石 -->
+            <a class="source-card" href="http://www.jepx.org/market/non_fossil/" target="_blank" rel="noopener noreferrer">
+              <b>JEPX 非化石価値取引市場 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">環境価値</span>
+              <p>FIT非化石証書（トラッキング付）、再エネ指定非化石証書のオークション約定結果・平均単価推移。</p>
+            </a>
+
+            <!-- 需給調整市場 EPRX -->
+            <a class="source-card" href="https://www.eprx.or.jp/" target="_blank" rel="noopener noreferrer">
+              <b>電力需給調整力取引所（EPRX） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">調整力取引</span>
+              <p>三次調整力②（蓄電池・再エネDR等）、二次調整力のブロック約定結果、取引規程・別冊マニュアル。</p>
+            </a>
+
+            <!-- OCCTO 容量市場 -->
+            <a class="source-card" href="https://www.occto.or.jp/capacity-market/" target="_blank" rel="noopener noreferrer">
+              <b>OCCTO 容量市場・長期脱炭素電源オークション <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">容量価値</span>
+              <p>実需給4年先メインオークション落札結果、系統用蓄電池の長期固定費回収オークション募集要項。</p>
+            </a>
+
+            <!-- J-クレジット -->
+            <a class="source-card" href="https://japancredit.go.jp/" target="_blank" rel="noopener noreferrer">
+              <b>J-クレジット制度 事務局ポータル <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">炭素クレジット</span>
+              <p>再エネ自家消費・省エネ創出クレジットの入札販売結果、認証方法論、東証カーボンクレジット市場動向。</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- カテゴリ4: 気象・日射量・性能分析データベース -->
+        <div style="margin-top: 48px;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: #c084fc; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span>☀️</span> 【気象・日射量・性能分析データベース】予実乖離分析・PR補正・気象データ
+          </h3>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 18px;">
+            月次発電量レポート、PR（パフォーマンスレシオ）の天候補正、長期劣化シミュレーションで必須となる公的データソースです。
+          </p>
+
+          <div class="sources-grid">
+            <!-- NEDO MONSOLA -->
+            <a class="source-card" href="https://cgi.data.nedo.go.jp/index.html" target="_blank" rel="noopener noreferrer">
+              <b>NEDO 日射量データベース（MONSOLA / METPV） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(192,132,252,0.15); color: #c084fc;">日射量標準値</span>
+              <p>全国各地の斜面日射量データベース（MONSOLA-20）、年平均最適傾斜角、標準年METPV-20。</p>
+            </a>
+
+            <!-- 気象庁 過去データ -->
+            <a class="source-card" href="https://www.data.jma.go.jp/obd/stats/etrn/index.php" target="_blank" rel="noopener noreferrer">
+              <b>気象庁 過去の気象データ検索（アメダス実績） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(192,132,252,0.15); color: #c084fc;">実績気象値</span>
+              <p>発電所最寄りのアメダス観測地点における過去の日照時間・全天日射量実績（予実対比・日射補正用）。</p>
+            </a>
+
+            <!-- JPEA 統計 -->
+            <a class="source-card" href="https://www.jpea.gr.jp/library/material/" target="_blank" rel="noopener noreferrer">
+              <b>一般社団法人 太陽光発電協会（JPEA）出荷統計・資料 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(192,132,252,0.15); color: #c084fc;">業界動向</span>
+              <p>国内モジュール出荷統計、四半期別導入推移、PV OUTLOOK 2050ビジョン、保守点検指針資料。</p>
+            </a>
+          </div>
         </div>
       </section>
 

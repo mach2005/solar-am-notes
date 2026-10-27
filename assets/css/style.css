@@ -1106,7 +1106,16 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-feature-
   transition: transform .2s var(--ease), border-color .2s;
 }
 .source-card:hover { transform: translateY(-2px); border-color: var(--gold); }
-.source-card b { color: #fff; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+.source-card b { color: #fff; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.source-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
 .source-card p { margin: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.65; }
 
 /* ---------- Footer (Executive Slate & Gold Border) ---------- */
