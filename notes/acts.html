@@ -12,15 +12,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
-    .act-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
-    .act-badge.law-denki { background: hsl(205 85% 62% / 0.15); color: var(--sky); border: 1px solid hsl(205 85% 62% / 0.3); }
-    .act-badge.law-fit   { background: hsl(34 98% 58% / 0.15); color: var(--gold); border: 1px solid hsl(34 98% 58% / 0.3); }
-    .act-badge.law-land  { background: hsl(152 60% 50% / 0.15); color: var(--green); border: 1px solid hsl(152 60% 50% / 0.3); }
-    .act-badge.law-warn  { background: hsl(4 85% 62% / 0.15); color: var(--red); border: 1px solid hsl(4 85% 62% / 0.3); }
-    .penalty-box { background: hsl(4 85% 62% / 0.08); border-left: 4px solid var(--red); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 13.5px; }
-    .penalty-box b { color: var(--red); }
+    .act-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+    .act-badge.law-denki { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .act-badge.law-fit   { background: rgba(245, 158, 11, 0.12); color: var(--gold); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .act-badge.law-land  { background: rgba(74, 222, 128, 0.12); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
+    .act-badge.law-warn  { background: rgba(248, 113, 113, 0.12); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+    .penalty-box { background: linear-gradient(165deg, rgba(38, 16, 20, 0.7) 0%, rgba(20, 8, 10, 0.9) 100%); border-left: 4px solid var(--red); padding: 16px 20px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 16px 0; font-size: 14px; line-height: 1.75; box-shadow: var(--shadow-sm); }
+    .penalty-box b { color: #f87171; font-weight: 700; }
     .act-table td:first-child { white-space: nowrap; font-weight: 700; color: var(--gold); }
-    .diag-filter-box { background: var(--bg-card); border: 1px solid hsl(222 20% 28%); border-radius: 12px; padding: 20px; margin: 24px 0; }
+    .diag-filter-box { background: linear-gradient(165deg, rgba(20, 28, 48, 0.7) 0%, rgba(10, 15, 27, 0.9) 100%); border: 1px solid var(--border-highlight); border-radius: var(--radius); padding: 24px; margin: 26px 0; backdrop-filter: blur(16px); box-shadow: var(--shadow-md); }
   </style>
 </head>
 <body data-root="../" data-page="acts">
@@ -40,12 +40,12 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>07 重要法令詳解</span></nav>
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>10 重要法令詳解</span></nav>
         <h1>メガソーラー重要法令詳解（AM必携ノート）</h1>
         <p>発電所の存続と収益を左右する最重要法令を1本ずつ徹底解説。条文の根拠、申請・届出手続き、違反時の重いペナルティ、そしてAMが押さえるべき日常の遵守タスク。</p>
         <div class="meta">
-          <span class="tag" style="border-color:var(--gold);color:var(--gold)">電気事業法</span>
-          <span class="tag" style="border-color:var(--sky);color:var(--sky)">再エネ特措法</span>
+          <span class="tag">電気事業法</span>
+          <span class="tag">再エネ特措法</span>
           <span class="tag">農地法</span><span class="tag">森林法</span><span class="tag">盛土規制法</span><span class="tag">環境アセス法</span>
         </div>
       </div>
@@ -59,12 +59,12 @@
 
       <article class="prose">
 
-        <!-- ===== SECTION: 総合ビジュアル ===== -->
+        <!-- ===== SECTION: 総合実写スライド ===== -->
         <div class="diagram-card">
-          <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> メガソーラーを取り巻く主要法令・許認可マップ</h4>
-          <p class="desc">保安（電気事業法）× 収益（再エネ特措法）× 土地・環境（農地法・森林法・盛土法）の3方向から網羅管理</p>
+          <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> メガソーラー重要法令・コンプライアンス実務体系スライド</h4>
+          <p class="desc">電気事業法（主任技術者・保安規程）× 再エネ特措法（FIT/FIP認定・廃棄積立）× 盛土規制法・森林法（0.5ha基準・法面計算）× 農地法・環境アセスの4大柱とAM防衛要件</p>
           <div class="diagram-figure">
-            <img src="../assets/img/legal_acts_guide.jpg" alt="メガソーラーの重要法令・許認可・コンプライアンスの総合インフォグラフィック図" loading="lazy">
+            <img src="../assets/img/acts_overview_slide.jpg" alt="メガソーラー重要法令・コンプライアンス実務体系・電気事業法・再エネ特措法・盛土森林法・農地環境アセスの4大ピラー実写スライド図解" loading="lazy">
           </div>
         </div>
 
