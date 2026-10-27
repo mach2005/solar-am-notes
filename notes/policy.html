@@ -32,7 +32,7 @@
         <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>03 制度・市場</span></nav>
         <h1>FIT/FIP・電力市場・出力制御</h1>
         <p>売電収入の「ルール」を決める制度と市場の仕組み。収入の安定性とリスクを理解するための土台。</p>
-        <div class="meta"><span class="tag">再エネ特措法</span><span class="tag">FIT</span><span class="tag">FIP</span><span class="tag">JEPX</span><span class="tag">出力制御</span></div>
+        <div class="meta"><span class="tag">再エネ特措法</span><span class="tag">FIT</span><span class="tag">FIP</span><span class="tag">JEPX</span><span class="tag">系統用蓄電池</span><span class="tag">アグリゲーション</span><span class="tag">出力制御</span></div>
       </div>
     </section>
 
@@ -43,6 +43,16 @@
       </details>
 
       <article class="prose">
+
+        <!-- ===== SECTION: 政策・蓄電池・アグリゲーション 総合スライド図解 ===== -->
+        <div class="diagram-card">
+          <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 再エネ×系統用蓄電池×アグリゲーション最新運用体系スライド</h4>
+          <p class="desc">FIP制度・AI発電予測によるインバランス回避・系統用BESSのアービトラージ・需給調整/容量市場マルチ取引と出力制御対策</p>
+          <div class="diagram-figure">
+            <img src="../assets/img/policy_battery_aggregation_slide.jpg" alt="再エネ×系統用蓄電池×アグリゲーション最新運用体系スライド図解" loading="lazy">
+          </div>
+        </div>
+
         <section id="history">
           <h2>制度の変遷</h2>
           <table>
@@ -125,6 +135,60 @@
           </table>
           <h3>計画値同時同量とインバランス</h3>
           <p>発電事業者（発電BG）は、30分ごとの発電計画を提出し、実績を計画に一致させる義務があります（<strong>計画値同時同量</strong>）。計画と実績のずれ（<strong>インバランス</strong>）は、インバランス料金で精算されます。太陽光は天候で出力が変わるため、発電予測の精度が収支に直結します。</p>
+        </section>
+
+        <!-- ===== SECTION: アグリゲーションと蓄電池トレンド ===== -->
+        <section id="bess-aggregator">
+          <h2>アグリゲーションと蓄電池の最新トレンド</h2>
+          <p>再エネの大量導入とFIP移行に伴い、<strong>アグリゲーター（特定卸供給事業者・発電BG）</strong>と<strong>系統用・併設型蓄電池（BESS）</strong>が事業採算性を左右する最重要テーマとなっています。</p>
+
+          <div class="kp-grid">
+            <div class="kp">
+              <b>再エネアグリゲーターの役割</b>
+              <p>AI気象予測で発電計画を作成し、複数発電所を束ねたBG（バランシンググループ）でインバランスリスクを極小化。JEPXスポット市場や時間前市場での最適売電入札を代行。</p>
+            </div>
+            <div class="kp">
+              <b>系統用蓄電池（BESS）ビジネス</b>
+              <p>送配電網に直接連系するスタンドアローン型蓄電池。昼間の安い電気（太陽光余剰）を充電し、夕方〜夜間の電力需要ピーク時に放電する「価格差取引（アービトラージ）」が主軸。</p>
+            </div>
+            <div class="kp">
+              <b>マルチ市場での収益多角化</b>
+              <p>JEPX電力取引だけでなく、需給調整市場（周波数調整・三次調整力）、容量市場（供給力kW価値）、長期脱炭素電源オークション（20年間の固定費回収）を組み合わせたマルチマネタイズ。</p>
+            </div>
+            <div class="kp">
+              <b>太陽光併設蓄電池と出力制御回避</b>
+              <p>無補償の出力制御（抑制）がかかる時間帯に余剰電力を充電し、売電可能な時間帯にシフト放電。FIPプレミアムとコーポレートPPAを連動させ、逸失利益を完全ゼロ化。</p>
+            </div>
+          </div>
+
+          <h3>系統用蓄電池（BESS）の4大マネタイズ市場</h3>
+          <table>
+            <thead><tr><th>市場名</th><th>取引対象</th><th>蓄電池の収益化メカニズム</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>JEPXスポット・時間前市場</b></td>
+                <td>電力量（kWh）</td>
+                <td><b>価格差アービトラージ</b>：春・秋の昼間0.01円〜数円/kWhで充電し、夕方・夜間15〜30円/kWh超で放電売電。</td>
+              </tr>
+              <tr>
+                <td><b>需給調整市場</b></td>
+                <td>調整力（ΔkW・kWh）</td>
+                <td><b>系統周波数の安定化</b>：数秒〜数分単位の急峻な需給変動に対し、蓄電池の高速応答性を活かして三次調整力②や二次調整力等を提供し待機料・供出料を獲得。</td>
+              </tr>
+              <tr>
+                <td><b>容量市場</b></td>
+                <td>将来の供給力（kW）</td>
+                <td><b>ピーク時供給能力の提供</b>：酷暑・厳冬の電力逼迫時に放電できる容量を4年前に応札し、毎年確実な固定収入（容量確保契約金額）を受領。</td>
+              </tr>
+              <tr>
+                <td><b>長期脱炭素電源オークション</b></td>
+                <td>新規脱炭素電源の建設投資（kW）</td>
+                <td><b>初期巨額投資の20年長期回収</b>：大容量系統用蓄電池の初期建設費（CAPEX）を対象に、20年間にわたって固定費（CAPEX＋固定OPEX）の回収が保証される公的制度。</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout tip"><span class="ic">🔋</span><div><b class="t">AM視点の最新トレンド分析</b><p>FIP単体では出力制御や昼間の市場価格低迷により収益悪化リスクが高まります。そのため、2024年以降は「アグリゲーターによるBG集約化」および「系統用蓄電池または併設型蓄電池の導入」が、投資家やレンダー（融資銀行）に対する最重要のアピールポイントとなっています。</p></div></div>
         </section>
 
         <section id="curtailment">
