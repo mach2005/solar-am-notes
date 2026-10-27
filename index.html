@@ -59,40 +59,46 @@
     <!-- ===== Topics ===== -->
     <section class="section" id="topics" aria-labelledby="topics-title">
       <div class="section-head reveal">
-        <span class="kicker">Topics</span>
-        <h2 id="topics-title">学習ノート ＆ 最新情報</h2>
-        <p>気になるテーマから読み進められます。各ノートには公式・計算例・実務ポイント、そして最新政策ニュースを収録しています。</p>
+        <span class="kicker">Curriculum &amp; Domains</span>
+        <h2 id="topics-title">実務体系別 学習ノート ＆ ツール</h2>
+        <p>太陽光アセットマネジメント（AM）に必要な全13テーマを4大実務領域に整理・分類しました。興味のある分野から体系的に読み進められます。</p>
       </div>
 
-      <div class="cards">
-        <a class="card reveal" href="notes/news.html" id="card-news" style="border-color:hsl(42 96% 60% / 0.4);background:linear-gradient(180deg, hsl(34 98% 58% / 0.12), hsl(222 28% 9% / 0.95))">
-          <span class="num" style="color:hsl(42 96% 60% / 0.7);font-size:32px">NEW</span>
-          <span class="card-icon" style="background:hsl(42 96% 60% / 0.2);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span>
-          <h3>最新ニュース・政策動向</h3>
-          <p>経産省・資源エネルギー庁の公表資料、OCCTOの出力制御見通し、再エネ専門メディアの動向を毎朝自動収集。</p>
-          <div class="tags"><span class="tag" style="border-color:var(--gold);color:var(--gold)">毎日自動更新</span><span class="tag">審議会リンク</span><span class="tag">政策動向</span></div>
-          <span class="more">最新情報をチェック →</span>
-        </a>
+      <!-- カテゴリ切り替えチップ -->
+      <div class="filter-chips" id="topic-chips" role="group" aria-label="テーマで絞り込み" style="justify-content: center; margin-bottom: 28px;">
+        <button class="chip active" data-filter="all">全13ノートを表示</button>
+        <button class="chip" data-filter="tech">⚡ 現場・技術・O&amp;M (4)</button>
+        <button class="chip" data-filter="perf">📈 発電性能分析 (1)</button>
+        <button class="chip" data-filter="market">🔋 制度・市場・蓄電池 (3)</button>
+        <button class="chip" data-filter="finance">⚖️ 金融・法務 (4)</button>
+        <button class="chip" data-filter="tool">📖 用語・ツール (1)</button>
+      </div>
 
-        <a class="card reveal" href="notes/performance.html" id="card-performance">
+      <div class="cards" id="topics-grid">
+
+        <!-- ===== 領域1: 現場・電気技術・O&M ===== -->
+        <a class="card reveal" href="notes/electrical.html" id="card-electrical" data-cat="tech">
+          <span class="badge-domain domain-tech">⚡ 現場・技術</span>
           <span class="num">01</span>
-          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
-          <h3>発電性能分析</h3>
-          <p>PR・比発電量・設備利用率の計算、損失要因の分解、予実分析とP50/P90の考え方。</p>
-          <div class="tags"><span class="tag">PR</span><span class="tag">損失要因</span><span class="tag">予実分析</span></div>
+          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <h3>電気設備（構成・保安）</h3>
+          <p>モジュール・PCS・変圧器・受変電キュービクルの構成、電圧区分、保護継電器、保安体制と単線結線図。</p>
+          <div class="tags"><span class="tag">PCS</span><span class="tag">キュービクル</span><span class="tag">保安規程</span></div>
           <span class="more">ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/om.html" id="card-om">
+        <a class="card reveal" href="notes/om.html" id="card-om" data-cat="tech">
+          <span class="badge-domain domain-tech">⚡ 現場・O&amp;M</span>
           <span class="num">02</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span>
           <h3>O&amp;M（運転・保守）</h3>
-          <p>定期点検、遠隔監視とアラーム対応、除草・洗浄、IVカーブ・サーモ点検、盗難対策、KPI管理。</p>
+          <p>定期点検、遠隔監視とアラーム対応、除草・洗浄、ドローン赤外線サーモ・IVカーブ点検、盗難対策、KPI管理。</p>
           <div class="tags"><span class="tag">点検</span><span class="tag">稼働率</span><span class="tag">予防保全</span></div>
           <span class="more">ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/due-diligence.html" id="card-dd" style="border-color:hsl(205 85% 62% / 0.35);background:linear-gradient(180deg, hsl(205 85% 62% / 0.1), hsl(222 28% 9% / 0.95))">
+        <a class="card reveal" href="notes/due-diligence.html" id="card-dd" data-cat="tech" style="border-color:hsl(205 85% 62% / 0.35);background:linear-gradient(180deg, hsl(205 85% 62% / 0.1), hsl(222 28% 9% / 0.95))">
+          <span class="badge-domain domain-tech">⚡ 買収・検査</span>
           <span class="num">03</span>
           <span class="card-icon" style="background:hsl(205 85% 62% / 0.15);color:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6M8 11h6"/></svg></span>
           <h3>ファシリティDD・事故事例</h3>
@@ -101,26 +107,62 @@
           <span class="more">DDノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/policy.html" id="card-policy">
+        <a class="card reveal" href="notes/denken.html" id="card-denken" data-cat="tech" style="border-color:hsl(205 85% 62% / 0.35)">
+          <span class="badge-domain domain-tech">⚡ 資格・保安</span>
           <span class="num">04</span>
-          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10M19 21V10M9 21V10M15 21V10M2 10l10-6 10 6"/></svg></span>
-          <h3>FIT/FIP・電力市場・出力制御</h3>
-          <p>FITとFIPの仕組み、プレミアムの考え方、JEPX、出力制御ルール、廃棄等費用積立制度。</p>
-          <div class="tags"><span class="tag">FIT</span><span class="tag">FIP</span><span class="tag">JEPX</span></div>
+          <span class="card-icon" style="background:hsl(205 85% 62% / 0.15);color:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+          <h3>電験・電気主任技術者</h3>
+          <p>電験三種・二種の資格体系、実務直結の4科目（法規・電力・機械・理論）エッセンス、2026年度公式本試験問題。</p>
+          <div class="tags"><span class="tag" style="border-color:var(--sky);color:var(--sky)">公式過去問収録</span><span class="tag">計算ツール</span><span class="tag">法規</span></div>
+          <span class="more">電験ノートを開く →</span>
+        </a>
+
+        <!-- ===== 領域2: 発電性能・データ分析 ===== -->
+        <a class="card reveal" href="notes/performance.html" id="card-performance" data-cat="perf" style="border-color:rgba(192, 132, 252, 0.35);background:linear-gradient(180deg, rgba(192, 132, 252, 0.08), hsl(222 28% 9% / 0.95))">
+          <span class="badge-domain domain-perf">📈 性能分析</span>
+          <span class="num">05</span>
+          <span class="card-icon" style="background:rgba(192, 132, 252, 0.15);color:#c084fc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+          <h3>発電性能分析</h3>
+          <p>PR・比発電量・設備利用率の計算、損失要因の分解、温度補正PR、予実分析とP50/P90の考え方。</p>
+          <div class="tags"><span class="tag">PR</span><span class="tag">損失要因</span><span class="tag">予実分析</span></div>
           <span class="more">ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/ppa-market.html" id="card-ppa" style="border-color:hsl(152 60% 50% / 0.35);background:linear-gradient(180deg, hsl(152 60% 50% / 0.1), hsl(222 28% 9% / 0.95))">
-          <span class="num">05</span>
+        <!-- ===== 領域3: 制度・電力市場・蓄電池 ===== -->
+        <a class="card reveal" href="notes/policy.html" id="card-policy" data-cat="market" style="border-color:hsl(152 60% 50% / 0.35);background:linear-gradient(180deg, hsl(152 60% 50% / 0.08), hsl(222 28% 9% / 0.95))">
+          <span class="badge-domain domain-market">🔋 制度・市場</span>
+          <span class="num">06</span>
+          <span class="card-icon" style="background:hsl(152 60% 50% / 0.15);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10M19 21V10M9 21V10M15 21V10M2 10l10-6 10 6"/></svg></span>
+          <h3>FIT/FIP・系統用蓄電池・出力制御</h3>
+          <p>FIPプレミアム算出、再エネアグリゲーター、系統用蓄電池BESSのアービトラージ、出力抑制対策、廃棄積立。</p>
+          <div class="tags"><span class="tag" style="border-color:var(--green);color:var(--green)">系統用蓄電池</span><span class="tag">アグリゲーション</span><span class="tag">FIP</span></div>
+          <span class="more">ノートを開く →</span>
+        </a>
+
+        <a class="card reveal" href="notes/ppa-market.html" id="card-ppa" data-cat="market" style="border-color:hsl(152 60% 50% / 0.35);background:linear-gradient(180deg, hsl(152 60% 50% / 0.1), hsl(222 28% 9% / 0.95))">
+          <span class="badge-domain domain-market">🔋 市場取引</span>
+          <span class="num">07</span>
           <span class="card-icon" style="background:hsl(152 60% 50% / 0.15);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
           <h3>PPA・電力市場取引</h3>
           <p>オフサイト/VPPA/オンサイトPPA、0円コマ・インバランスリスク、容量市場・系統用蓄電池併設と収益シミュレーター。</p>
-          <div class="tags"><span class="tag" style="border-color:var(--green);color:var(--green)">収益シミュレーター</span><span class="tag">VPPA</span><span class="tag">系統用蓄電池</span></div>
+          <div class="tags"><span class="tag" style="border-color:var(--green);color:var(--green)">収益シミュレーター</span><span class="tag">VPPA</span><span class="tag">容量市場</span></div>
           <span class="more">PPA実務ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/finance.html" id="card-finance">
-          <span class="num">06</span>
+        <a class="card reveal" href="notes/news.html" id="card-news" data-cat="market" style="border-color:hsl(42 96% 60% / 0.4);background:linear-gradient(180deg, hsl(34 98% 58% / 0.12), hsl(222 28% 9% / 0.95))">
+          <span class="badge-domain domain-market" style="color:var(--gold);border-color:rgba(251,191,36,0.3)">📰 ニュース速報</span>
+          <span class="num" style="color:hsl(42 96% 60% / 0.7);font-size:32px">NEW</span>
+          <span class="card-icon" style="background:hsl(42 96% 60% / 0.2);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span>
+          <h3>最新ニュース・政策動向</h3>
+          <p>経産省・エネ庁の公表資料、OCCTOの出力制御見通し、再エネ専門メディアの動向を1日4回自動収集。</p>
+          <div class="tags"><span class="tag" style="border-color:var(--gold);color:var(--gold)">1日4回自動更新</span><span class="tag">審議会速報</span><span class="tag">政策動向</span></div>
+          <span class="more">最新情報をチェック →</span>
+        </a>
+
+        <!-- ===== 領域4: 金融・法務・事業性 ===== -->
+        <a class="card reveal" href="notes/finance.html" id="card-finance" data-cat="finance">
+          <span class="badge-domain domain-finance">⚖️ 金融・PF</span>
+          <span class="num">09</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l6 8 6-8M12 12v8M7 13h10M7 17h10"/></svg></span>
           <h3>金融・ファイナンス</h3>
           <p>GK-TKスキーム、プロジェクトファイナンス、キャッシュウォーターフォール、コベナンツ管理、リアルタイムDSCR/IRRシミュレーター。</p>
@@ -128,44 +170,29 @@
           <span class="more">金融実務ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/electrical.html" id="card-electrical">
-          <span class="num">07</span>
-          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span>
-          <h3>電気設備</h3>
-          <p>モジュール・PCS・変圧器・受変電設備の構成、電圧区分、保護継電器、保安体制と主任技術者。</p>
-          <div class="tags"><span class="tag">PCS</span><span class="tag">高圧連系</span><span class="tag">保安規程</span></div>
-          <span class="more">ノートを開く →</span>
-        </a>
-
-        <a class="card reveal" href="notes/denken.html" id="card-denken" style="border-color:hsl(205 85% 62% / 0.35)">
-          <span class="num">08</span>
-          <span class="card-icon" style="background:hsl(205 85% 62% / 0.15);color:var(--sky)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
-          <h3>電験・電気主任技術者</h3>
-          <p>電験三種・二種の資格体系、実務直結の4科目（法規・電力・機械・理論）エッセンス、2026年度公式過去問アーカイブ。</p>
-          <div class="tags"><span class="tag" style="border-color:var(--sky);color:var(--sky)">公式過去問収録</span><span class="tag">計算ツール</span><span class="tag">法規</span></div>
-          <span class="more">電験ノートを開く →</span>
-        </a>
-
-        <a class="card reveal" href="notes/acts.html" id="card-acts" style="border-color:hsl(34 98% 58% / 0.35)">
-          <span class="num">09</span>
+        <a class="card reveal" href="notes/acts.html" id="card-acts" data-cat="finance" style="border-color:hsl(34 98% 58% / 0.35)">
+          <span class="badge-domain domain-finance">⚖️ 法令・許認可</span>
+          <span class="num">10</span>
           <span class="card-icon" style="background:hsl(34 98% 58% / 0.15);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
           <h3>重要法令詳解</h3>
-          <p>電気事業法・再エネ特措法・農地法・森林法・盛土規制法・環境アセス法。義務・手続き・罰則・診断ツール。</p>
-          <div class="tags"><span class="tag" style="border-color:var(--gold);color:var(--gold)">診断ツール搭載</span><span class="tag">電気事業法</span><span class="tag">特措法</span></div>
+          <p>電気事業法・再エネ特措法・農地法・森林法・盛土規制法・環境アセス法。義務・手続き・罰則・法令適用診断ツール。</p>
+          <div class="tags"><span class="tag" style="border-color:var(--gold);color:var(--gold)">診断ツール搭載</span><span class="tag">電気事業法</span><span class="tag">盛土法</span></div>
           <span class="more">重要法令ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/legal.html" id="card-legal">
-          <span class="num">10</span>
+        <a class="card reveal" href="notes/legal.html" id="card-legal" data-cat="finance">
+          <span class="badge-domain domain-finance">⚖️ 契約・リスク</span>
+          <span class="num">11</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span>
           <h3>契約・保険・土地権原</h3>
-          <p>地上権・賃借権、EPC/O&amp;M/AM契約の主要条項、メーカー保証、自然災害・利益保険実務。</p>
+          <p>地上権・賃借権、EPC/O&amp;M/AM契約の主要条項、メーカー保証、自然災害・利益保険実務とリスク配分。</p>
           <div class="tags"><span class="tag">EPC</span><span class="tag">地上権</span><span class="tag">保険</span></div>
           <span class="more">契約ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/industry.html" id="card-industry" style="border-color:hsl(152 60% 50% / 0.35)">
-          <span class="num">11</span>
+        <a class="card reveal" href="notes/industry.html" id="card-industry" data-cat="finance" style="border-color:hsl(152 60% 50% / 0.35)">
+          <span class="badge-domain domain-finance">⚖️ 業界構造</span>
+          <span class="num">12</span>
           <span class="card-icon" style="background:hsl(152 60% 50% / 0.15);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           <h3>業界マップ・企業ガイド</h3>
           <p>IPP・インフラファンド、AM、O&amp;M、EPC、モジュール・PCSメーカー、金融機関、TA。業界多層カオスマップ。</p>
@@ -173,14 +200,17 @@
           <span class="more">業界マップを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/glossary.html" id="card-glossary">
-          <span class="num">12</span>
+        <!-- ===== 領域5: 実務リファレンス ===== -->
+        <a class="card reveal" href="notes/glossary.html" id="card-glossary" data-cat="tool">
+          <span class="badge-domain domain-tool">📖 実務辞典</span>
+          <span class="num">13</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>
-          <h3>用語集</h3>
-          <p>現場・会議・レポートで頻出する用語を検索＆カテゴリで絞り込み。スマホでサッと確認。</p>
-          <div class="tags"><span class="tag">検索</span><span class="tag">カテゴリ別</span></div>
+          <h3>用語集（Glossary）</h3>
+          <p>現場・会議・レポートで頻出する70+の実務専門用語を即時インクリメンタル検索＆カテゴリ絞り込み。</p>
+          <div class="tags"><span class="tag">70+用語収録</span><span class="tag">リアルタイム検索</span></div>
           <span class="more">用語集を開く →</span>
         </a>
+
       </div>
     </section>
 

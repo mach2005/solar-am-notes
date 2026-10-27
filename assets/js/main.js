@@ -25,17 +25,67 @@
     { id: "glossary",      file: "notes/glossary.html",      label: "用語集" }
   ];
 
+  // ---- ナビゲーショングループ定義（ヘッダーメニューをカテゴリ別にスッキリ整理） ----
+  var NAV_GROUPS = [
+    {
+      label: "⚡ 現場・技術・O&amp;M",
+      items: [
+        { id: "electrical",    file: "notes/electrical.html",    label: "電気設備" },
+        { id: "om",            file: "notes/om.html",            label: "O&amp;M（運転保守）" },
+        { id: "due-diligence", file: "notes/due-diligence.html", label: "ファシリティDD" },
+        { id: "denken",        file: "notes/denken.html",        label: "電験・主任技術者" }
+      ]
+    },
+    {
+      label: "📈 性能分析",
+      items: [
+        { id: "performance",   file: "notes/performance.html",   label: "発電性能分析" }
+      ]
+    },
+    {
+      label: "🔋 制度・市場・蓄電池",
+      items: [
+        { id: "policy",        file: "notes/policy.html",        label: "FIT/FIP・系統用蓄電池" },
+        { id: "ppa-market",    file: "notes/ppa-market.html",    label: "PPA・電力市場取引" },
+        { id: "news",          file: "notes/news.html",          label: "最新ニュース・政策速報" }
+      ]
+    },
+    {
+      label: "⚖️ 金融・法務",
+      items: [
+        { id: "finance",       file: "notes/finance.html",       label: "金融・ファイナンス" },
+        { id: "acts",          file: "notes/acts.html",          label: "メガソーラー重要法令" },
+        { id: "legal",         file: "notes/legal.html",         label: "契約・保険・土地権原" },
+        { id: "industry",      file: "notes/industry.html",      label: "業界マップ・企業ガイド" }
+      ]
+    }
+  ];
+
   var body = document.body;
   var root = body.getAttribute("data-root") || "";
   var current = body.getAttribute("data-page") || "home";
 
-  // ---- ナビゲーション ----
+  // ---- ナビゲーション描画 ----
   var nav = document.getElementById("site-nav");
   if (nav) {
     var html = '<a href="' + root + 'index.html"' + (current === "home" ? ' class="active"' : "") + ">ホーム</a>";
-    PAGES.forEach(function (p) {
-      html += '<a href="' + root + p.file + '"' + (current === p.id ? ' class="active" aria-current="page"' : "") + ">" + p.label + "</a>";
+    NAV_GROUPS.forEach(function (group) {
+      if (group.items.length === 1) {
+        var single = group.items[0];
+        html += '<a href="' + root + single.file + '"' + (current === single.id ? ' class="active" aria-current="page"' : "") + '>' + group.label + '</a>';
+      } else {
+        var hasActive = group.items.some(function (it) { return it.id === current; });
+        html += '<div class="nav-dropdown">';
+        html += '  <button class="nav-dropdown-btn' + (hasActive ? ' has-active' : '') + '">' + group.label + ' <svg viewBox="0 0 12 12" width="10" height="10"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>';
+        html += '  <div class="nav-dropdown-menu">';
+        group.items.forEach(function (it) {
+          html += '<a href="' + root + it.file + '"' + (current === it.id ? ' class="active" aria-current="page"' : "") + '>' + it.label + '</a>';
+        });
+        html += '  </div>';
+        html += '</div>';
+      }
     });
+    html += '<a href="' + root + 'notes/glossary.html"' + (current === "glossary" ? ' class="active" aria-current="page"' : "") + ">用語集</a>";
     nav.innerHTML = html;
   }
 
@@ -50,6 +100,26 @@
         if (e.target.tagName === "A") body.classList.remove("nav-open");
       });
     }
+  }
+
+  // ---- トップページのトピック絞り込みフィルター ----
+  var topicChips = document.getElementById("topic-chips");
+  if (topicChips) {
+    var cards = document.querySelectorAll("#topics-grid .card");
+    topicChips.addEventListener("click", function (e) {
+      var btn = e.target.closest(".chip");
+      if (!btn) return;
+      topicChips.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("active"); });
+      btn.classList.add("active");
+      var filter = btn.getAttribute("data-filter");
+      cards.forEach(function (card) {
+        if (filter === "all" || card.getAttribute("data-cat") === filter) {
+          card.classList.remove("is-hidden");
+        } else {
+          card.classList.add("is-hidden");
+        }
+      });
+    });
   }
 
   // ---- 前後ページのリンク ----

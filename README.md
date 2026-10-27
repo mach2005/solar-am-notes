@@ -5,20 +5,33 @@ HTML / CSS / JavaScript のみで構成した静的サイトなので、GitHub P
 
 ## 構成
 
+## 構成（全13テーマ・4大実務領域）
+
 ```
-├── index.html            トップページ
+├── index.html            トップページ（体系別ナビ・ドメインフィルター搭載）
 ├── notes/
-│   ├── performance.html  01 発電性能分析
-│   ├── om.html           02 O&M
-│   ├── policy.html       03 FIT/FIP・電力市場・出力制御
-│   ├── finance.html      04 ファイナンス
-│   ├── electrical.html   05 電気設備
-│   ├── legal.html        06 法令・契約
-│   └── glossary.html     07 用語集
+│   ├── 【⚡ 現場・技術・O&M】
+│   │   ├── electrical.html   01 電気設備（構成・キュービクル・保安）
+│   │   ├── om.html           02 O&M（運転保守・予防診断・遠隔監視）
+│   │   ├── due-diligence.html 03 ファシリティDD・事故事例診断
+│   │   └── denken.html       04 電験・主任技術者実務＆公式本試験
+│   ├── 【📈 発電性能分析】
+│   │   └── performance.html  05 発電性能分析（PR・損失ウォーターフォール・予実）
+│   ├── 【🔋 制度・市場・蓄電池】
+│   │   ├── policy.html       06 FIT/FIP・系統用蓄電池・出力制御
+│   │   ├── ppa-market.html   07 PPA・電力市場取引・BESS併設
+│   │   └── news.html         08 最新ニュース・政策動向（1日4回自動更新）
+│   ├── 【⚖️ 金融・法務・事業性】
+│   │   ├── finance.html      09 金融・ファイナンス（PF・DSCR/IRRシミュレーター）
+│   │   ├── acts.html         10 メガソーラー重要法令詳解＆法令診断
+│   │   ├── legal.html        11 契約・保険・土地権原実務
+│   │   └── industry.html     12 業界マップ・企業カオスマップ
+│   └── 【📖 実務リファレンス】
+│       └── glossary.html     13 用語集（70+用語・リアルタイム検索）
 └── assets/
-    ├── css/style.css     デザイン（色・レイアウト）
-    ├── js/main.js        ナビ・目次・用語検索などの動き
-    └── img/hero.jpg      トップ画像
+    ├── css/style.css     デザイン（ドロップダウンナビ・ドメインバッジ・ダークUI）
+    ├── js/main.js        階層型ナビ・トピックフィルター・目次・用語検索
+    └── img/              実写スライド解説画像（Gemini Nano Banana 2.1等）
 ```
 
 ## ノートの追加方法
