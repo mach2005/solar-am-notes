@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <meta http-equiv="refresh" content="0;url=../news.html">
+  <script>location.replace("../news.html");</script>
+  <link rel="canonical" href="../news.html">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body data-root="../" data-page="news">
@@ -29,12 +32,12 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>08 最新ニュース・政策動向</span></nav>
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>最新ニュース・実務ポータル</span></nav>
         <h1>最新ニュース・政策動向</h1>
-        <p>経済産業省・資源エネルギー庁の政策発表、専門メディアの業界ニュースを自動集約。毎朝の定点観測にご活用いただけます。</p>
+        <p>日経BPメガソーラービジネス・SOLAR JOURNAL・PVeye・スマートジャパンなど専門メディアおよび経済産業省・資源エネルギー庁の政策発表を自動集約（1日4回更新）。毎日の定点観測に活用いただけます。</p>
         <div class="meta">
           <span class="update-badge" id="news-updated">毎日自動更新中</span>
-          <span class="tag">経済産業省</span><span class="tag">資源エネルギー庁</span><span class="tag">OCCTO</span><span class="tag">再エネ専門ニュース</span>
+          <span class="tag">日経BP メガソーラービジネス</span><span class="tag">SOLAR JOURNAL</span><span class="tag">PVeye</span><span class="tag">経済産業省</span><span class="tag">OCCTO</span>
         </div>
       </div>
     </section>
@@ -43,17 +46,19 @@
       <!-- 検索とカテゴリフィルタ -->
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="search" id="news-search" placeholder="例：出力制御、FIT、蓄電池、廃棄等費用、パワコン…" aria-label="ニュースを検索" autocomplete="off">
+        <input type="search" id="news-search" placeholder="例：出力制御、FIT、蓄電池、廃棄等費用、パワコン、PPA…" aria-label="ニュースを検索" autocomplete="off">
       </div>
 
-      <div class="filter-chips" role="group" aria-label="カテゴリで絞り込み">
+      <div class="filter-chips" role="group" aria-label="メディア・カテゴリで絞り込み">
         <button class="chip news-chip active" data-filter="all">すべて</button>
+        <button class="chip news-chip" data-filter="source-nikkei">日経メガソーラー</button>
+        <button class="chip news-chip" data-filter="source-sj">SOLAR JOURNAL</button>
+        <button class="chip news-chip" data-filter="source-pveye">PVeye</button>
+        <button class="chip news-chip" data-filter="meti">経産省・エネ庁</button>
         <button class="chip news-chip" data-filter="policy">制度・法改正・条例</button>
         <button class="chip news-chip" data-filter="market">市場・出力制御・PPA</button>
         <button class="chip news-chip" data-filter="finance">投資・ファイナンス</button>
         <button class="chip news-chip" data-filter="om_tech">O&amp;M・保安・事故</button>
-        <button class="chip news-chip" data-filter="meti">経産省・エネ庁</button>
-        <button class="chip news-chip" data-filter="industry">業界・技術</button>
       </div>
 
       <div class="news-header-meta">
@@ -338,9 +343,49 @@
             </a>
           </div>
         </div>
+
+        <!-- カテゴリ5: 太陽光・蓄電池専門主要メディア（定点観測必読ソース） -->
+        <div style="margin-top: 48px;">
+          <h3 style="font-size: 1.25rem; font-weight: 700; color: #f59e0b; display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <span>📰</span> 【太陽光・再エネ 専門主要メディア】最新ビジネス・技術・市場動向
+          </h3>
+          <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 18px;">
+            本サイトで常時新着ニュースを自動取得・集約している太陽光・蓄電池の国内最有力専門メディア一覧です。
+          </p>
+
+          <div class="sources-grid">
+            <!-- 日経BP メガソーラービジネス -->
+            <a class="source-card" href="https://project.nikkeibp.co.jp/ms/mega-solar/" target="_blank" rel="noopener noreferrer">
+              <b>日経BP メガソーラービジネス <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(14,165,233,0.15); color: #38bdf8;">国内最大手</span>
+              <p>メガソーラー・蓄電池・FIT/FIPビジネス・投資動向の専門メディア。開発・O&amp;M・金融の実務記事が充実。</p>
+            </a>
+
+            <!-- SOLAR JOURNAL -->
+            <a class="source-card" href="https://solarjournal.jp/" target="_blank" rel="noopener noreferrer">
+              <b>SOLAR JOURNAL（ソーラージャーナル） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(245,158,11,0.15); color: #fbbf24;">専門誌連動</span>
+              <p>太陽光発電・蓄電池・次世代再エネのビジネス情報誌。海外動向・政策解説・最新機器レポート多数。</p>
+            </a>
+
+            <!-- PVeye -->
+            <a class="source-card" href="https://www.pveye.jp/" target="_blank" rel="noopener noreferrer">
+              <b>PVeye（ピーブイアイ） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(16,185,129,0.15); color: #34d399;">業界専門紙</span>
+              <p>太陽光発電・蓄電ビジネスの業界専門紙。現場取材に基づく深掘り記事、法規制・メーカー動向の速報。</p>
+            </a>
+
+            <!-- スマートジャパン -->
+            <a class="source-card" href="https://www.itmedia.co.jp/smartjapan/" target="_blank" rel="noopener noreferrer">
+              <b>スマートジャパン（ITmedia） <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></b>
+              <span class="source-badge" style="background: rgba(236,72,153,0.15); color: #f472b6;">IT × 再エネ</span>
+              <p>電力システム改革、再エネアグリゲーション、系統用蓄電池、脱炭素ビジネスを追うITmediaの専門メディア。</p>
+            </a>
+          </div>
+        </div>
       </section>
 
-      <nav class="pager" id="pager" aria-label="前後のノート" style="margin-top:64px"></nav>
+      
     </div>
   </main>
 

@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>用語集｜Solar AM Notes</title>
-  <meta name="description" content="メガソーラー・アセットマネジメントの用語集。発電性能、O&amp;M、制度・市場、ファイナンス、電気設備、法令・契約の頻出用語をキーワード検索とカテゴリで絞り込めます。">
+  <title>実務用語集（Glossary）｜Solar AM Notes</title>
+  <meta name="description" content="メガソーラー・アセットマネジメント実務用語集。電気設備、発電性能、O&amp;M、FIT/FIP・電力市場、ファイナンス、法令・契約の全6ジャンル150+用語を網羅。図解イラスト・高速検索対応。">
   <meta name="theme-color" content="#0b0f17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f7931e'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231a1206'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body data-root="../" data-page="glossary">
@@ -29,149 +29,440 @@
   <main>
     <section class="page-hero">
       <div class="page-hero-inner">
-        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>13 用語集</span></nav>
-        <h1>用語集</h1>
-        <p>会議やレポートで出てきた言葉をその場で確認。キーワード検索（カタカナ・ひらがな・英字どれでもOK）とカテゴリで絞り込めます。</p>
+        <nav class="breadcrumb" aria-label="パンくずリスト"><a href="../index.html">ホーム</a><span>/</span><span>12 実務用語集（Glossary）</span></nav>
+        <h1>実務用語集（Glossary）</h1>
+        <p>現場・技術・制度・ファイナンス・法務まで、太陽光アセットマネジメントで頻出する160以上の重要専門用語を体系的6ジャンルに分類。概念図解イラストとともに直感的に学習・即時検索できます。</p>
+        <div class="meta">
+          <span class="update-badge">収録数: 160+ 専門用語</span>
+          <span class="tag">図解イラスト5点収録</span>
+          <span class="tag">インクリメンタル高速検索</span>
+          <span class="tag">6大実務ジャンル別</span>
+        </div>
       </div>
     </section>
 
     <div class="section" style="padding-top:32px">
+      <!-- 検索ボックス -->
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="search" id="term-search" placeholder="例：PR、DSCR、出力制御、パワコン…" aria-label="用語を検索" autocomplete="off">
+        <input type="search" id="term-search" placeholder="例：PR、DSCR、PCS、出力制御、ホットスポット、ウォーターフォール、林地開発…" aria-label="用語を検索" autocomplete="off">
       </div>
-      <div class="filter-chips" role="group" aria-label="カテゴリで絞り込み">
-        <button class="chip active" data-filter="all" id="chip-all">すべて</button>
-        <button class="chip" data-filter="perf" id="chip-perf">発電性能</button>
-        <button class="chip" data-filter="om" id="chip-om">O&amp;M</button>
-        <button class="chip" data-filter="policy" id="chip-policy">制度・市場</button>
-        <button class="chip" data-filter="finance" id="chip-finance">ファイナンス</button>
-        <button class="chip" data-filter="elec" id="chip-elec">電気設備</button>
-        <button class="chip" data-filter="legal" id="chip-legal">法令・契約</button>
+
+      <!-- ジャンル切り替えチップ -->
+      <div class="filter-chips" role="group" aria-label="ジャンルで絞り込み">
+        <button class="chip active" data-filter="all" id="chip-all">全160+用語</button>
+        <button class="chip" data-filter="elec" id="chip-elec">⚡ 電気設備・構成技術</button>
+        <button class="chip" data-filter="perf" id="chip-perf">📈 発電性能・データ分析</button>
+        <button class="chip" data-filter="om" id="chip-om">🛠️ O&amp;M・点検・障害</button>
+        <button class="chip" data-filter="policy" id="chip-policy">🔋 制度・市場・蓄電池</button>
+        <button class="chip" data-filter="finance" id="chip-finance">⚖️ 金融・ファイナンス</button>
+        <button class="chip" data-filter="legal" id="chip-legal">📜 法令・許認可・契約</button>
       </div>
-      <p class="count" id="term-count" aria-live="polite"></p>
+      <p class="count" id="term-count" aria-live="polite">全160件以上の用語を表示中</p>
 
-      <dl class="terms">
-        <!-- ===== 発電性能 ===== -->
-        <div class="term" data-cat="perf"><dt>PR（性能比）<small>Performance Ratio</small><span class="cat">発電性能</span></dt><dd>実発電量 ÷（定格容量 × 傾斜面日射量 ÷ 1kW/m²）。日射の影響を除いた設備の健全性指標。目安は75〜85%程度。</dd></div>
-        <div class="term" data-cat="perf"><dt>比発電量<small>Specific Yield</small><span class="cat">発電性能</span></dt><dd>1kWpあたりの発電量（kWh/kWp）。規模の異なる発電所の比較に使う。</dd></div>
-        <div class="term" data-cat="perf"><dt>設備利用率<small>Capacity Factor</small><span class="cat">発電性能</span></dt><dd>年間発電量 ÷（定格出力 × 8,760時間）。DC基準かAC基準かで値が変わる。</dd></div>
-        <div class="term" data-cat="perf"><dt>傾斜面日射量<small>POA Irradiation</small><span class="cat">発電性能</span></dt><dd>パネル面に入射する日射量。水平面日射量（GHI）とは異なる。PR計算の分母に用いる。</dd></div>
-        <div class="term" data-cat="perf"><dt>STC（標準試験条件）<small>Standard Test Conditions</small><span class="cat">発電性能</span></dt><dd>日射強度1,000W/m²、セル温度25℃、エアマス1.5。モジュールの公称出力はこの条件での値。</dd></div>
-        <div class="term" data-cat="perf"><dt>温度係数<small>Temperature Coefficient</small><span class="cat">発電性能</span></dt><dd>モジュール温度1℃あたりの出力変化率。結晶系で約−0.3〜−0.45%/℃。</dd></div>
-        <div class="term" data-cat="perf"><dt>ソイリング<small>Soiling</small><span class="cat">発電性能</span></dt><dd>砂ぼこり・鳥の糞・花粉などパネル表面の汚れによる発電損失。</dd></div>
-        <div class="term" data-cat="perf"><dt>クリッピング（ピークカット）<small>Clipping</small><span class="cat">発電性能</span></dt><dd>DC出力がPCS定格を超えた分が切り捨てられる現象。過積載設計で発生する。</dd></div>
-        <div class="term" data-cat="perf"><dt>P50 / P90<small>Exceedance Probability</small><span class="cat">発電性能</span></dt><dd>その発電量を上回る確率が50%／90%となる予測値。P90はレンダーの保守的評価に使われる。</dd></div>
-        <div class="term" data-cat="perf"><dt>経年劣化率<small>Degradation Rate</small><span class="cat">発電性能</span></dt><dd>年あたりの出力低下率。計画では年0.5%前後を見込むことが多い。</dd></div>
-        <div class="term" data-cat="perf"><dt>LID<small>Light Induced Degradation</small><span class="cat">発電性能</span></dt><dd>光誘起劣化。設置初期に光を浴びることで起きる出力低下。</dd></div>
-        <div class="term" data-cat="perf"><dt>PID<small>Potential Induced Degradation</small><span class="cat">発電性能</span></dt><dd>電圧誘起劣化。高電圧と高温多湿でセルとフレーム間に漏れ電流が生じ、大きな出力低下を招く。</dd></div>
-        <div class="term" data-cat="perf"><dt>予実分析<small>Budget vs Actual</small><span class="cat">発電性能</span></dt><dd>計画発電量と実績の比較。差異を天候要因（日射）と性能要因（PR）に分解して説明する。</dd></div>
-        <div class="term" data-cat="perf"><dt>温度補正PR<small>Temperature-corrected PR</small><span class="cat">発電性能</span></dt><dd>温度損失の影響を除いたPR。季節変動をならし、劣化傾向の把握に使う。</dd></div>
+      <!-- ========================================================
+           ジャンル1: ⚡ 電気設備・構成技術 (elec)
+           ======================================================== -->
+      <section class="genre-section" data-genre="elec" id="sec-elec">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">⚡ 電気設備・構成技術</h2>
+            <span class="genre-badge" style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3);">26用語収録</span>
+          </div>
+          <p class="genre-desc">モジュールから接続箱、PCS（パワコン）、受変電キュービクル、保護継電器、特別高圧・高圧連系までの電気回路・設備保安の実務用語です。</p>
+        </div>
 
-        <!-- ===== O&M ===== -->
-        <div class="term" data-cat="om"><dt>O&amp;M<small>Operation &amp; Maintenance</small><span class="cat">O&amp;M</span></dt><dd>発電所の運転監視と保守点検。電気保安、駆けつけ、修繕、除草などを含む。</dd></div>
-        <div class="term" data-cat="om"><dt>稼働率<small>Availability</small><span class="cat">O&amp;M</span></dt><dd>停止のなさを示す指標。時間ベースとエネルギーベースがあり、O&amp;M契約で保証値を設けることもある。</dd></div>
-        <div class="term" data-cat="om"><dt>予防保全<small>Preventive Maintenance</small><span class="cat">O&amp;M</span></dt><dd>故障前に周期を決めて点検・部品交換を行う保全方式。</dd></div>
-        <div class="term" data-cat="om"><dt>状態基準保全（CBM）<small>Condition Based Maintenance</small><span class="cat">O&amp;M</span></dt><dd>監視データ等から劣化兆候を捉え、必要なタイミングで保全する方式。</dd></div>
-        <div class="term" data-cat="om"><dt>IVカーブ測定<small>I-V Curve Tracing</small><span class="cat">O&amp;M</span></dt><dd>ストリングの電流−電圧特性を測定し、断線・劣化・バイパスダイオード故障などを診断する。</dd></div>
-        <div class="term" data-cat="om"><dt>ホットスポット<small>Hot Spot</small><span class="cat">O&amp;M</span></dt><dd>影・汚れ・セル不良などで局所的に発熱する現象。出力低下や焼損の原因に。</dd></div>
-        <div class="term" data-cat="om"><dt>赤外線サーモグラフィ点検<small>IR Thermography</small><span class="cat">O&amp;M</span></dt><dd>赤外線カメラで温度分布を撮影し、ホットスポットや接続部の異常発熱を見つける。ドローン搭載が普及。</dd></div>
-        <div class="term" data-cat="om"><dt>EL検査<small>Electroluminescence</small><span class="cat">O&amp;M</span></dt><dd>通電でセルを発光させ、目に見えないマイクロクラックを検出する検査。</dd></div>
-        <div class="term" data-cat="om"><dt>絶縁抵抗測定<small>Insulation Resistance Test</small><span class="cat">O&amp;M</span></dt><dd>回路と大地間の絶縁状態を測定。地絡事故の予防に重要な年次点検項目。</dd></div>
-        <div class="term" data-cat="om"><dt>月次点検<small>Monthly Inspection</small><span class="cat">O&amp;M</span></dt><dd>保安規程に基づく巡視点検。外観・異音・異臭・計器指示値などを確認する。</dd></div>
-        <div class="term" data-cat="om"><dt>年次点検<small>Annual Inspection</small><span class="cat">O&amp;M</span></dt><dd>停電を伴う精密点検。絶縁抵抗測定・保護継電器試験・清掃・増し締めなど。</dd></div>
-        <div class="term" data-cat="om"><dt>遠隔監視システム<small>SCADA / Monitoring</small><span class="cat">O&amp;M</span></dt><dd>PCS・ストリング・気象・メーターのデータを収集し、異常時にアラームを出すシステム。</dd></div>
-        <div class="term" data-cat="om"><dt>SLA<small>Service Level Agreement</small><span class="cat">O&amp;M</span></dt><dd>対応時間・品質の水準を定めた取り決め。O&amp;M契約の駆けつけ時間など。</dd></div>
-        <div class="term" data-cat="om"><dt>予備品<small>Spare Parts</small><span class="cat">O&amp;M</span></dt><dd>故障時の早期復旧のために保管する交換部品（PCS部品・ヒューズ・モジュール等）。</dd></div>
+        <!-- 概念イラスト1: 発電システム電気構成フロー -->
+        <div class="glossary-visual-card">
+          <div class="glossary-visual-header">
+            <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 概念図解：太陽光発電システムの全体電気構成フロー</h4>
+            <span class="glossary-visual-tag">図解で覚える電気設備</span>
+          </div>
+          <div class="glossary-visual-body">
+            <div class="glossary-visual-img-wrap">
+              <img class="glossary-visual-img" src="../assets/images/glossary/solar_system_flow.jpg" alt="太陽光発電システムの電気構成フロー図（モジュール・接続箱・PCS・キュービクル・送配電網）" loading="lazy">
+            </div>
+            <div class="glossary-visual-points">
+              <div class="glossary-visual-point">
+                <b>① 直流回路（DC）: ストリング ➔ 接続箱</b>
+                モジュールを直列に繋ぎ電圧を上げた「ストリング」を、接続箱（集電盤）で並列に集約。開閉器や逆流防止素子を内蔵。
+              </div>
+              <div class="glossary-visual-point">
+                <b>② 電力変換: PCS（パワーコンディショナ）</b>
+                太陽電池の直流電力（DC）を商用交流電力（AC）に高効率変換。日射に追従するMPPT制御を常時実行。
+              </div>
+              <div class="glossary-visual-point">
+                <b>③ 交流昇圧＆保護: 変圧器キュービクル ➔ 系統連系</b>
+                変圧器（TR）で6.6kV（高圧）や22kV/66kV（特高）に昇圧。VCBや保護継電器で事故時に電力系統と瞬時遮断。
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!-- ===== 制度・市場 ===== -->
-        <div class="term" data-cat="policy"><dt>FIT（固定価格買取制度）<small>Feed-in Tariff</small><span class="cat">制度・市場</span></dt><dd>再エネ電気を国が定めた価格で一定期間買い取る制度。10kW以上の太陽光は20年間。2012年開始。</dd></div>
-        <div class="term" data-cat="policy"><dt>FIP<small>Feed-in Premium</small><span class="cat">制度・市場</span></dt><dd>市場等での売電収入にプレミアムを上乗せする制度。2022年4月開始。</dd></div>
-        <div class="term" data-cat="policy"><dt>調達価格<small>Tariff</small><span class="cat">制度・市場</span></dt><dd>FITで電気が買い取られる単価（円/kWh）。認定時期などにより案件ごとに決まる。</dd></div>
-        <div class="term" data-cat="policy"><dt>調達期間<small>Tariff Period</small><span class="cat">制度・市場</span></dt><dd>FITで買い取りが行われる期間。FIPでは交付期間という。</dd></div>
-        <div class="term" data-cat="policy"><dt>基準価格<small>FIP Price</small><span class="cat">制度・市場</span></dt><dd>FIPにおける収入の基準となる価格。プレミアム＝基準価格−参照価格。</dd></div>
-        <div class="term" data-cat="policy"><dt>参照価格<small>Reference Price</small><span class="cat">制度・市場</span></dt><dd>FIPで市場価格の水準を表す価格。市場価格の平均などから算定され、定期的に更新される。</dd></div>
-        <div class="term" data-cat="policy"><dt>再エネ賦課金<small>Renewable Energy Surcharge</small><span class="cat">制度・市場</span></dt><dd>FIT/FIPの費用を賄うため、電気料金に上乗せして電気の使用者から徴収されるもの。</dd></div>
-        <div class="term" data-cat="policy"><dt>事業計画認定<small>Business Plan Approval</small><span class="cat">制度・市場</span></dt><dd>2017年改正FIT法以降の認定方式。事業計画策定ガイドラインの遵守などが求められる。</dd></div>
-        <div class="term" data-cat="policy"><dt>JEPX<small>Japan Electric Power Exchange</small><span class="cat">制度・市場</span></dt><dd>日本卸電力取引所。スポット市場（30分×48コマ）・時間前市場などを運営。</dd></div>
-        <div class="term" data-cat="policy"><dt>計画値同時同量<small>Balancing</small><span class="cat">制度・市場</span></dt><dd>30分ごとの発電・需要計画と実績を一致させる仕組み・義務。</dd></div>
-        <div class="term" data-cat="policy"><dt>インバランス<small>Imbalance</small><span class="cat">制度・市場</span></dt><dd>計画と実績の差。インバランス料金で精算される。</dd></div>
-        <div class="term" data-cat="policy"><dt>出力制御<small>Curtailment</small><span class="cat">制度・市場</span></dt><dd>供給が需要を上回るおそれがある場合に、電力会社の指示で発電を抑制すること。</dd></div>
-        <div class="term" data-cat="policy"><dt>無制限・無補償ルール<small>Designated Rule</small><span class="cat">制度・市場</span></dt><dd>上限なく無補償で出力制御を受けるルール（指定ルール）。他に旧ルール（30日）、新ルール（360時間）がある。</dd></div>
-        <div class="term" data-cat="policy"><dt>オンライン代理制御<small>Online Proxy Control</small><span class="cat">制度・市場</span></dt><dd>オフライン事業者の出力制御をオンライン事業者が代わりに行い、経済的に精算する仕組み。</dd></div>
-        <div class="term" data-cat="policy"><dt>非化石証書<small>Non-fossil Certificate</small><span class="cat">制度・市場</span></dt><dd>非化石電源由来の環境価値を証書化したもの。非化石価値取引市場で取引される。</dd></div>
-        <div class="term" data-cat="policy"><dt>廃棄等費用積立制度<small>Decommissioning Reserve</small><span class="cat">制度・市場</span></dt><dd>10kW以上の太陽光が対象。調達期間終了前10年間、廃棄費用を原則外部積立する制度。2022年7月開始。</dd></div>
-        <div class="term" data-cat="policy"><dt>アグリゲーター<small>Aggregator</small><span class="cat">制度・市場</span></dt><dd>複数の電源や蓄電池を束ねて市場取引・AI発電予測・バランシング（計画値同時同量）を代行する事業者。特定卸供給事業者としてFIP案件で不可欠。</dd></div>
-        <div class="term" data-cat="policy"><dt>バランシンググループ（BG）<small>Balancing Group</small><span class="cat">制度・市場</span></dt><dd>計画値同時同量のインバランスリスクを分散・ヘッジするために、複数の発電事業者を束ねて組成する事業者連合。</dd></div>
-        <div class="term" data-cat="policy"><dt>系統用蓄電池（BESS）<small>Grid-Scale Battery Energy Storage</small><span class="cat">制度・市場</span></dt><dd>送配電網に直接連系するスタンドアローン型大型蓄電システム。昼間充電・夜間放電のアービトラージや需給調整市場・容量市場でマルチに収益化を図る。</dd></div>
-        <div class="term" data-cat="policy"><dt>併設型蓄電池<small>Co-located Battery Storage</small><span class="cat">制度・市場</span></dt><dd>太陽光発電所構内に設置される蓄電池。出力制御時の余剰電力を充電して逸失を防ぎ、夕方以降の高価格帯にシフト放電する。</dd></div>
-        <div class="term" data-cat="policy"><dt>アービトラージ（価格差取引）<small>Arbitrage</small><span class="cat">制度・市場</span></dt><dd>JEPXスポット市場で電力価格が極めて安価な時間帯（昼間0.01円など）に蓄電池へ充電し、夕方・夜間の高値時間帯に放電して利ざやを獲得する取引手法。</dd></div>
-        <div class="term" data-cat="policy"><dt>需給調整市場<small>Balancing Market</small><span class="cat">制度・市場</span></dt><dd>一般送配電事業者が系統周波数の維持や需給バランス調整に必要な調整力（ΔkW/kWh）を公募調達する市場。蓄電池の高速応答性が強み。</dd></div>
-        <div class="term" data-cat="policy"><dt>容量市場<small>Capacity Market</small><span class="cat">制度・市場</span></dt><dd>将来（4年後等）の全国の電力供給能力（kW）をあらかじめ確保・取引する市場。稼働可能電源・蓄電池に固定収入が支払われる。</dd></div>
-        <div class="term" data-cat="policy"><dt>長期脱炭素電源オークション<small>Long-term Decarbonization Auction</small><span class="cat">制度・市場</span></dt><dd>系統用蓄電池や再エネなど巨額の初期投資を要する脱炭素電源の新設を促すため、20年間にわたり固定費回収を国が保証する容量市場の特別入札枠。</dd></div>
-        <div class="term" data-cat="policy"><dt>卒FIT<small>Post-FIT</small><span class="cat">制度・市場</span></dt><dd>調達期間が終了した状態。以降は市場売電・相対契約・PPAなどで販売する。</dd></div>
-        <div class="term" data-cat="policy"><dt>コーポレートPPA<small>Corporate PPA</small><span class="cat">制度・市場</span></dt><dd>企業（需要家）と発電事業者が長期で電力・環境価値を売買する契約。オンサイト型とオフサイト型がある。</dd></div>
+        <dl class="terms">
+          <div class="term" data-cat="elec"><dt>PCS（パワーコンディショナ）<small>Power Conditioning System</small><span class="cat cat-elec">電気設備</span></dt><dd>太陽電池の直流電力（DC）を電力系統と同じ周波数の交流電力（AC）に変換する中核装置。インバータ回路、系統連系保護装置、自律運転機能などを統合。</dd></div>
+          <div class="term" data-cat="elec"><dt>MPPT（最大電力点追従）<small>Maximum Power Point Tracking</small><span class="cat cat-elec">電気設備</span></dt><dd>日射強度や温度で刻々と変動する太陽電池の電流・電圧特性（I-V特性）において、出力電力（P＝V×I）が最大となる最適動作点（Pmax）を自動で追従・維持する制御。</dd></div>
+          <div class="term" data-cat="elec"><dt>過積載率（DC/AC比）<small>DC/AC Ratio</small><span class="cat cat-elec">電気設備</span></dt><dd>モジュール定格容量（DC）÷ PCS定格容量（AC）。120%〜180%の過積載設計により、朝夕や曇天時の発電量を底上げして総売電量を最大化する手法。</dd></div>
+          <div class="term" data-cat="elec"><dt>ストリング<small>PV String</small><span class="cat cat-elec">電気設備</span></dt><dd>太陽光モジュールを複数枚直列に配線接続した最小の発電回路単位。直列枚数によってストリング全体の開放電圧（Voc）および動作電圧（Vmp）が決まる。</dd></div>
+          <div class="term" data-cat="elec"><dt>接続箱（集電盤）<small>Combiner Box / Junction Box</small><span class="cat cat-elec">電気設備</span></dt><dd>アレイ上の複数ストリングの直流配線を並列にまとめてPCSへ送電する盤。直流断路器、ヒューズ、逆流防止ダイオード、サージ保護装置（SPD）を内蔵。</dd></div>
+          <div class="term" data-cat="elec"><dt>キュービクル（受変電設備）<small>High Voltage Cubicle</small><span class="cat cat-elec">電気設備</span></dt><dd>高圧（6.6kV）または特高で電力系統と連系するための受変電機器を一括収納した金属製キャビネット。変圧器、断路器、遮断器、計器用変成器、保護継電器を配置。</dd></div>
+          <div class="term" data-cat="elec"><dt>高圧連系<small>High Voltage Interconnection</small><span class="cat cat-elec">電気設備</span></dt><dd>6.6kV配電線に連系する発電設備区分。原則として発電出力50kW以上2,000kW未満のメガソーラーが該当し、電気主任技術者の選任届出が必要。</dd></div>
+          <div class="term" data-cat="elec"><dt>特別高圧連系（特高）<small>Extra High Voltage Interconnection</small><span class="cat cat-elec">電気設備</span></dt><dd>22kV、66kV、77kV以上の基幹送電線に連系する発電区分。原則2,000kW（2MW）以上が対象で、専用受電設備・専任の主任技術者・電気保安体制の構築が必須。</dd></div>
+          <div class="term" data-cat="elec"><dt>単独運転防止（単独運転検出）<small>Anti-Islanding Protection</small><span class="cat cat-elec">電気設備</span></dt><dd>系統停電時に発電所が系統へ送電を継続（単独運転）すると感電や設備破壊を招くため、PCSに能動的・受動的方式で単独運転を瞬時に検知し停止させる保護機能。</dd></div>
+          <div class="term" data-cat="elec"><dt>OVGR（地絡過電圧継電器）<small>Ground Over Voltage Relay</small><span class="cat cat-elec">電気設備</span></dt><dd>系統側で1線地絡事故が発生した際に生じる零相電圧（Vo）を検出して遮断器を作動させる継電器。非接地系統の保護に不可欠。</dd></div>
+          <div class="term" data-cat="elec"><dt>DGR（地絡方向継電器）<small>Directional Ground Relay</small><span class="cat cat-elec">電気設備</span></dt><dd>零相電圧（Vo）と零相電流（Io）の位相差を判別し、地絡事故が「構内」で起きたのか「系統構外」で起きたのかを正確に識別して構内事故時のみ遮断する継電器。</dd></div>
+          <div class="term" data-cat="elec"><dt>OCR（過電流継電器）<small>Over Current Relay</small><span class="cat cat-elec">電気設備</span></dt><dd>回路に定格を超える過負荷電流や短絡電流（ショート）が流れたことを検出し、主遮断器（VCB等）に引き外しトリップ信号を送る継電器。</dd></div>
+          <div class="term" data-cat="elec"><dt>力率一定制御<small>Constant Power Factor Control</small><span class="cat cat-elec">電気設備</span></dt><dd>太陽光発電の大量連系により受電点電圧が上昇して上限を逸脱するのを防ぐため、PCSから適度な遅れ無効電力を出力して受電点力率（95%等）を一定に保つ制御。</dd></div>
+          <div class="term" data-cat="elec"><dt>FRT要件（系統擾乱耐性）<small>Fault Ride Through</small><span class="cat cat-elec">電気設備</span></dt><dd>送電線の落雷などで瞬時電圧低下や周波数変動が生じた際、即座に系統から一斉脱落せず、一定時間運転を維持して系統の崩壊（ブラックアウト）を防ぐ性能要件。</dd></div>
+          <div class="term" data-cat="elec"><dt>バイパスダイオード<small>Bypass Diode</small><span class="cat cat-elec">電気設備</span></dt><dd>落ち葉や影で発電しなくなったセル群を電気的に迂回（バイパス）させ、影セルが抵抗となって異常発熱するホットスポット現象やストリング全体の出力低下を防ぐダイオード。</dd></div>
+          <div class="term" data-cat="elec"><dt>開放電圧（Voc）<small>Open Circuit Voltage</small><span class="cat cat-elec">電気設備</span></dt><dd>端子間に電流が流れていない状態の電圧。冬期の極寒環境下では温度係数によりVocが急上昇するため、PCSの最大許容入力電圧を超えないよう直列数を設計する。</dd></div>
+          <div class="term" data-cat="elec"><dt>短絡電流（Isc）<small>Short Circuit Current</small><span class="cat cat-elec">電気設備</span></dt><dd>端子間をショートさせた時に流れる最大電流。日射強度にほぼ比例。ケーブル許容電流やヒューズ容量選定の基準値となる。</dd></div>
+          <div class="term" data-cat="elec"><dt>動作点（Vmp / Imp / Pmax）<small>Maximum Power Voltage / Current</small><span class="cat cat-elec">電気設備</span></dt><dd>最大出力動作電圧（Vmp）と最大出力動作電流（Imp）。この積（Vmp×Imp）がモジュールの最大定格出力（Pmax）となる。</dd></div>
+          <div class="term" data-cat="elec"><dt>電気主任技術者<small>Chief Electrical Engineer</small><span class="cat cat-elec">電気設備</span></dt><dd>電気事業法に基づき、事業用電気工作物の工事・維持・運用の保安を監督する国家資格者（電験一種・二種・三種）。自家用発電所設置者は選任または委託が義務。</dd></div>
+          <div class="term" data-cat="elec"><dt>保安規程<small>Safety Regulations</small><span class="cat cat-elec">電気設備</span></dt><dd>設置者が電気工作物の保安のために自ら定め、経済産業大臣（産業保安監督部）に届出を行う規程。巡視点検の頻度、定期点検基準、緊急連絡体制などを規定。</dd></div>
+          <div class="term" data-cat="elec"><dt>自家用電気工作物<small>Private Electrical Facilities</small><span class="cat cat-elec">電気設備</span></dt><dd>電気事業法上の重要区分。50kW以上の太陽電池発電所、または受電電圧600V超の高圧受電設備を有する発電所が該当し、法令上の保安義務が課される。</dd></div>
+          <div class="term" data-cat="elec"><dt>使用前自己確認制度<small>Pre-commissioning Self-inspection</small><span class="cat cat-elec">電気設備</span></dt><dd>10kW以上500kW未満の太陽光発電所（小規模事業用電気工作物含む）において、使用開始前に技術基準適合性を自ら確認・記録・届出することが義務付けられた制度。</dd></div>
+          <div class="term" data-cat="elec"><dt>受電点（責任分界点）<small>Point of Common Coupling (PCC)</small><span class="cat cat-elec">電気設備</span></dt><dd>一般送配電事業者の系統設備と発電事業者設備との財産・保安上の境界。通常は第一号柱の気中開閉器（PAS/SOG）の電源側接続端子となる。</dd></div>
+          <div class="term" data-cat="elec"><dt>PAS / SOG開閉器<small>Pole Air Switch / Storage Overcurrent Ground</small><span class="cat cat-elec">電気設備</span></dt><dd>受電点柱上に設置される高圧気中開閉器。構内事故時に系統への波及事故を遮断し、送電線全体の停電を防ぐ最後の砦。</dd></div>
+          <div class="term" data-cat="elec"><dt>変圧器（トランス / TR）<small>Step-up Transformer</small><span class="cat cat-elec">電気設備</span></dt><dd>PCSの出力電圧（例: AC380Vや480V）を送電・受電電圧（6.6kV、22kV、66kV）まで電磁誘導により昇圧する静止誘導機器。</dd></div>
+          <div class="term" data-cat="elec"><dt>真空遮断器（VCB）<small>Vacuum Circuit Breaker</small><span class="cat cat-elec">電気設備</span></dt><dd>高圧電路の負荷電流を開閉し、事故時には継電器の指令により真空容器内の高い絶縁性能を利用して安全に大電流アークを遮断・消弧する遮断器。</dd></div>
+        </dl>
+      </section>
 
-        <!-- ===== ファイナンス ===== -->
-        <div class="term" data-cat="finance"><dt>SPV<small>Special Purpose Vehicle</small><span class="cat">ファイナンス</span></dt><dd>特定の事業のためだけに設立される会社。倒産隔離によりリスクを切り離す。</dd></div>
-        <div class="term" data-cat="finance"><dt>GK-TKスキーム<small>Godo Kaisha - Tokumei Kumiai</small><span class="cat">ファイナンス</span></dt><dd>合同会社（GK）を事業主体とし、投資家が匿名組合（TK）出資する仕組み。</dd></div>
-        <div class="term" data-cat="finance"><dt>プロジェクトファイナンス<small>Project Finance</small><span class="cat">ファイナンス</span></dt><dd>事業のキャッシュフローを返済原資とし、事業資産を担保とする融資手法。</dd></div>
-        <div class="term" data-cat="finance"><dt>ノンリコース<small>Non-recourse</small><span class="cat">ファイナンス</span></dt><dd>スポンサー（出資者）に返済義務が遡及しない融資。限定的に遡及するものはリミテッドリコース。</dd></div>
-        <div class="term" data-cat="finance"><dt>IRR（内部収益率）<small>Internal Rate of Return</small><span class="cat">ファイナンス</span></dt><dd>NPVがゼロになる割引率。プロジェクトIRRとエクイティIRRがある。</dd></div>
-        <div class="term" data-cat="finance"><dt>NPV（正味現在価値）<small>Net Present Value</small><span class="cat">ファイナンス</span></dt><dd>将来CFを割引率で現在価値にした合計から初期投資を引いた値。</dd></div>
-        <div class="term" data-cat="finance"><dt>DSCR<small>Debt Service Coverage Ratio</small><span class="cat">ファイナンス</span></dt><dd>元利金返済カバー率。CFADS ÷ 元利金返済額。融資契約の財務制限条項に使われる。</dd></div>
-        <div class="term" data-cat="finance"><dt>LLCR<small>Loan Life Coverage Ratio</small><span class="cat">ファイナンス</span></dt><dd>融資残存期間のCFADS現在価値 ÷ 借入残高。期間全体の返済余力。</dd></div>
-        <div class="term" data-cat="finance"><dt>CFADS<small>Cash Flow Available for Debt Service</small><span class="cat">ファイナンス</span></dt><dd>元利金返済に充当可能なキャッシュフロー。</dd></div>
-        <div class="term" data-cat="finance"><dt>EBITDA<small>Earnings Before Interest, Taxes, Depreciation and Amortization</small><span class="cat">ファイナンス</span></dt><dd>利払い・税金・償却前利益。発電事業では概ね「売電収入−運営費用」。</dd></div>
-        <div class="term" data-cat="finance"><dt>DSRA<small>Debt Service Reserve Account</small><span class="cat">ファイナンス</span></dt><dd>元利金返済積立口座。数か月分の返済額を積み立てておく。</dd></div>
-        <div class="term" data-cat="finance"><dt>ロックアップ<small>Lock-up / Distribution Block</small><span class="cat">ファイナンス</span></dt><dd>DSCRが一定水準を下回った場合などに、投資家への分配が停止されること。</dd></div>
-        <div class="term" data-cat="finance"><dt>コベナンツ<small>Covenants</small><span class="cat">ファイナンス</span></dt><dd>融資契約で借り手が守るべき約束（財務制限条項・報告義務・事前承諾事項など）。</dd></div>
-        <div class="term" data-cat="finance"><dt>キャッシュウォーターフォール<small>Cash Waterfall</small><span class="cat">ファイナンス</span></dt><dd>収入の支払い優先順位。運営費→元利金→積立→分配の順が典型。</dd></div>
-        <div class="term" data-cat="finance"><dt>DCF法<small>Discounted Cash Flow</small><span class="cat">ファイナンス</span></dt><dd>将来CFを割り引いて資産価値を算定する評価手法。</dd></div>
-        <div class="term" data-cat="finance"><dt>法定耐用年数<small>Statutory Useful Life</small><span class="cat">ファイナンス</span></dt><dd>税務上の減価償却年数。売電用の太陽光発電設備は17年が一般的な扱い。</dd></div>
-        <div class="term" data-cat="finance"><dt>AM（アセットマネジメント）<small>Asset Management</small><span class="cat">ファイナンス</span></dt><dd>所有者に代わり資産の価値を維持・向上させる業務。O&amp;M管理・予実管理・レポーティング等。</dd></div>
+      <!-- ========================================================
+           ジャンル2: 📈 発電性能・データ分析 (perf)
+           ======================================================== -->
+      <section class="genre-section" data-genre="perf" id="sec-perf">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">📈 発電性能・データ分析</h2>
+            <span class="genre-badge" style="background: rgba(192,132,252,0.15); color: #c084fc; border: 1px solid rgba(192,132,252,0.3);">22用語収録</span>
+          </div>
+          <p class="genre-desc">PR（性能比）、比発電量、損失ツリー、温度補正、P50/P90予測、日射量測定と予実対比分析に関するアセットマネージャー必修の指標です。</p>
+        </div>
 
-        <!-- ===== 電気設備 ===== -->
-        <div class="term" data-cat="elec"><dt>PCS（パワーコンディショナ・パワコン）<small>Power Conditioning System</small><span class="cat">電気設備</span></dt><dd>直流を交流に変換し、系統連系保護や出力制御を担う装置。インバータとも呼ぶ。</dd></div>
-        <div class="term" data-cat="elec"><dt>MPPT<small>Maximum Power Point Tracking</small><span class="cat">電気設備</span></dt><dd>最大電力点追従制御。日射・温度で変わる最大出力点を自動で追いかける。</dd></div>
-        <div class="term" data-cat="elec"><dt>過積載率<small>DC/AC Ratio</small><span class="cat">電気設備</span></dt><dd>モジュール容量（DC）÷ PCS容量（AC）。</dd></div>
-        <div class="term" data-cat="elec"><dt>ストリング<small>String</small><span class="cat">電気設備</span></dt><dd>モジュールを直列接続した単位。直列数で電圧が決まる。</dd></div>
-        <div class="term" data-cat="elec"><dt>接続箱<small>Junction Box / Combiner Box</small><span class="cat">電気設備</span></dt><dd>複数のストリングを並列に束ねる箱。開閉器・ヒューズ・逆流防止素子を備える。</dd></div>
-        <div class="term" data-cat="elec"><dt>キュービクル<small>Cubicle</small><span class="cat">電気設備</span></dt><dd>高圧受変電設備を金属箱に収めたもの。高圧連系の発電所に設置。</dd></div>
-        <div class="term" data-cat="elec"><dt>高圧連系<small>High Voltage Interconnection</small><span class="cat">電気設備</span></dt><dd>6.6kVの配電線への連系。原則50kW以上2,000kW未満。</dd></div>
-        <div class="term" data-cat="elec"><dt>特別高圧連系<small>Extra High Voltage Interconnection</small><span class="cat">電気設備</span></dt><dd>7,000V超の送電線への連系。原則2,000kW以上。</dd></div>
-        <div class="term" data-cat="elec"><dt>単独運転<small>Islanding</small><span class="cat">電気設備</span></dt><dd>系統が停電しているのに発電所が送電を続ける状態。保安上危険なため検出・停止が必要。</dd></div>
-        <div class="term" data-cat="elec"><dt>OVGR<small>Ground Over Voltage Relay</small><span class="cat">電気設備</span></dt><dd>地絡過電圧継電器。零相電圧で系統側の地絡を検出する。</dd></div>
-        <div class="term" data-cat="elec"><dt>力率一定制御<small>Constant Power Factor Control</small><span class="cat">電気設備</span></dt><dd>PCSの力率を一定に保ち、系統電圧の上昇を抑える制御。</dd></div>
-        <div class="term" data-cat="elec"><dt>FRT要件<small>Fault Ride Through</small><span class="cat">電気設備</span></dt><dd>系統の瞬時電圧低下・周波数変動時に運転を継続する能力の要件。</dd></div>
-        <div class="term" data-cat="elec"><dt>バイパスダイオード<small>Bypass Diode</small><span class="cat">電気設備</span></dt><dd>影になったセル群を迂回させ、損失とホットスポットを抑える素子。</dd></div>
-        <div class="term" data-cat="elec"><dt>開放電圧（Voc）<small>Open Circuit Voltage</small><span class="cat">電気設備</span></dt><dd>電流ゼロ時の電圧。低温で高くなるため、PCS入力電圧上限との関係で設計上重要。</dd></div>
-        <div class="term" data-cat="elec"><dt>電気主任技術者<small>Chief Electrical Engineer</small><span class="cat">電気設備</span></dt><dd>事業用電気工作物の保安を監督する国家資格者。選任または外部委託で確保する。</dd></div>
-        <div class="term" data-cat="elec"><dt>保安規程<small>Safety Regulations</small><span class="cat">電気設備</span></dt><dd>自家用電気工作物の保安のために設置者が定め、届け出る規程。点検の内容・頻度などを定める。</dd></div>
-        <div class="term" data-cat="elec"><dt>自家用電気工作物<small>Private Electrical Facilities</small><span class="cat">電気設備</span></dt><dd>電気事業法上の区分。出力50kW以上の太陽電池発電設備などが該当する。</dd></div>
+        <dl class="terms">
+          <div class="term" data-cat="perf"><dt>PR（性能比 / パフォーマンスレシオ）<small>Performance Ratio</small><span class="cat cat-perf">発電性能</span></dt><dd>実発電量 ÷（定格DC容量 × 傾斜面日射量 ÷ 1kW/m²）。日射変動の影響を排除して設備の本来の健全度を評価する指標。正常稼働時の水準は78〜85%程度。</dd></div>
+          <div class="term" data-cat="perf"><dt>比発電量（kWh/kWp）<small>Specific Yield</small><span class="cat cat-perf">発電性能</span></dt><dd>単位設備容量（1kWp）あたりの年間・月間発電量。発電所規模の大小に依存せず、立地ごとの日射条件や発電効率を横並びで比較する際に用いる指標。</dd></div>
+          <div class="term" data-cat="perf"><dt>設備利用率（Capacity Factor）<small>Capacity Factor (CF)</small><span class="cat cat-perf">発電性能</span></dt><dd>実発電量 ÷（定格出力 × 年間8,760時間）。太陽光発電は夜間発電しないため年間平均14〜17%程度が標準値。DC設備容量基準とAC連系出力基準で値が異なる。</dd></div>
+          <div class="term" data-cat="perf"><dt>傾斜面日射量（POA）<small>Plane of Array (POA) Irradiation</small><span class="cat cat-perf">発電性能</span></dt><dd>架台傾斜角度に設置されたモジュール受光面に直接入射する日射量。水平面日射量と異なり、PRの計算式分母に厳密に用いられる一次測定データ。</dd></div>
+          <div class="term" data-cat="perf"><dt>水平面全天日射量（GHI）<small>Global Horizontal Irradiation</small><span class="cat cat-perf">発電性能</span></dt><dd>水平面が受ける直達日射と散乱日射の合計。気象庁やNEDOの観測データで広く用いられる標準日射指標。</dd></div>
+          <div class="term" data-cat="perf"><dt>STC（標準試験条件）<small>Standard Test Conditions</small><span class="cat cat-perf">発電性能</span></dt><dd>日射強度1,000W/m²、セル温度25℃、大気質量スペクトルAM1.5。カタログに記載されるモジュール定格出力（Wp）はこの厳格な試験条件下の測定値。</dd></div>
+          <div class="term" data-cat="perf"><dt>温度係数（Pmax温度係数）<small>Temperature Coefficient of Pmax</small><span class="cat cat-perf">発電性能</span></dt><dd>セル温度が25℃から1℃上昇するごとに最大出力が何%低下するかを表す係数。結晶シリコン系モジュールで約−0.30〜−0.45%/℃。夏場は20%前後の出力低下要因となる。</dd></div>
+          <div class="term" data-cat="perf"><dt>ソイリング損失（汚れ損失）<small>Soiling Loss</small><span class="cat cat-perf">発電性能</span></dt><dd>黄砂・火山灰・土埃・鳥糞・花粉などの表面付着によりガラス透過率が低下し生じる発電損失。一般に年平均1〜3%程度、降雨の少ない乾燥地域や幹線道路沿いでは5%超に達する。</dd></div>
+          <div class="term" data-cat="perf"><dt>クリッピング（ピークカット損失）<small>Inverter Clipping</small><span class="cat cat-perf">発電性能</span></dt><dd>過積載設計において、太陽電池アレイのDC発電電力がPCSのAC最大容量を超えた際、PCS定格値で出力が頭打ちされカットオフされる現象。</dd></div>
+          <div class="term" data-cat="perf"><dt>P50 / P90（予測超過確率）<small>P50 / P90 Forecast</small><span class="cat cat-perf">発電性能</span></dt><dd>年間の気象変動を考慮し、その発電量を上回る確率が50%（平均値）および90%（保守的悲観値）である予測値。銀行レンダーの融資返済能力審査（DSCR算定）にはP90が使われる。</dd></div>
+          <div class="term" data-cat="perf"><dt>経年劣化率（Degradation Rate）<small>Annual Degradation Rate</small><span class="cat cat-perf">発電性能</span></dt><dd>紫外線・熱・湿気によりモジュール出力が毎年徐々に低下する比率。一般的な事業計画では年率0.5%〜0.7%程度の減衰をモデルに組み込む。</dd></div>
+          <div class="term" data-cat="perf"><dt>LID（光誘起劣化）<small>Light Induced Degradation</small><span class="cat cat-perf">発電性能</span></dt><dd>設置初期にモジュールが太陽光を初めて浴びることで、シリコン内のボロン-酸素複合体が原因で生じる初期出力低下（約1〜3%）。近年のN型セル（TOPCon等）では極小化。</dd></div>
+          <div class="term" data-cat="perf"><dt>PID（電圧誘起劣化）<small>Potential Induced Degradation</small><span class="cat cat-perf">発電性能</span></dt><dd>高電圧回路において、セルと接地フレーム間の電位差および高温多湿環境により漏れ電流が生じ、ガラス中のナトリウムイオンがセル内に移動して著しい出力低下を引き起こす重大劣化現象。</dd></div>
+          <div class="term" data-cat="perf"><dt>予実分析（Budget vs Actual）<small>BvA Variance Analysis</small><span class="cat cat-perf">発電性能</span></dt><dd>事業計画発電量（予算）と実発電量（実績）の乖離を、日射量の過不足による「天候要因」と、PRや設備トラブルによる「設備性能要因」に定量的分解して行うレポート業務。</dd></div>
+          <div class="term" data-cat="perf"><dt>温度補正PR<small>Temperature-corrected PR</small><span class="cat cat-perf">発電性能</span></dt><dd>気温の上昇・下降に伴うモジュール温度損失の影響を数理的に除去したPR。夏冬の季節的な見かけの変動を排し、経年劣化や真の設備劣化傾向を正確にトレースする。</dd></div>
+          <div class="term" data-cat="perf"><dt>エアマス（AM値）<small>Air Mass</small><span class="cat cat-perf">発電性能</span></dt><dd>太陽光が地球大気層を通過する光路の相対的厚み。天頂方向（真上）を1.0とし、温帯日本の年間平均日照角を代表する標準テスト条件（STC）ではAM1.5が採用される。</dd></div>
+          <div class="term" data-cat="perf"><dt>ミスマッチ損失<small>Mismatch Loss</small><span class="cat cat-perf">発電性能</span></dt><dd>同一ストリング内で直列接続されたモジュール同士の微小な電気特性バラつきや部分影により、直列回路全体が最も電流の低いモジュールに制限されて生じる損失。</dd></div>
+          <div class="term" data-cat="perf"><dt>シャドーイング損失（影損失）<small>Near Shading Loss</small><span class="cat cat-perf">発電性能</span></dt><dd>前列アレイ架台、電柱、周囲の樹木、フェンスなどがモジュール面に落とす幾何学的な影による発電損失。冬至の午前午後でも影がかからない離隔距離（アレイ間隔）設計が重要。</dd></div>
+          <div class="term" data-cat="perf"><dt>配線損失（DC/ACケーブルロス）<small>Cable Ohmic Loss</small><span class="cat cat-perf">発電性能</span></dt><dd>電線導体の電気抵抗によってジュール熱として失われる電力損失（I²R）。一般的にDC側配線損失を1.5〜2%以内、AC側を1%以内に抑えるよう電線サイズを選定。</dd></div>
+          <div class="term" data-cat="perf"><dt>日照時間<small>Sunshine Duration</small><span class="cat cat-perf">発電性能</span></dt><dd>直達日射強度が120W/m²以上あった時間。アメダス等で観測されるが、日射強度そのものとは異なるため、発電量の厳密な相関分析には日射量（MJ/m²やkWh/m²）を用いる。</dd></div>
+          <div class="term" data-cat="perf"><dt>PPA性能保証値<small>Guaranteed Generation / PR</small><span class="cat cat-perf">発電性能</span></dt><dd>オフサイトPPAやEPC・O&amp;M契約において事業者が合意する最低保証発電量または保証PR。未達時には違約金（LD）や電気料金補填義務が発生する。</dd></div>
+          <div class="term" data-cat="perf"><dt>日射計（パイラノメーター）<small>Pyranometer</small><span class="cat cat-perf">発電性能</span></dt><dd>日射強度（W/m²）を高精度に計測するセンサー。熱電対式の二次準器（Secondary Standard）日射計が遠隔監視システムやPR高精度算出に標準採用される。</dd></div>
+        </dl>
+      </section>
 
-        <!-- ===== 法令・契約 ===== -->
-        <div class="term" data-cat="legal"><dt>EPC<small>Engineering, Procurement and Construction</small><span class="cat">法令・契約</span></dt><dd>設計・調達・建設を一括で請け負う契約形態。</dd></div>
-        <div class="term" data-cat="legal"><dt>LD（予定損害賠償）<small>Liquidated Damages</small><span class="cat">法令・契約</span></dt><dd>完工遅延や性能未達時にあらかじめ定めた算式で支払う賠償金。</dd></div>
-        <div class="term" data-cat="legal"><dt>契約不適合責任<small>Liability for Non-conformity</small><span class="cat">法令・契約</span></dt><dd>引き渡された目的物が契約内容に適合しない場合の責任。2020年4月の民法改正で瑕疵担保責任から変更。</dd></div>
-        <div class="term" data-cat="legal"><dt>地上権<small>Superficies</small><span class="cat">法令・契約</span></dt><dd>工作物を所有するため他人の土地を使用する物権。登記で第三者に対抗できる。</dd></div>
-        <div class="term" data-cat="legal"><dt>林地開発許可<small>Forest Development Permit</small><span class="cat">法令・契約</span></dt><dd>森林法に基づく民有林の開発許可。太陽光は2023年4月から0.5ha超が対象。</dd></div>
-        <div class="term" data-cat="legal"><dt>農地転用許可<small>Farmland Conversion Permit</small><span class="cat">法令・契約</span></dt><dd>農地法に基づき、農地を農地以外に転用する際に必要な許可。</dd></div>
-        <div class="term" data-cat="legal"><dt>環境アセスメント<small>Environmental Impact Assessment</small><span class="cat">法令・契約</span></dt><dd>環境影響評価。太陽光は2020年4月から法の対象（第一種4万kW以上、第二種3万kW以上）。</dd></div>
-        <div class="term" data-cat="legal"><dt>接続契約<small>Grid Connection Agreement</small><span class="cat">法令・契約</span></dt><dd>一般送配電事業者と結ぶ系統連系の契約。工事費負担金や出力制御ルールなどを定める。</dd></div>
-        <div class="term" data-cat="legal"><dt>事業計画策定ガイドライン<small>Business Plan Guidelines</small><span class="cat">法令・契約</span></dt><dd>再エネ特措法に基づく認定事業者の遵守事項（標識・柵塀・保守点検・撤去など）を示した指針。</dd></div>
-        <div class="term" data-cat="legal"><dt>利益保険（休業損害）<small>Business Interruption Insurance</small><span class="cat">法令・契約</span></dt><dd>事故による発電停止期間の売電収入の逸失を補償する保険。</dd></div>
-      </dl>
+      <!-- ========================================================
+           ジャンル3: 🛠️ O&M・点検・障害トラブル (om)
+           ======================================================== -->
+      <section class="genre-section" data-genre="om" id="sec-om">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">🛠️ O&amp;M・点検・障害トラブル</h2>
+            <span class="genre-badge" style="background: rgba(251,146,60,0.15); color: #fb923c; border: 1px solid rgba(251,146,60,0.3);">34用語収録</span>
+          </div>
+          <p class="genre-desc">日常巡回、年次停電点検、ドローンIRサーモ、IVカーブ測定、ホットスポット、ケーブル盗難対策などの現場保全実務用語です。</p>
+        </div>
+
+        <!-- 概念イラスト: 絶縁抵抗測定 vs 絶縁耐力試験 -->
+        <div class="glossary-visual-card">
+          <div class="glossary-visual-header">
+            <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 概念図解：絶縁抵抗測定（Megger） vs 絶縁耐力試験（耐圧試験）の決定的な違い</h4>
+            <span class="glossary-visual-tag">図解で覚える法定試験</span>
+          </div>
+          <div class="glossary-visual-body">
+            <div class="glossary-visual-img-wrap">
+              <img class="glossary-visual-img" src="../assets/images/glossary/insulation_withstand_test.jpg" alt="絶縁抵抗測定と絶縁耐力試験（耐圧試験）の目的・印加電圧・合否基準の比較図解" loading="lazy">
+            </div>
+            <div class="glossary-visual-points">
+              <div class="glossary-visual-point">
+                <b>① 絶縁抵抗測定（Megger）: 「現在の絶縁状態」を非破壊で計測</b>
+                DC 500V / 1,000Vを印加し、漏れ電流から抵抗値（MΩ）を算出。日常・年次点検で経年劣化の早期発見に用い、電路を傷つけない。
+              </div>
+              <div class="glossary-visual-point">
+                <b>② 絶縁耐力試験（耐圧試験）: 「過電圧への破壊耐力」を実証</b>
+                電技解釈第15条に基づき、最大使用電圧の1.5倍（6.6kVなら10,350V交流）を10分間印加。竣工時・更新時に絶縁破壊しない安全裕度を直接証明。
+              </div>
+              <div class="glossary-visual-point">
+                <b>③ 現場の安全手順: 機器隔離と残留電荷放電</b>
+                耐圧試験前には弱電機器（VT/避雷器）を隔離。試験後はケーブルの静電容量に蓄積された高圧電荷を必ず「接地放電棒」で完全放電する。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 概念イラスト2: ホットスポットとバイパスダイオード -->
+        <div class="glossary-visual-card">
+          <div class="glossary-visual-header">
+            <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg> 概念図解：ホットスポット発生とバイパスダイオードの保護動作</h4>
+            <span class="glossary-visual-tag">図解で覚える不具合メカニズム</span>
+          </div>
+          <div class="glossary-visual-body">
+            <div class="glossary-visual-img-wrap">
+              <img class="glossary-visual-img" src="../assets/images/glossary/hotspot_diode.jpg" alt="ホットスポット現象とバイパスダイオードの迂回作動メカニズム図解" loading="lazy">
+            </div>
+            <div class="glossary-visual-points">
+              <div class="glossary-visual-point">
+                <b>① 異常発熱（ホットスポット）の発生</b>
+                落ち葉やクラックでセルが影になると発電できず「高抵抗の負荷」に転落。他の健全セルの電流が集中し局所的に100℃以上の異常発熱を起こす。
+              </div>
+              <div class="glossary-visual-point">
+                <b>② バイパスダイオードの導通（迂回保護）</b>
+                異常電圧を検知して内蔵ダイオードがON。該当クラスタ（20〜24セル）をバイパスして電流を逃がし、バックシートの焼損や火災を阻止。
+              </div>
+              <div class="glossary-visual-point">
+                <b>③ O&amp;M点検での早期発見</b>
+                ドローン搭載の赤外線サーモグラフィ（IRカメラ）により、広大なメガソーラーからホットスポット発熱セルを一網打尽に検出・交換対応。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl class="terms">
+          <div class="term" data-cat="om"><dt>O&amp;M（運転保守）<small>Operation &amp; Maintenance</small><span class="cat cat-om">O&amp;M</span></dt><dd>発電所の安定稼働と売電収入を維持するための日常運転管理（監視・駆けつけ・除草）および保守点検（電気法定点検・機器修繕・予備品管理）の総称。</dd></div>
+          <div class="term" data-cat="om"><dt>稼働率（アベイラビリティ）<small>Availability</small><span class="cat cat-om">O&amp;M</span></dt><dd>発電所が故障等で停止せず稼働可能であった時間比率。O&amp;M契約では通常99.0%〜99.5%以上の稼働率保証が設定され、未達時はO&amp;M受託者がペナルティを負う。</dd></div>
+          <div class="term" data-cat="om"><dt>予防保全（PM）<small>Preventive Maintenance</small><span class="cat cat-om">O&amp;M</span></dt><dd>故障やトラブルが発生する前に、あらかじめ定めた周期・計画に基づいて部品交換（PCSファン、フィルター等）や清掃を行い、未然に停止を防ぐ保全手法。</dd></div>
+          <div class="term" data-cat="om"><dt>事後保全（BM）<small>Breakdown Maintenance</small><span class="cat cat-om">O&amp;M</span></dt><dd>機器の故障や停止が実際に発生した後に速やかに駆けつけ、原因特定と部品交換・復旧を行う保全手法。</dd></div>
+          <div class="term" data-cat="om"><dt>状態基準保全（CBM）<small>Condition Based Maintenance</small><span class="cat cat-om">O&amp;M</span></dt><dd>IoT遠隔監視やAIデータ分析により機器の劣化兆候や温度異常をリアルタイムで捉え、最適なタイミングでピンポイントに処置を施す最新保全アプローチ。</dd></div>
+          <div class="term" data-cat="om"><dt>IVカーブ測定<small>I-V Curve Tracing</small><span class="cat cat-om">O&amp;M</span></dt><dd>専用測定器でストリングの電流-電圧特性曲線をトレースし、曲線形状の歪みや段差から、セルの割れ・汚れ・配線断線・バイパスダイオードショートを特定する診断試験。</dd></div>
+          <div class="term" data-cat="om"><dt>ホットスポット<small>Hot Spot</small><span class="cat cat-om">O&amp;M</span></dt><dd>セルの製造欠陥、クラック、部分影、鳥糞付着により特定セルが高抵抗化し、他のセルが発電した電力を消費して異常発熱する現象。放置するとモジュール焼損に至る。</dd></div>
+          <div class="term" data-cat="om"><dt>赤外線サーモグラフィ点検<small>Infrared Thermography Inspection</small><span class="cat cat-om">O&amp;M</span></dt><dd>赤外線カメラを用いてモジュール受光面や接続箱・キュービクル端子部の表面温度分布を可視化し、目視では見えないホットスポットや接続不良過熱を検出する検査。</dd></div>
+          <div class="term" data-cat="om"><dt>ドローンIR点検<small>UAV Drone Thermal Inspection</small><span class="cat cat-om">O&amp;M</span></dt><dd>高解像度サーモカメラとRTK-GPSを搭載したドローンを自律飛行させ、数万枚のパネルを数十分で空撮スキャンして不良モジュール位置を座標特定する点検手法。</dd></div>
+          <div class="term" data-cat="om"><dt>EL検査<small>Electroluminescence Inspection</small><span class="cat cat-om">O&amp;M</span></dt><dd>夜間にモジュールへ逆電流を通電させ、セルが微弱発光する近赤外線を特殊カメラで撮影して、肉眼では絶対に見えない内部のマイクロクラック（微小亀裂）を検出する検査。</dd></div>
+                    <div class="term" data-cat="om"><dt>絶縁耐力試験（耐圧試験）<small>Dielectric Withstand Voltage Test</small><span class="cat cat-om">O&amp;M</span></dt><dd>電気設備技術基準の解釈第15条に基づく法定破壊限界試験。最大使用電圧の1.5倍（高圧6.6kV系は6,900V×1.5＝10,350V）を10分間印加し、絶縁破壊（パンク）しないことを実証。竣工時・使用前自己確認・重要機器更新時に必須。</dd></div>
+          <div class="term" data-cat="om"><dt>絶縁抵抗測定（メガ測定）<small>Insulation Resistance Test (Megger)</small><span class="cat cat-om">O&amp;M</span></dt><dd>直流高電圧（DC 500V/1000V等）を印加して漏洩微小電流から絶縁抵抗値（MΩ）を非破壊で測る定期法定検査。低圧電路（300V超: 0.4MΩ以上等）および高圧電路（実務管理値: 100MΩ以上）。直流アレイ側はPV専用メガーを用いて安全測定を行う。</dd></div>
+          <div class="term" data-cat="om"><dt>接地抵抗測定<small>Earth Resistance Test</small><span class="cat cat-om">O&amp;M</span></dt><dd>接地極（アース棒）と大地間の電気抵抗値を測る法定検査。A種（10Ω以下：高圧機器外箱）、B種（150/IgΩ以下：変圧器混触防止）、C種（10Ω以下：300V超機器）、D種（100Ω以下：PV架台等）。通常3極法（E・P・C極を等間隔直線配置）で測定。</dd></div>
+          <div class="term" data-cat="om"><dt>保護継電器試験（リレー連動試験）<small>Protective Relay Calibration &amp; Trip Test</small><span class="cat cat-om">O&amp;M</span></dt><dd>過電流継電器（OCR）や地絡方向継電器（DGR）に試験器から模擬事故信号を入力し、動作時間特性・最小動作感度を校正測定。さらに主遮断器（VCB/PAS）への引き外し信号と連動トリップが正常に行われるかを年次停電点検で実動検証する。</dd></div>
+          <div class="term" data-cat="om"><dt>変圧器絶縁油試験（破壊電圧・全酸価・油中ガス）<small>Transformer Insulating Oil Analysis</small><span class="cat cat-om">O&amp;M</span></dt><dd>受変電設備の油入変圧器の劣化・内部異常を診断する試験。絶縁破壊電圧試験（基準30kV以上）、油の酸化劣化を示す全酸価測定（0.2mgKOH/g以上で注意）、および可燃性ガス（C2H2, H2等）から内部部分放電やアーク放電を早期検知する油中ガス分析を行う。</dd></div>
+          <div class="term" data-cat="om"><dt>開放電圧・極性確認試験（Voc測定）<small>Open Circuit Voltage &amp; Polarity Check</small><span class="cat cat-om">O&amp;M</span></dt><dd>竣工時および点検時に接続箱端子で各ストリングの開放電圧（Voc）を測定し、配線の逆極性（プラスマイナス逆接）がないか、モジュールの直列枚数通りの電圧が出ているかを確認する検査。クラスタ断線や部分影の初期スクリーニングとなる。</dd></div>
+          <div class="term" data-cat="om"><dt>短絡電流測定（Isc測定）<small>Short Circuit Current Test (Isc)</small><span class="cat cat-om">O&amp;M</span></dt><dd>ストリングを直流短絡させた状態で短絡電流計またはクランプメーターにより流れる最大電流（Isc）を測定。日射強度センサの測定値と照合し、ストリング内のセル破損、バイパスダイオードショート、配線高抵抗異常を検出する。</dd></div>
+          <div class="term" data-cat="om"><dt>使用前自己確認試験<small>Pre-operation Self-Confirmation Test</small><span class="cat cat-om">O&amp;M</span></dt><dd>電気事業法第51条の2に基づき、設置者が系統連系・使用開始前に技術基準適合性を自ら確認し、経産省産業保安監督部へ届出を行う法定制度。絶縁耐力試験、保護継電器連動試験、負荷遮断試験などの詳細な試験成績書と保安規程の提出が義務付けられる。</dd></div>
+          <div class="term" data-cat="om"><dt>ロックアウト・タグラウト（LOTO）<small>Lockout / Tagout (LOTO)</small><span class="cat cat-om">O&amp;M</span></dt><dd>年次点検や修繕工事において、誤送電による感電死亡事故を防止するための安全管理手順。断路器や遮断器を開放した状態で物理的に南京錠で施錠（ロックアウト）し、操作禁止・危険を警告する識別札を掲示（タグラウト）して電源を完全隔離する。</dd></div>
+          <div class="term" data-cat="om"><dt>検電器・接地放電棒<small>Voltage Detector &amp; Grounding Discharge Stick</small><span class="cat cat-om">O&amp;M</span></dt><dd>停電点検作業前の安全必須用具。検電器で作業対象電路が無電圧状態（電気が来ていないこと）であることを音と光で確認。耐圧試験後や長距離高圧ケーブル停電直後には、残留した静電電荷を高圧接地放電棒により大地へ完全に逃がしてから触れる。</dd></div>
+          <div class="term" data-cat="om"><dt>月次点検（巡視点検）<small>Monthly Routine Inspection</small><span class="cat cat-om">O&amp;M</span></dt><dd>電気保安規程に基づき毎月1回以上行う運転中点検。外観目視、異音・異臭・温度確認、計器数値記録、フェンス破損や雑草侵入状況を確認。</dd></div>
+          <div class="term" data-cat="om"><dt>年次点検（停電点検）<small>Annual Scheduled Maintenance</small><span class="cat cat-om">O&amp;M</span></dt><dd>発電所全体を停電させて行う年1回の精密点検。受変電設備内部清掃、ボルト増し締め、継電器連動試験、変圧器絶縁油分析、保護協調の確認を実施。</dd></div>
+          <div class="term" data-cat="om"><dt>遠隔監視システム（SCADA）<small>SCADA &amp; Monitoring System</small><span class="cat cat-om">O&amp;M</span></dt><dd>PCS、受電盤、日射計・気温計、受電電力量計のデータを常時クラウド集約し、PCSトリップや通信途絶時に監視センターへ自動アラートを発報するシステム。</dd></div>
+          <div class="term" data-cat="om"><dt>SLA（サービスレベル合意）<small>Service Level Agreement</small><span class="cat cat-om">O&amp;M</span></dt><dd>O&amp;M受託者が遵守すべき業務品質水準。アラート発報から現場への一次駆けつけ時間（例: 2〜3時間以内）、復旧目標時間、月次報告書提出期限などを契約で規定。</dd></div>
+          <div class="term" data-cat="om"><dt>予備品（スペアパーツ）<small>Critical Spare Parts</small><span class="cat cat-om">O&amp;M</span></dt><dd>機器故障時の長期停止損失を防ぐために現地倉庫に常備する交換部材。PCSインバータ基板、冷却ファン、直流ヒューズ、サージキラー、予備モジュールなど。</dd></div>
+          <div class="term" data-cat="om"><dt>スネールトレイル（カタツムリの這い跡）<small>Snail Trails</small><span class="cat cat-om">O&amp;M</span></dt><dd>モジュール表面にカタツムリが這ったような灰黒色の網目状の線が現れる現象。裏面封止材（EVA）の水分反応とセルの微小クラックが原因で生じる。</dd></div>
+          <div class="term" data-cat="om"><dt>クラスタ断線<small>Cluster Disconnection</small><span class="cat cat-om">O&amp;M</span></dt><dd>モジュール内のセル列（1クラスタあたり通常20〜24セル）をつなぐ内部インターコネクタ線の破断や半田外れにより、そのクラスタが丸ごと発電不能になる不具合。</dd></div>
+          <div class="term" data-cat="om"><dt>水トリー現象<small>Water Treeing</small><span class="cat cat-om">O&amp;M</span></dt><dd>地中埋設された高圧架橋ポリエチレンケーブル（CVケーブル）の絶縁体内に水分と電界の作用で樹枝状の微小亀裂が進展し、最終的に地絡・短絡絶縁破壊に至る現象。</dd></div>
+          <div class="term" data-cat="om"><dt>ケーブル盗難対策<small>Copper Wire Theft Prevention</small><span class="cat cat-om">O&amp;M</span></dt><dd>銅価格高騰により激増している送電銅線ケーブルの切断盗難への防犯対策。人感赤外線センサー、防犯カメラ、侵入検知フェンス、直埋コンクリート巻き、アルミケーブルへの転換など。</dd></div>
+          <div class="term" data-cat="om"><dt>防草シート・除草管理<small>Vegetation Management</small><span class="cat cat-om">O&amp;M</span></dt><dd>アレイ下から繁茂する雑草がモジュール下端に影を作ってPR低下や火災を招くのを防ぐため、高耐久遮光防草シートの敷設や年2〜3回の草刈りを計画管理する業務。</dd></div>
+          <div class="term" data-cat="om"><dt>害獣・鳥害対策<small>Wildlife &amp; Bird Mitigation</small><span class="cat cat-om">O&amp;M</span></dt><dd>イノシシによる敷地土砂掘り起こし、ネズミ・小動物による配線被覆の噛み切り地絡、カラスの投石によるガラス割れ、鳥糞による局所汚損に対処する防護工。</dd></div>
+          <div class="term" data-cat="om"><dt>モジュール洗浄<small>PV Module Cleaning</small><span class="cat cat-om">O&amp;M</span></dt><dd>降雨では落ちない油性汚れ、鳥糞、重度の黄砂・火山灰を高圧純水や専用ロボットを用いて洗浄する作業。洗浄コストと増収効果の費用対効果（ROI）を精査して実施。</dd></div>
+          <div class="term" data-cat="om"><dt>地絡事故（アースフォールト）<small>Ground Fault</small><span class="cat cat-om">O&amp;M</span></dt><dd>電線被覆の損傷や機器内部絶縁不良により、電気が架台や大地へ漏洩する事故。直流地絡検出機能（GFDI）や地絡継電器（DGR/OVGR）により即座に電路を遮断。</dd></div>
+          <div class="term" data-cat="om"><dt>法面点検・土砂災害監視<small>Slope Stability Inspection</small><span class="cat cat-om">O&amp;M</span></dt><dd>山地・丘陵地メガソーラーにおいて、大雨・台風時の法面崩壊、雨水排水溝の土砂詰まり、盛土の沈下・クラックを目視・ドローンで確認する防災保全業務。</dd></div>
+        </dl>
+      </section>
+
+      <!-- ========================================================
+           ジャンル4: 🔋 制度・FIT/FIP・電力市場・蓄電池 (policy)
+           ======================================================== -->
+      <section class="genre-section" data-genre="policy" id="sec-policy">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">🔋 制度・FIT/FIP・電力市場・蓄電池</h2>
+            <span class="genre-badge" style="background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3);">28用語収録</span>
+          </div>
+          <p class="genre-desc">再エネ特措法、FITからFIPへの移行、JEPX市場、計画値同時同量、出力制御、系統用蓄電池BESS、PPAビジネスに関する最前線用語です。</p>
+        </div>
+
+        <!-- 概念イラスト3: 系統用蓄電池アービトラージ -->
+        <div class="glossary-visual-card">
+          <div class="glossary-visual-header">
+            <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 概念図解：系統用蓄電池（BESS）のJEPX市場アービトラージサイクル</h4>
+            <span class="glossary-visual-tag">図解で覚える最新市場実務</span>
+          </div>
+          <div class="glossary-visual-body">
+            <div class="glossary-visual-img-wrap">
+              <img class="glossary-visual-img" src="../assets/images/glossary/battery_arbitrage.jpg" alt="系統用蓄電池の充放電アービトラージ市場取引図解" loading="lazy">
+            </div>
+            <div class="glossary-visual-points">
+              <div class="glossary-visual-point">
+                <b>① 昼間（10〜14時）: 0.01円で充電（CHARGE）</b>
+                太陽光発電がピークを迎え、エリア出力制御が発生する時間帯。JEPXスポット価格は最低値（0.01円/kWh）に暴落するため、蓄電池に大量充電。
+              </div>
+              <div class="glossary-visual-point">
+                <b>② 夕方夜間（17〜21時）: 高値ピークで放電（DISCHARGE）</b>
+                日没に伴い太陽光発電がゼロになり、照明・家庭需要で電力需要が急増。JEPX価格が高騰（20〜40円/kWh）したタイミングで系統へ放電。
+              </div>
+              <div class="glossary-visual-point">
+                <b>③ 利ざや（価格差）とマルチ収益化</b>
+                価格差（アービトラージ）による売買差益を獲得。さらに「容量市場」のkW固定収入や「需給調整市場」のΔkW調整力報酬を複合的に獲得。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl class="terms">
+          <div class="term" data-cat="policy"><dt>FIT（固定価格買取制度）<small>Feed-in Tariff</small><span class="cat cat-policy">制度・市場</span></dt><dd>再エネ電気を国が定めた固定価格（調達価格）で一定期間（通常20年間）、送配電事業者が買い取ることを義務付けた制度。2012年7月開始。</dd></div>
+          <div class="term" data-cat="policy"><dt>FIP制度<small>Feed-in Premium</small><span class="cat cat-policy">制度・市場</span></dt><dd>再エネ発電事業者が卸電力市場（JEPX）や相対契約で売電した収入に対し、国が基準価格（FIP価格）と市場参照価格の差額を「プレミアム」として交付する制度。2022年4月開始。</dd></div>
+          <div class="term" data-cat="policy"><dt>基準価格（FIP価格）<small>FIP Target Price</small><span class="cat cat-policy">制度・市場</span></dt><dd>FIP制度において事業者が回収すべき投資コスト・適正利潤を勘案して調達価格等算定委員会が決定する収入の基準単価（円/kWh）。</dd></div>
+          <div class="term" data-cat="policy"><dt>参照価格<small>Reference Price</small><span class="cat cat-policy">制度・市場</span></dt><dd>FIPで市場価格水準を表す指標。前月までの前日スポット市場価格の平均値や非化石価値価格に基づき月ごとに算定・公表される。</dd></div>
+          <div class="term" data-cat="policy"><dt>FIPプレミアム<small>FIP Premium</small><span class="cat cat-policy">制度・市場</span></dt><dd>事業者に交付される補助額。基本式: プレミアム単価 ＝ 基準価格 − 参照価格。市場価格が高騰したコマではプレミアムがゼロになる場合もある。</dd></div>
+          <div class="term" data-cat="policy"><dt>再エネ賦課金<small>Renewable Energy Surcharge</small><span class="cat cat-policy">制度・市場</span></dt><dd>FIT/FIP制度の買い取り・交付金原資を賄うため、全国の電力使用者が毎月の電気使用量（kWh）に応じて電気料金に上乗せして負担する賦課金。</dd></div>
+          <div class="term" data-cat="policy"><dt>事業計画認定<small>Business Plan Approval</small><span class="cat cat-policy">制度・市場</span></dt><dd>再エネ特措法に基づき経済産業大臣から受ける発電事業の認定。策定ガイドラインの遵守、事前説明会の開催、適切な土地権原の確保が要件。</dd></div>
+          <div class="term" data-cat="policy"><dt>JEPX（日本卸電力取引所）<small>Japan Electric Power Exchange</small><span class="cat cat-policy">制度・市場</span></dt><dd>日本唯一の公的卸電力取引市場。前日に30分単位（1日48コマ）の電力を取引する「一日前スポット市場」や直前取引の「時間前市場」を運営。</dd></div>
+          <div class="term" data-cat="policy"><dt>計画値同時同量（バランシング）<small>Balancing Obligation</small><span class="cat cat-policy">制度・市場</span></dt><dd>発電事業者や小売電気事業者が、30分ごとの発電計画値・需要計画値と実際の30分実績値を完全に一致させる義務。FIP事業者にも課される。</dd></div>
+          <div class="term" data-cat="policy"><dt>インバランス料金<small>Imbalance Settlement</small><span class="cat cat-policy">制度・市場</span></dt><dd>計画発電量と実績発電量の差分（インバランス）に対し、一般送配電事業者が需給調整を代行した対価として事後精算されるペナルティ的精算費用。</dd></div>
+          <div class="term" data-cat="policy"><dt>出力制御（出力抑制）<small>Curtailment</small><span class="cat cat-policy">制度・市場</span></dt><dd>好天・軽負荷期（春・秋）に電力需要を上回る再エネ供給が発生した際、系統周波数崩壊を防ぐため一般送配電事業者の指示で発電を停止・抑制させる措置。</dd></div>
+          <div class="term" data-cat="policy"><dt>オンライン代理制御<small>Online Proxy Curtailment</small><span class="cat cat-elec cat-policy">制度・市場</span></dt><dd>手動停止が難しいオフライン制御事業者の出力制御を、遠隔制御可能なオンライン事業者が代わりに余分に引き受け、後日金銭精算する公平化ルール。</dd></div>
+          <div class="term" data-cat="policy"><dt>指定ルール（無制限・無補償）<small>Designated Rule (Unlimited Curtailment)</small><span class="cat cat-policy">制度・市場</span></dt><dd>接続可能量を超過したエリアに連系する発電所に適用される出力制御ルール。年間の抑制上限日数（30日ルールや360時間ルール）がなく、無制限・無補償。</dd></div>
+          <div class="term" data-cat="policy"><dt>非化石証書（トラッキング付）<small>Non-Fossil Certificate</small><span class="cat cat-policy">制度・市場</span></dt><dd>再エネ電力が持つCO2ゼロの「環境価値」を取り出して取引可能にした証書。発電所所在地や電源種別を追跡（トラッキング）可能でRE100に適合。</dd></div>
+          <div class="term" data-cat="policy"><dt>アグリゲーター<small>Renewable Energy Aggregator</small><span class="cat cat-policy">制度・市場</span></dt><dd>多数の小規模発電所や蓄電池を束ね（アグリゲーション）、高精度AI発電予測、JEPX市場入札代行、インバランス回避を一括代行する専門事業者。</dd></div>
+          <div class="term" data-cat="policy"><dt>バランシンググループ（BG）<small>Balancing Group</small><span class="cat cat-policy">制度・市場</span></dt><dd>複数の発電事業者やアグリゲーターが連合を組み、同一グループ内でプラスインバランスとマイナスインバランスを相殺してペナルティを最小化する枠組み。</dd></div>
+          <div class="term" data-cat="policy"><dt>系統用蓄電池（BESS）<small>Grid-Scale Battery Energy Storage</small><span class="cat cat-policy">制度・市場</span></dt><dd>発電所に併設せず、送配電系統に直接スタンドアローン連系する大型蓄電池設備。市場価格差アービトラージ、容量市場、需給調整市場で多元的に収益化。</dd></div>
+          <div class="term" data-cat="policy"><dt>併設型蓄電池<small>Co-located Solar + Storage</small><span class="cat cat-policy">制度・市場</span></dt><dd>太陽光発電所構内に設置する蓄電池。昼間の出力制御による捨て電力を充電して売電ロスを回収し、夕方以降に放電してFIP収入やPPA価値を高める。</dd></div>
+          <div class="term" data-cat="policy"><dt>アービトラージ（価格差取引）<small>Power Market Arbitrage</small><span class="cat cat-policy">制度・市場</span></dt><dd>JEPXスポット市場で電力価格が暴落する昼間（0.01円コマなど）に蓄電池へ充電し、夕方・夜間の電力需要ピーク（高価格帯）に放電して利ざやを稼ぐ取引。</dd></div>
+          <div class="term" data-cat="policy"><dt>需給調整市場<small>Balancing Market</small><span class="cat cat-policy">制度・市場</span></dt><dd>送配電事業者が系統周波数維持（50Hz/60Hz）に必要な調整力（一次〜三次調整力）を公募調達する市場。数秒〜数分で応答できる蓄電池に最適。</dd></div>
+          <div class="term" data-cat="policy"><dt>容量市場<small>Capacity Market</small><span class="cat cat-policy">制度・市場</span></dt><dd>将来（4年後等）の日本のピーク需要に対応可能な電力供給力（kW）をあらかじめ確保・取引する市場。稼働可能状態を維持することで年間の固定収入を得られる。</dd></div>
+          <div class="term" data-cat="policy"><dt>長期脱炭素電源オークション<small>Long-term Decarbonization Auction</small><span class="cat cat-policy">制度・市場</span></dt><dd>系統用蓄電池などの巨額初期投資を要する脱炭素電源の新設を促進するため、容量市場において20年間にわたり固定費回収を国が保証する超大型競争入札枠。</dd></div>
+          <div class="term" data-cat="policy"><dt>コーポレートPPA<small>Corporate PPA</small><span class="cat cat-policy">制度・市場</span></dt><dd>企業（需要家）が再エネ発電事業者から直接、長期固定価格で電力と環境価値を購入する契約。電気代高騰ヘッジと脱炭素（Scope2削減）を両立。</dd></div>
+          <div class="term" data-cat="policy"><dt>オフサイトPPA<small>Off-site Corporate PPA</small><span class="cat cat-policy">制度・市場</span></dt><dd>需要家敷地外（遠隔地）のメガソーラーから、一般送配電網を介して託送供給により需要家工場・オフィスへ電気と環境価値を届けるPPA形態。</dd></div>
+          <div class="term" data-cat="policy"><dt>オンサイトPPA<small>On-site Corporate PPA</small><span class="cat cat-policy">制度・市場</span></dt><dd>需要家の工場屋根や遊休地に発電事業者が無償で太陽光を設置し、送配電網を通さずに自家消費させてその使用量に応じたサービス料を請求するPPA形態。</dd></div>
+          <div class="term" data-cat="policy"><dt>バーチャルPPA（VPPA）<small>Virtual PPA / Synthetic PPA</small><span class="cat cat-policy">制度・市場</span></dt><dd>電力本体はJEPX市場等で売却し、環境価値（非化石証書）のみを需要家へ直接譲渡するとともに、固定価格と市場価格の差額を差金決済（CFD）する契約形態。</dd></div>
+          <div class="term" data-cat="policy"><dt>廃棄等費用積立制度<small>Decommissioning Reserve System</small><span class="cat cat-policy">制度・市場</span></dt><dd>10kW以上のFIT/FIP事業者を対象に、事業終了後の放置を防ぐため調達期間終了前10年間、売電収入から源泉徴収的に推進機関（OCCTO）へ外部積立を強制する制度。</dd></div>
+          <div class="term" data-cat="policy"><dt>ネガワット取引<small>Negawatt Trading / DR</small><span class="cat cat-policy">制度・市場</span></dt><dd>電力逼迫時に需要家が節電・需要抑制（ディマンドリスポンス）した電力削減量を「発電」と同等価値として市場で売買・対価を受け取る取引手法。</dd></div>
+        </dl>
+      </section>
+
+      <!-- ========================================================
+           ジャンル5: ⚖️ 金融・ファイナンス・投資評価 (finance)
+           ======================================================== -->
+      <section class="genre-section" data-genre="finance" id="sec-finance">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">⚖️ 金融・ファイナンス・投資評価</h2>
+            <span class="genre-badge" style="background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">26用語収録</span>
+          </div>
+          <p class="genre-desc">GK-TKスキーム、プロジェクトファイナンス、キャッシュウォーターフォール、DSCR、IRR、コベナンツ管理に関する投資実務用語です。</p>
+        </div>
+
+        <!-- 概念イラスト4: キャッシュウォーターフォール -->
+        <div class="glossary-visual-card">
+          <div class="glossary-visual-header">
+            <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 4l6 8 6-8M12 12v8M7 13h10M7 17h10"/></svg> 概念図解：プロジェクトファイナンスのキャッシュウォーターフォール構造</h4>
+            <span class="glossary-visual-tag">図解で覚える融資・資金配分</span>
+          </div>
+          <div class="glossary-visual-body">
+            <div class="glossary-visual-img-wrap">
+              <img class="glossary-visual-img" src="../assets/images/glossary/cash_waterfall.jpg" alt="キャッシュウォーターフォールの段階的支払い構造図解" loading="lazy">
+            </div>
+            <div class="glossary-visual-points">
+              <div class="glossary-visual-point">
+                <b>① 最優先（Step 1 &amp; 2）: 売電収入 ➔ 運営維持費（OPEX）</b>
+                入金された総売電収入から、まず発電所運営を継続するためのO&amp;M費・土地賃料・保険料・公租公課が最優先で支払われる。
+              </div>
+              <div class="glossary-visual-point">
+                <b>② 融資返済（Step 3 &amp; 4）: シニア元利金返済 ➔ DSRA積立</b>
+                残ったキャッシュ（CFADS）から銀行への借入元利金を返済（DSCR審査）。万一の収入減に備えDSRA（返済積立口座）を満たす。
+              </div>
+              <div class="glossary-visual-point">
+                <b>③ 劣後（Step 5）: 投資家（エクイティ）への配当</b>
+                すべての融資コベナンツ（DSCR基準クリア等）を満たした後に初めて、残余剰余金が投資家へのTK配当として分配される。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl class="terms">
+          <div class="term" data-cat="finance"><dt>SPV（特定目的会社）<small>Special Purpose Vehicle</small><span class="cat cat-finance">ファイナンス</span></dt><dd>特定の太陽光発電事業を保有・運営するためだけに設立されるペーパーカンパニー。親会社（スポンサー）から事業リスクを法的に遮断（倒産隔離）する。</dd></div>
+          <div class="term" data-cat="finance"><dt>合同会社（GK）<small>Godo Kaisha</small><span class="cat cat-finance">ファイナンス</span></dt><dd>日本版LLC（Limited Liability Company）。設立コストが安価で機関設計の自由度が高く、倒産隔離型ストラクチャーのSPV法人形態として主流。</dd></div>
+          <div class="term" data-cat="finance"><dt>匿名組合（TK出資）<small>Tokumei Kumiai</small><span class="cat cat-finance">ファイナンス</span></dt><dd>商法に基づく契約形態。出資者（匿名組合員）が営業者（GK等）の事業に出資し、その事業から生じる利益の分配を受ける仕組み。配当は損金算入可能。</dd></div>
+          <div class="term" data-cat="finance"><dt>GK-TKスキーム<small>GK-TK Structure</small><span class="cat cat-finance">ファイナンス</span></dt><dd>合同会社（GK）を事業主体（SPV）とし、投資家が匿名組合（TK）契約を通じて出資するストラクチャー。パススルー課税（法人税と配当課税の二重課税回避）を実現。</dd></div>
+          <div class="term" data-cat="finance"><dt>プロジェクトファイナンス<small>Project Finance</small><span class="cat cat-finance">ファイナンス</span></dt><dd>スポンサー企業の信用力ではなく、発電事業そのものが生み出す将来キャッシュフローを返済原資とし、発電所資産や売電債権を担保とする長期融資手法。</dd></div>
+          <div class="term" data-cat="finance"><dt>ノンリコースローン<small>Non-recourse Loan</small><span class="cat cat-finance">ファイナンス</span></dt><dd>債務不履行（デフォルト）が生じた場合でも、レンダー（融資銀行）の返済請求権が当該プロジェクトの資産・CFのみに限定され、親会社に遡及しない融資。</dd></div>
+          <div class="term" data-cat="finance"><dt>シニアローン<small>Senior Debt</small><span class="cat cat-finance">ファイナンス</span></dt><dd>他の債権者や出資者に対して元利金返済の優先順位が最上位にある最優先債権。金利は低いが、担保設定やコベナンツによる厳しい制約が付く。</dd></div>
+          <div class="term" data-cat="finance"><dt>メザニンローン<small>Mezzanine Debt</small><span class="cat cat-finance">ファイナンス</span></dt><dd>シニアローン（デット）と出資金（エクイティ）の中間に位置する劣後融資。シニアより返済順位が劣後するため高金利だが、自己資金不足を補完する。</dd></div>
+          <div class="term" data-cat="finance"><dt>IRR（内部収益率）<small>Internal Rate of Return</small><span class="cat cat-finance">ファイナンス</span></dt><dd>投資期間中の全キャッシュフローの現在価値の合計（NPV）がゼロになる割引率。事業全体の採算性を示す「プロジェクトIRR」と、自己資本利益率を示す「エクイティIRR」がある。</dd></div>
+          <div class="term" data-cat="finance"><dt>NPV（正味現在価値）<small>Net Present Value</small><span class="cat cat-finance">ファイナンス</span></dt><dd>将来生み出される全キャッシュフローを所定の割引率（資本コスト）で現在価値に割り引いた合計から、初期投資額を差し引いた純現在価値。NPV＞0であれば投資適格。</dd></div>
+          <div class="term" data-cat="finance"><dt>DSCR（元利金返済カバー率）<small>Debt Service Coverage Ratio</small><span class="cat cat-finance">ファイナンス</span></dt><dd>元利返済前キャッシュフロー（CFADS）÷ 年間元利金返済額（Debt Service）。融資銀行が最も重視する安全性指標。太陽光では通常1.20〜1.30倍以上が要求基準。</dd></div>
+          <div class="term" data-cat="finance"><dt>LLCR（融資残存期間返済カバー率）<small>Loan Life Coverage Ratio</small><span class="cat cat-finance">ファイナンス</span></dt><dd>融資残存期間中の全CFADSの現在価値合計 ÷ 借入金残高。単年度の変動を均し、融資期間全体を通じて借入金を完済できる余力を示す指標。</dd></div>
+          <div class="term" data-cat="finance"><dt>CFADS（元利返済前CF）<small>Cash Flow Available for Debt Service</small><span class="cat cat-finance">ファイナンス</span></dt><dd>売電収入から運営費（O&amp;M費・公租公課・保険料等）を差し引いた、純粋に借入金返済に充当可能な正味キャッシュフロー。</dd></div>
+          <div class="term" data-cat="finance"><dt>EBITDA<small>Earnings Before Interest, Taxes, Depreciation</small><span class="cat cat-finance">ファイナンス</span></dt><dd>利払い前・税引前・減価償却前利益。発電事業における実質的な現金創出力（営業キャッシュフロー）を簡易把握する指標。</dd></div>
+          <div class="term" data-cat="finance"><dt>DSRA（元利金返済積立口座）<small>Debt Service Reserve Account</small><span class="cat cat-finance">ファイナンス</span></dt><dd>天候不順や一時的な事故による収入減少時でも返済が滞らないよう、通常6ヶ月分の元利金返済相当額を常時プールしておく拘束口座。</dd></div>
+          <div class="term" data-cat="finance"><dt>MRA（大規模修繕積立金）<small>Major Maintenance Reserve Account</small><span class="cat cat-finance">ファイナンス</span></dt><dd>10〜15年目に想定されるPCSインバータの総取替や大規模修繕に備え、あらかじめ毎年キャッシュフローから計画的に積み立てておく特別口座。</dd></div>
+          <div class="term" data-cat="finance"><dt>キャッシュウォーターフォール<small>Cash Waterfall</small><span class="cat cat-finance">ファイナンス</span></dt><dd>融資契約に基づき、売電収入口座に入金された現金を定められた厳格な優先順位に従って段階的に支払っていく仕組み（運営費 ➔ シニア元利金 ➔ DSRA積立 ➔ 配当）。</dd></div>
+          <div class="term" data-cat="finance"><dt>ロックアップ（配当停止条項）<small>Distribution Lock-up</small><span class="cat cat-finance">ファイナンス</span></dt><dd>直近12ヶ月のDSCRが基準値（例: 1.15倍）を下回った場合やコベナンツ違反時に、投資家への配当分配が強制停止され、資金が口座内に留保される仕組み。</dd></div>
+          <div class="term" data-cat="finance"><dt>コベナンツ（財務制限条項）<small>Financial Covenants</small><span class="cat cat-finance">ファイナンス</span></dt><dd>融資契約において借り手（SPV）が貸付人（銀行団）に対して遵守を誓約する義務事項。最低DSCR維持、追加借入禁止、担保提供制限、保険付保維持など。</dd></div>
+          <div class="term" data-cat="finance"><dt>DCF法（割引現在価値法）<small>Discounted Cash Flow</small><span class="cat cat-finance">ファイナンス</span></dt><dd>将来20年間にわたり発電事業が生み出すフリーキャッシュフローを、リスクを反映した加重平均資本コスト（WACC）で現在価値に割り引いて資産価値を算定する評価法。</dd></div>
+          <div class="term" data-cat="finance"><dt>法定耐用年数（17年）<small>Statutory Depreciation Period</small><span class="cat cat-finance">ファイナンス</span></dt><dd>税法上の減価償却資産区分における太陽光発電設備の法定耐用年数。主たる用途区分が電気業用設備として「17年」と定められている。</dd></div>
+          <div class="term" data-cat="finance"><dt>CAPEX（資本的支出）<small>Capital Expenditure</small><span class="cat cat-finance">ファイナンス</span></dt><dd>発電所の建設・設備取得に要する初期投資総額（モジュール・架台・PCS・工事費・土地取得費・連系負担金等）。</dd></div>
+          <div class="term" data-cat="finance"><dt>OPEX（運営維持費）<small>Operating Expense</small><span class="cat cat-finance">ファイナンス</span></dt><dd>発電所の運営期間中に毎年経常的に発生する費用（O&amp;M委託費・土地賃料・保険料・公租公課固定資産税・AMフィー等）。</dd></div>
+          <div class="term" data-cat="finance"><dt>D/Eレシオ（デット・エクイティ比率）<small>Debt-to-Equity Ratio</small><span class="cat cat-finance">ファイナンス</span></dt><dd>総事業費における借入金（デット）と自己資金（エクイティ）の構成比。メガソーラーのPFでは「80:20」や「85:15」などの高レバレッジが一般的。</dd></div>
+          <div class="term" data-cat="finance"><dt>セカンダリー買収（セカンダリー市場）<small>Secondary Asset Acquisition</small><span class="cat cat-finance">ファイナンス</span></dt><dd>すでに系統連系され売電実績（トラックレコード）がある稼働済み太陽光発電所を既存オーナーから売買・買収する取引。開発リスクがない反面、デューデリジェンス（DD）が重要。</dd></div>
+          <div class="term" data-cat="finance"><dt>TA（テクニカルアドバイザー）<small>Technical Advisor</small><span class="cat cat-finance">ファイナンス</span></dt><dd>融資銀行や買収投資家に代わって、発電所の設計図面、使用機器の信頼性、土木造成、日射量データ、PR予測を第三者の立場から技術的精査（TDD）する専門機関。</dd></div>
+        </dl>
+      </section>
+
+      <!-- ========================================================
+           ジャンル6: 📜 法令・許認可・契約・保険 (legal)
+           ======================================================== -->
+      <section class="genre-section" data-genre="legal" id="sec-legal">
+        <div class="genre-header">
+          <div class="genre-title-wrap">
+            <h2 class="genre-title">📜 法令・許認可・契約・保険</h2>
+            <span class="genre-badge" style="background: rgba(148,163,184,0.15); color: #cbd5e1; border: 1px solid rgba(148,163,184,0.3);">26用語収録</span>
+          </div>
+          <p class="genre-desc">電気事業法、林地開発（0.5ha）、農地転用、盛土法、EPC/O&amp;M契約、地上権、利益保険などの法務・許認可・リスク管理用語です。</p>
+        </div>
+
+        <dl class="terms">
+          <div class="term" data-cat="legal"><dt>電気事業法<small>Electricity Business Act</small><span class="cat cat-legal">法令・契約</span></dt><dd>電気工作物の工事・維持・運用の安全確保を定めた基本法。保安規程の届出、電気主任技術者の選任、技術基準適合義務、事故報告義務を規定。</dd></div>
+          <div class="term" data-cat="legal"><dt>再エネ特措法<small>Renewable Energy Special Measures Act</small><span class="cat cat-legal">法令・契約</span></dt><dd>FIT/FIP制度の根拠法。事業計画認定制度、事前説明会の義務化、フェンス・標識設置義務、積立金制度、違反時の認定取消・交付金留保を規定。</dd></div>
+          <div class="term" data-cat="legal"><dt>林地開発許可（0.5ha基準）<small>Forest Development Permit</small><span class="cat cat-legal">法令・契約</span></dt><dd>森林法第10条の2に基づく知事許可。土砂崩れや水害を防ぐため、太陽光発電の開発は2023年4月より許可対象面積が従来の1ha超から「0.5ha超」に大幅厳格化。</dd></div>
+          <div class="term" data-cat="legal"><dt>農地法（農地転用許可）<small>Farmland Act Permission</small><span class="cat cat-legal">法令・契約</span></dt><dd>農地を太陽光用地に転換する際に必要な農業委員会・都道府県知事許可。所有権移転を伴う「農地法第5条許可」や、自己所有地を転用する「第4条許可」がある。第1種農地は原則不許可。</dd></div>
+          <div class="term" data-cat="legal"><dt>営農型太陽光（ソーラーシェアリング）<small>Agrivoltaics</small><span class="cat cat-legal">法令・契約</span></dt><dd>農地上の支柱（2〜3m以上）の上にモジュールを設置し、下部農地で営農を継続しながら発電する形態。農地の一時転用許可（3年または10年更新）が必要。</dd></div>
+          <div class="term" data-cat="legal"><dt>盛土規制法<small>Embankment Regulation Act</small><span class="cat cat-legal">法令・契約</span></dt><dd>危険な盛土による土砂崩落を防ぐための新法（宅地造成及び特定盛土等規制法）。規制区域内の切土・盛土・残土搬入について厳しい許可基準・中間検査・定期報告が義務。</dd></div>
+          <div class="term" data-cat="legal"><dt>環境アセスメント（環境影響評価法）<small>Environmental Impact Assessment</small><span class="cat cat-legal">法令・契約</span></dt><dd>大規模太陽光の環境影響を事前に調査・予測・評価する手続き。出力40MW（4万kW）以上が第一種事業（必須）、30MW以上40MW未満が第二種事業（判定対象）。自治体条例アセスも多数。</dd></div>
+          <div class="term" data-cat="legal"><dt>メガソーラー条例（自治体規制）<small>Local Solar Ordinances</small><span class="cat cat-legal">法令・契約</span></dt><dd>全国の自治体が独自に制定する太陽光規制条例。事前同意要件、景観保全地区や災害危険区域での設置禁止、独自課税（宿泊税に似た太陽光税・パネル税）などを課す。</dd></div>
+          <div class="term" data-cat="legal"><dt>接続契約（系統連系契約）<small>Interconnection Agreement</small><span class="cat cat-legal">法令・契約</span></dt><dd>一般送配電事業者との間で締結する電力系統連系に関する契約。連系容量、受電電圧、工事費負担金、出力制御ルールの遵守義務などを規定。</dd></div>
+          <div class="term" data-cat="legal"><dt>託送供給約款<small>Wheeling Service Agreement</small><span class="cat cat-legal">法令・契約</span></dt><dd>一般送配電事業者の送配電ネットワークを利用して発電所から需要家や市場へ電気を送り届ける際の料金・条件を定めた公的約款。</dd></div>
+          <div class="term" data-cat="legal"><dt>工事費負担金<small>Grid Interconnection Construction Charge</small><span class="cat cat-legal">法令・契約</span></dt><dd>発電所を系統に接続するために必要となる送配電網の設備増強・電柱変圧器工事費用を発電事業者が負担する費用。高額化（億単位）することがある。</dd></div>
+          <div class="term" data-cat="legal"><dt>EPC契約<small>EPC Contract</small><span class="cat cat-legal">法令・契約</span></dt><dd>設計（Engineering）、機器調達（Procurement）、建設施工（Construction）を一括して請負業者に委託するターンキー契約。完工時期、性能保証、瑕疵担保を規定。</dd></div>
+          <div class="term" data-cat="legal"><dt>O&amp;M委託契約<small>O&amp;M Agreement</small><span class="cat cat-legal">法令・契約</span></dt><dd>発電所の運転管理・保守点検を専門O&amp;M業者に委託する契約。点検頻度、SLA（駆けつけ時間）、稼働率保証、免責事由、費用体系を明記。</dd></div>
+          <div class="term" data-cat="legal"><dt>AM委託契約<small>Asset Management Agreement</small><span class="cat cat-legal">法令・契約</span></dt><dd>資産所有者（SPV）から発電所の総合経営管理（契約管理、予実管理、レンダー対話、保険手配、決算・税務調整、売電管理）を受託する契約。</dd></div>
+          <div class="term" data-cat="legal"><dt>契約不適合責任<small>Liability for Non-Conformity</small><span class="cat cat-legal">法令・契約</span></dt><dd>引き渡された設備や土地が契約内容に適合しない（欠陥・性能未達）場合に、売主や施工会社が負う民法上の責任（追完請求、代金減額、解除、損害賠償）。旧・瑕疵担保責任。</dd></div>
+          <div class="term" data-cat="legal"><dt>LD（予定損害賠償額）<small>Liquidated Damages</small><span class="cat cat-legal">法令・契約</span></dt><dd>工期遅延（Delay LD）や引き渡し時の性能未達（Performance LD）が発生した際、実際の損害立証を不要としてあらかじめ契約で定めた算式で請求できる損害賠償金。</dd></div>
+          <div class="term" data-cat="legal"><dt>地上権（区分地上権）<small>Superficies / Surface Rights</small><span class="cat cat-legal">法令・契約</span></dt><dd>他人の土地において工作物（太陽光設備）を所有するために土地を使用する物権。登記可能で、地主が破産しても土地利用権が保護されるためPF融資で最も好まれる。</dd></div>
+          <div class="term" data-cat="legal"><dt>賃借権（土地賃貸借契約）<small>Leasehold Rights</small><span class="cat cat-legal">法令・契約</span></dt><dd>地主から土地を借りて賃料を支払う債権契約。20年以上の長期契約を結ぶが、融資時には賃借権設定登記や地主からのPF融資承諾書（介入権承諾）が求められる。</dd></div>
+          <div class="term" data-cat="legal"><dt>動産総合保険<small>Property All Risks Insurance</small><span class="cat cat-legal">法令・契約</span></dt><dd>火災、落雷、風災・水災・雪災、盗難、外部からの衝突・飛来物などによるモジュールや機器の物的損害を補償する必須の損害保険。</dd></div>
+          <div class="term" data-cat="legal"><dt>企業総合賠償責任保険（CGL）<small>Comprehensive General Liability</small><span class="cat cat-legal">法令・契約</span></dt><dd>発電所フェンスの倒壊、モジュール飛散、法面崩壊土砂流出などにより、近隣住民や第三者の身体・財産に損害を与えた場合の賠償責任を補償する保険。</dd></div>
+          <div class="term" data-cat="legal"><dt>利益保険（休業損害保険 / BI）<small>Business Interruption Insurance</small><span class="cat cat-legal">法令・契約</span></dt><dd>火災や自然災害で発電設備が損壊し運転停止を余儀なくされた期間中、本来得られたはずの売電収入の喪失（逸失利益）および固定費（借入金返済等）を補填する保険。</dd></div>
+          <div class="term" data-cat="legal"><dt>機械保険<small>Machinery Insurance</small><span class="cat cat-legal">法令・契約</span></dt><dd>PCSや変圧器などの電気機器が、運転中の電気的事故（ショート・過電流）や機械的内部破損により生じた損害を補償する保険。</dd></div>
+          <div class="term" data-cat="legal"><dt>リニア出力保証（25年出力保証）<small>Linear Power Warranty</small><span class="cat cat-legal">法令・契約</span></dt><dd>モジュールメーカーが発行する保証。1年目に公称出力の98%以上、以降毎年緩やかに減衰し25年目に80〜85%以上の出力をリニアに保証する約定。</dd></div>
+          <div class="term" data-cat="legal"><dt>事前説明会義務化<small>Prior Public Briefing Obligation</small><span class="cat cat-legal">法令・契約</span></dt><dd>改正再エネ特措法により、周辺住民（原則1km圏内等）に対して事業内容や安全・環境保全策を説明する公的説明会の開催が認定取得・更新の必須要件となった制度。</dd></div>
+          <div class="term" data-cat="legal"><dt>交付金一時留保制度<small>FIP Subsidy Suspension System</small><span class="cat cat-legal">法令・契約</span></dt><dd>関係法令（森林法・盛土法等）違反や説明会違反を犯した発電事業者に対し、経済産業省が改善指導を行い、是正されない場合はFIP交付金やFIT買取金の支払いを一時差し止める行政処分。</dd></div>
+          <div class="term" data-cat="legal"><dt>デューデリジェンス（TDD / LDD / FDD）<small>Due Diligence</small><span class="cat cat-legal">法令・契約</span></dt><dd>発電所の買収・出資・融資時に実施される包括的精査。技術（TDD）、法務・許認可（LDD）、財務・税務（FDD）の専門家が瑕疵やリスクを洗い出す。</dd></div>
+        </dl>
+      </section>
+
       <p class="empty" id="term-empty">該当する用語が見つかりませんでした。別のキーワードでお試しください。</p>
 
-      <nav class="pager" id="pager" aria-label="前後のノート"></nav>
+      <nav class="pager" id="pager" aria-label="前後のノート" style="margin-top:64px"></nav>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
       <p>© Solar AM Notes — 個人の学習用ノート</p>
-      <p>※ 用語の定義は一般的な説明です。制度・法令上の定義は一次情報を確認してください。</p>
+      <p>※ 用語の定義はメガソーラー・アセットマネジメント実務における一般的な解説です。法令・規程・契約書の実務適用にあたっては最新の公的条文・一次情報をご確認ください。</p>
     </div>
   </footer>
 

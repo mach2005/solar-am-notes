@@ -9,16 +9,16 @@
   "use strict";
 
   // ---- ページ一覧（追加・並べ替えはここだけ編集すればOK） ----
+  // ---- 学習ノート一覧（前後のノートリンク用・学習順に整理） ----
   var PAGES = [
-    { id: "news",          file: "notes/news.html",          label: "最新ニュース" },
-    { id: "performance",   file: "notes/performance.html",   label: "発電性能" },
+    { id: "electrical",    file: "notes/electrical.html",    label: "電気設備" },
     { id: "om",            file: "notes/om.html",            label: "O&M" },
     { id: "due-diligence", file: "notes/due-diligence.html", label: "ファシリティDD" },
+    { id: "denken",        file: "notes/denken.html",        label: "電験・主任技術者" },
+    { id: "performance",   file: "notes/performance.html",   label: "発電性能" },
     { id: "policy",        file: "notes/policy.html",        label: "制度・市場" },
     { id: "ppa-market",    file: "notes/ppa-market.html",    label: "PPA・市場取引" },
     { id: "finance",       file: "notes/finance.html",       label: "金融・ファイナンス" },
-    { id: "electrical",    file: "notes/electrical.html",    label: "電気設備" },
-    { id: "denken",        file: "notes/denken.html",        label: "電験・主任技術者" },
     { id: "acts",          file: "notes/acts.html",          label: "重要法令" },
     { id: "legal",         file: "notes/legal.html",         label: "契約・保険" },
     { id: "industry",      file: "notes/industry.html",      label: "業界マップ" },
@@ -46,8 +46,7 @@
       label: "🔋 制度・市場・蓄電池",
       items: [
         { id: "policy",        file: "notes/policy.html",        label: "FIT/FIP・系統用蓄電池" },
-        { id: "ppa-market",    file: "notes/ppa-market.html",    label: "PPA・電力市場取引" },
-        { id: "news",          file: "notes/news.html",          label: "最新ニュース・政策速報" }
+        { id: "ppa-market",    file: "notes/ppa-market.html",    label: "PPA・電力市場取引" }
       ]
     },
     {
@@ -69,6 +68,10 @@
   var nav = document.getElementById("site-nav");
   if (nav) {
     var html = '<a href="' + root + 'index.html"' + (current === "home" ? ' class="active"' : "") + ">ホーム</a>";
+    // 最新ニュースを最前面・独立機能ボタンとして配置（ノートとは完全独立）
+    html += '<a href="' + root + 'news.html" class="nav-news-link' + (current === "news" ? ' active' : "") + '" aria-label="最新ニュース・政策動向速報">' +
+            '📰 最新ニュース <span class="nav-badge-live">LIVE</span></a>';
+
     NAV_GROUPS.forEach(function (group) {
       if (group.items.length === 1) {
         var single = group.items[0];
@@ -223,9 +226,10 @@
   var q = document.getElementById("term-search");
   var terms = document.querySelectorAll(".term");
   if (q && terms.length) {
-    var chips = document.querySelectorAll(".chip");
+    var chips = document.querySelectorAll(".filter-chips .chip");
     var countEl = document.getElementById("term-count");
     var emptyEl = document.getElementById("term-empty");
+    var genreSections = document.querySelectorAll(".genre-section");
     var cat = "all";
 
     function norm(s) {
@@ -244,6 +248,17 @@
         el.style.display = show ? "" : "none";
         if (show) n++;
       });
+
+      // ジャンルセクションごとの表示制御（該当用語が0件のジャンルはセクションごと非表示）
+      if (genreSections.length) {
+        genreSections.forEach(function (sec) {
+          var secCat = sec.getAttribute("data-genre");
+          var matchCat = cat === "all" || secCat === cat;
+          var visibleTerms = sec.querySelectorAll('.term:not([style*="display: none"])');
+          sec.style.display = (matchCat && visibleTerms.length > 0) ? "" : "none";
+        });
+      }
+
       if (countEl) countEl.textContent = n + " 件の用語";
       if (emptyEl) emptyEl.style.display = n ? "none" : "block";
     }
@@ -259,91 +274,208 @@
     apply();
   }
 
-  // ---- 最新ニュース：非同期読み込み・検索・カテゴリ絞り込み ----
-  var newsContainer = document.getElementById("news-cards");
-  if (newsContainer) {
-    var newsSearch = document.getElementById("news-search");
-    var newsChips = document.querySelectorAll(".news-chip");
-    var newsCount = document.getElementById("news-count");
-    var newsUpdated = document.getElementById("news-updated");
-    var newsEmpty = document.getElementById("news-empty");
-    var newsItems = [];
-    var currentNewsCat = "all";
+  // ---- 共通：HTMLエスケープ＆ソースバッジ判定 ----
+  function escapeHtml(s) {
+    if (!s) return "";
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
 
-    var catLabels = {
-      meti: "経産省・エネ庁",
-      policy: "制度・法改正・条例",
-      market: "市場・出力制御・PPA",
-      finance: "投資・ファイナンス",
-      om_tech: "O&M・保安・事故",
-      industry: "業界・技術"
+  function getSourceClass(src) {
+    if (!src) return "source-gnews";
+    if (src.indexOf("日経BP") !== -1 || src.indexOf("メガソーラー") !== -1) return "source-nikkei";
+    if (src.indexOf("SOLAR JOURNAL") !== -1) return "source-sj";
+    if (src.indexOf("PVeye") !== -1) return "source-pveye";
+    if (src.indexOf("経済産業省") !== -1 || src.indexOf("資源エネルギー庁") !== -1 || src.indexOf("METI") !== -1) return "source-meti";
+    if (src.indexOf("スマートジャパン") !== -1) return "source-smartjapan";
+    return "source-gnews";
+  }
+
+  var catLabels = {
+    meti: "経産省・エネ庁",
+    policy: "制度・法改正・条例",
+    market: "市場・出力制御・PPA",
+    finance: "投資・ファイナンス",
+    om_tech: "O&M・保安・事故",
+    industry: "業界・技術"
+  };
+
+  // ---- ニュースデータの取得と各ページへの配信 ----
+  var homeNewsContainer = document.getElementById("home-news-cards");
+  var newsContainer = document.getElementById("news-cards");
+
+  if (homeNewsContainer || newsContainer) {
+    var rawNewsItems = [];
+
+    // 1. トップページの速報ウィジェット
+    if (homeNewsContainer) {
+      var homeNewsChips = document.querySelectorAll("#home-news-chips .chip");
+      var homeNewsUpdated = document.getElementById("home-news-updated");
+      var currentHomeFilter = "all";
+
+      var renderHomeNews = function () {
+        var filtered = rawNewsItems.filter(function (it) {
+          if (currentHomeFilter === "all") return true;
+          if (currentHomeFilter === "日経BP メガソーラービジネス") {
+            return it.source && (it.source.indexOf("日経BP") !== -1 || it.source.indexOf("メガソーラー") !== -1);
+          }
+          if (currentHomeFilter === "SOLAR JOURNAL") {
+            return it.source && it.source.indexOf("SOLAR JOURNAL") !== -1;
+          }
+          if (currentHomeFilter === "PVeye") {
+            return it.source && it.source.indexOf("PVeye") !== -1;
+          }
+          if (currentHomeFilter === "policy_market") {
+            return it.category === "meti" || it.category === "policy" || it.category === "market";
+          }
+          return true;
+        });
+
+        // トップページは独立して最新5件を表示
+        var topItems = filtered.slice(0, 5);
+        if (!topItems.length) {
+          homeNewsContainer.innerHTML = '<p style="color:var(--text-sub);padding:24px;text-align:center;">該当するニュースがありません。</p>';
+          return;
+        }
+
+        var html = "";
+        topItems.forEach(function (it) {
+          var srcClass = getSourceClass(it.source);
+          var catName = catLabels[it.category] || "情報";
+          var featTag = it.featured ? '<span class="news-featured-tag">注目</span>' : '';
+          var link = it.link || "#";
+
+          html += '<a class="home-news-card" href="' + escapeHtml(link) + '" target="_blank" rel="noopener noreferrer">' +
+                    '<div>' +
+                      '<div class="home-news-meta">' +
+                        featTag +
+                        '<span class="badge-source ' + srcClass + '">' + escapeHtml(it.source) + '</span>' +
+                        '<span class="news-cat cat-' + escapeHtml(it.category) + '">' + escapeHtml(catName) + '</span>' +
+                        '<span class="news-date">' + escapeHtml(it.date) + '</span>' +
+                      '</div>' +
+                      '<h3 class="home-news-title">' + escapeHtml(it.title) + '</h3>' +
+                      (it.summary ? '<p class="home-news-summary">' + escapeHtml(it.summary) + '</p>' : '') +
+                    '</div>' +
+                    '<div class="home-news-foot">' +
+                      '<span>記事を読む ↗</span>' +
+                      '<span class="home-news-link-btn">公式配信元で閲覧</span>' +
+                    '</div>' +
+                  '</a>';
+        });
+        homeNewsContainer.innerHTML = html;
+      };
+
+      homeNewsChips.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          homeNewsChips.forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          currentHomeFilter = btn.getAttribute("data-source");
+          renderHomeNews();
+        });
+      });
+    }
+
+    // 2. ニュース詳細ポータル（notes/news.html）
+    if (newsContainer) {
+      var newsSearch = document.getElementById("news-search");
+      var newsChips = document.querySelectorAll(".news-chip");
+      var newsCount = document.getElementById("news-count");
+      var newsUpdated = document.getElementById("news-updated");
+      var newsEmpty = document.getElementById("news-empty");
+      var currentNewsCat = "all";
+
+      var renderPortalNews = function () {
+        var kw = newsSearch ? newsSearch.value.trim().toLowerCase() : "";
+        var filtered = rawNewsItems.filter(function (it) {
+          var matchCat = true;
+          if (currentNewsCat === "all") {
+            matchCat = true;
+          } else if (currentNewsCat === "source-nikkei") {
+            matchCat = it.source && (it.source.indexOf("日経BP") !== -1 || it.source.indexOf("メガソーラー") !== -1);
+          } else if (currentNewsCat === "source-sj") {
+            matchCat = it.source && it.source.indexOf("SOLAR JOURNAL") !== -1;
+          } else if (currentNewsCat === "source-pveye") {
+            matchCat = it.source && it.source.indexOf("PVeye") !== -1;
+          } else {
+            matchCat = it.category === currentNewsCat;
+          }
+
+          var text = (it.title + " " + it.summary + " " + it.source).toLowerCase();
+          var matchKw = !kw || text.indexOf(kw) !== -1;
+          return matchCat && matchKw;
+        });
+
+        if (newsCount) newsCount.textContent = filtered.length + " 件の記事";
+        if (newsEmpty) newsEmpty.style.display = filtered.length ? "none" : "block";
+
+        var html = "";
+        filtered.forEach(function (it) {
+          var catName = catLabels[it.category] || "情報";
+          var srcClass = getSourceClass(it.source);
+          var featTag = it.featured ? '<span class="news-featured-tag">★ 注目トピック</span>' : '';
+          var linkTag = it.link
+            ? '<a href="' + escapeHtml(it.link) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(it.title) +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>'
+            : escapeHtml(it.title);
+
+          html += '<article class="news-card">' +
+                    '<div class="news-meta-row">' +
+                      featTag +
+                      '<span class="badge-source ' + srcClass + '">' + escapeHtml(it.source) + '</span>' +
+                      '<span class="news-cat cat-' + escapeHtml(it.category) + '">' + escapeHtml(catName) + '</span>' +
+                      '<span class="news-date">' + escapeHtml(it.date) + '</span>' +
+                    '</div>' +
+                    '<h3 class="news-title">' + linkTag + '</h3>' +
+                    (it.summary ? '<p class="news-summary">' + escapeHtml(it.summary) + '</p>' : '') +
+                  '</article>';
+        });
+        newsContainer.innerHTML = html;
+      };
+
+      if (newsSearch) newsSearch.addEventListener("input", renderPortalNews);
+      newsChips.forEach(function (c) {
+        c.addEventListener("click", function () {
+          newsChips.forEach(function (x) { x.classList.remove("active"); });
+          c.classList.add("active");
+          currentNewsCat = c.getAttribute("data-filter");
+          renderPortalNews();
+        });
+      });
+    }
+
+    // データ取得（window.SOLAR_NEWS_DATA があればローカル file:// でも即座に完全描画）
+    var applyData = function (data) {
+      if (!data || !data.items) return false;
+      rawNewsItems = data.items || [];
+      var updateText = data.updated_at ? "最終更新: " + data.updated_at : "毎日自動更新中";
+      var homeUpd = document.getElementById("home-news-updated");
+      if (homeUpd) homeUpd.textContent = updateText;
+      var portalUpd = document.getElementById("news-updated");
+      if (portalUpd) portalUpd.textContent = updateText;
+
+      if (homeNewsContainer && renderHomeNews) renderHomeNews();
+      if (newsContainer && renderPortalNews) renderPortalNews();
+      return true;
     };
 
-    function escapeHtml(s) {
-      if (!s) return "";
-      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    if (window.SOLAR_NEWS_DATA && applyData(window.SOLAR_NEWS_DATA)) {
+      // グローバルオブジェクトから即時レンダリング成功
+    } else {
+      fetch(root + "data/news.json")
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          applyData(data);
+        })
+        .catch(function (err) {
+          console.warn("ニュース読み込みエラー:", err);
+          if (!rawNewsItems.length) {
+            var msg = '<p style="color:var(--text-sub);padding:20px;text-align:center;">ニュースデータの読み込み中またはオフラインです。</p>';
+            if (homeNewsContainer) homeNewsContainer.innerHTML = msg;
+            if (newsContainer) newsContainer.innerHTML = msg;
+          }
+        });
     }
-
-    function renderNews() {
-      var kw = newsSearch ? newsSearch.value.trim().toLowerCase() : "";
-      var filtered = newsItems.filter(function (it) {
-        var matchCat = currentNewsCat === "all" || it.category === currentNewsCat;
-        var text = (it.title + " " + it.summary + " " + it.source).toLowerCase();
-        var matchKw = !kw || text.indexOf(kw) !== -1;
-        return matchCat && matchKw;
-      });
-
-      if (newsCount) newsCount.textContent = filtered.length + " 件の記事";
-      if (newsEmpty) newsEmpty.style.display = filtered.length ? "none" : "block";
-
-      var html = "";
-      filtered.forEach(function (it) {
-        var catName = catLabels[it.category] || "情報";
-        var featTag = it.featured ? '<span class="news-featured-tag">★ 注目トピック</span>' : '';
-        var linkTag = it.link
-          ? '<a href="' + escapeHtml(it.link) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(it.title) +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg></a>'
-          : escapeHtml(it.title);
-
-        html += '<article class="news-card">' +
-                  '<div class="news-meta-row">' +
-                    featTag +
-                    '<span class="news-cat cat-' + escapeHtml(it.category) + '">' + escapeHtml(catName) + '</span>' +
-                    '<span class="news-source">' + escapeHtml(it.source) + '</span>' +
-                    '<span class="news-date">' + escapeHtml(it.date) + '</span>' +
-                  '</div>' +
-                  '<h3 class="news-title">' + linkTag + '</h3>' +
-                  (it.summary ? '<p class="news-summary">' + escapeHtml(it.summary) + '</p>' : '') +
-                '</article>';
-      });
-      newsContainer.innerHTML = html;
-    }
-
-    fetch(root + "data/news.json")
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        if (data.updated_at && newsUpdated) {
-          newsUpdated.textContent = "最終更新: " + data.updated_at;
-        }
-        newsItems = data.items || [];
-        renderNews();
-      })
-      .catch(function (err) {
-        console.warn("ニュース読み込みエラー:", err);
-        newsContainer.innerHTML = '<p style="color:var(--text-sub);padding:20px;">最新ニュースの取得中またはオフラインです。上の公的機関リンク集から最新情報をご確認いただけます。</p>';
-      });
-
-    if (newsSearch) newsSearch.addEventListener("input", renderNews);
-    newsChips.forEach(function (c) {
-      c.addEventListener("click", function () {
-        newsChips.forEach(function (x) { x.classList.remove("active"); });
-        c.classList.add("active");
-        currentNewsCat = c.getAttribute("data-filter");
-        renderNews();
-      });
-    });
   }
 })();

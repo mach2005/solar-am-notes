@@ -29,47 +29,236 @@
     </div>
   </header>
 
+  <!-- ===== ヘッダー直下：最優先速報ティッカーバー（サイトを開いて最速で目に入る独立枠） ===== -->
+  <aside class="top-breaking-bar" aria-label="業界最新ニュース速報ティッカー">
+    <div class="top-breaking-inner">
+      <span class="breaking-badge"><span class="live-dot"></span>業界速報</span>
+      <div class="breaking-marquee">
+        <a class="breaking-link" href="https://www.pveye.jp/eye_sight/view/6938/" target="_blank" rel="noopener noreferrer">【PVeye】経産省、FIT・FIP支援縮小へ 公共地導入・カーポート限定検討</a>
+        <span class="breaking-sep">/</span>
+        <a class="breaking-link" href="https://www.pveye.jp/inside_news/view/6944/" target="_blank" rel="noopener noreferrer">【PVeye】SBI損保、メガソーラー向けケーブル盗難保険を商品化</a>
+        <span class="breaking-sep">/</span>
+        <a class="breaking-link" href="https://www.pveye.jp/eye_sight/view/6964/" target="_blank" rel="noopener noreferrer">【PVeye】「営農用太陽光の普及に壁 自治体支援拡充が急務」</a>
+      </div>
+      <a class="breaking-all-link" href="news.html">全120件ポータル ↗</a>
+    </div>
+  </aside>
+
   <main>
-    <!-- ===== Hero ===== -->
-    <section class="hero">
+    <!-- ===== Hero (ファーストビュー 2カラム独立ニュース枠) ===== -->
+    <section class="hero hero-split">
       <div class="hero-bg" role="img" aria-label="夕暮れのメガソーラー発電所"></div>
-      <div class="hero-inner">
-        <span class="eyebrow">Personal Study Notes</span>
-        <h1>メガソーラーを<br><span class="grad-text">“資産”として読み解く。</span></h1>
-        <p class="lead">発電性能・O&amp;M・制度・ファイナンス・電気設備・法務。アセットマネージャーに必要な知識を、スマホでいつでも復習できる学習ノートにまとめました。</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#topics" id="btn-start">ノートを読む
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-ghost" href="notes/glossary.html" id="btn-glossary">用語集で調べる</a>
+      <div class="hero-inner hero-split-inner">
+        
+        <!-- 左カラム: 学習ポータル メインコンセプト -->
+        <div class="hero-col-main">
+          <span class="eyebrow">Personal Study Notes</span>
+          <h1>メガソーラーを<br><span class="grad-text">“資産”として読み解く。</span></h1>
+          <p class="lead">発電性能・O&amp;M・制度・ファイナンス・電気設備・法務。メガソーラーAM実務に必要な全12テーマを体系化。スマホ・PCでいつでも復習できる専門学習ノート。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#topics" id="btn-start">学習ノート一覧 (全12テーマ) ↓</a>
+            <a class="btn btn-ghost" href="news.html" id="btn-news-portal">ニュースポータル (120件+) ↗</a>
+          </div>
         </div>
+
+        <!-- 右カラム: 【最優先・独立別枠】ファーストビュー最新ニュース速報枠 -->
+        <aside class="hero-col-news" aria-label="ファーストビュー最新ニュース速報枠">
+          <div class="hero-news-box">
+            <div class="hero-news-box-head">
+              <div class="hero-news-head-title">
+                <span class="live-indicator"><span class="live-dot"></span>LIVE速報</span>
+                <h3>最新業界ニュース</h3>
+              </div>
+              <a class="hero-news-all-link" href="news.html">全120件ポータル ↗</a>
+            </div>
+            <p class="hero-news-box-sub">PVeye・日経BP・SOLAR JOURNAL・経産省 新着5件</p>
+            
+            <div class="hero-news-list">
+              <a class="hero-news-item" href="https://www.pveye.jp/eye_sight/view/6938/" target="_blank" rel="noopener noreferrer">
+                <div class="hero-news-item-meta">
+                  <span class="news-featured-tag">注目</span>
+                  <span class="badge-source source-pveye">PVeye</span>
+                  <span class="news-date">2026-10-31</span>
+                </div>
+                <h4 class="hero-news-item-title">経産省、FIT・FIPの支援縮小へ 公共地導入やカーポート限定か</h4>
+              </a>
+
+              <a class="hero-news-item" href="https://www.pveye.jp/eye_sight/view/6964/" target="_blank" rel="noopener noreferrer">
+                <div class="hero-news-item-meta">
+                  <span class="badge-source source-pveye">PVeye</span>
+                  <span class="news-date">2026-10-31</span>
+                </div>
+                <h4 class="hero-news-item-title">「営農用太陽光の普及に壁 自治体支援の拡充が急務」</h4>
+              </a>
+
+              <a class="hero-news-item" href="https://www.pveye.jp/eye_sight/view/6974/" target="_blank" rel="noopener noreferrer">
+                <div class="hero-news-item-meta">
+                  <span class="badge-source source-pveye">PVeye</span>
+                  <span class="news-date">2026-10-31</span>
+                </div>
+                <h4 class="hero-news-item-title">堀内電気、近計システムを提訴へ（損害賠償額2300万円）</h4>
+              </a>
+
+              <a class="hero-news-item" href="https://www.pveye.jp/inside_news/view/6944/" target="_blank" rel="noopener noreferrer">
+                <div class="hero-news-item-meta">
+                  <span class="badge-source source-pveye">PVeye</span>
+                  <span class="news-date">2026-10-31</span>
+                </div>
+                <h4 class="hero-news-item-title">SBI損保、メガソーラー向け「ケーブル盗難保険」を商品化</h4>
+              </a>
+
+              <a class="hero-news-item" href="https://www.pveye.jp/inside_news/view/6945/" target="_blank" rel="noopener noreferrer">
+                <div class="hero-news-item-meta">
+                  <span class="badge-source source-pveye">PVeye</span>
+                  <span class="news-date">2026-10-31</span>
+                </div>
+                <h4 class="hero-news-item-title">大日本印刷、10MW級のオンサイトPPA締結を発表</h4>
+              </a>
+            </div>
+
+            <div class="hero-news-box-foot">
+              <a class="hero-news-foot-btn" href="#latest-news-section">▼ ソース別絞り込み・詳細解説ボードへ</a>
+            </div>
+          </div>
+        </aside>
+
       </div>
     </section>
 
     <!-- ===== Stats ===== -->
     <div class="section" style="padding-top:0;padding-bottom:0">
       <div class="stats reveal">
-        <div class="stat"><b class="grad-text">NEWS</b><span>毎朝の政策・市場情報</span></div>
+        <div class="stat"><b class="grad-text">NEWS</b><span>日経/SJ/PVeye/経産省</span></div>
         <div class="stat"><b class="grad-text">60+</b><span>収録専門用語</span></div>
         <div class="stat"><b class="grad-text">PR</b><span>性能評価の基本指標</span></div>
         <div class="stat"><b class="grad-text">DSCR</b><span>融資管理の基本指標</span></div>
       </div>
     </div>
 
+    <!-- ===== 【特設・最優先独立別枠】最新ニュース＆業界動向速報ボード ===== -->
+    <section class="section home-news-section news-standalone-board" id="latest-news-section" aria-labelledby="home-news-title">
+      <div class="home-news-header reveal">
+        <div class="home-news-title-wrap">
+          <span class="live-indicator"><span class="live-dot"></span>LIVE UPDATE</span>
+          <h2 id="home-news-title">最新ニュース ＆ 業界動向速報</h2>
+          <p>日経メガソーラー・SOLAR JOURNAL・PVeye・経済産業省・OCCTO等の最新5件をリアルタイム集約（1日4回更新）</p>
+        </div>
+        <div class="home-news-actions">
+          <span class="home-news-updated" id="home-news-updated">毎日自動更新中</span>
+          <a class="btn-more-news" href="news.html">全ニュース・実務ポータルを見る (120件+) →</a>
+        </div>
+      </div>
+
+      <!-- クイックソース切り替えフィルター -->
+      <div class="filter-chips home-news-chips" id="home-news-chips" role="group" aria-label="ニュースソースで絞り込み">
+        <button class="chip active" data-source="all">すべての新着 (最新5件)</button>
+        <button class="chip" data-source="日経BP メガソーラービジネス">日経メガソーラー</button>
+        <button class="chip" data-source="SOLAR JOURNAL">SOLAR JOURNAL</button>
+        <button class="chip" data-source="PVeye">PVeye</button>
+        <button class="chip" data-source="policy_market">経産省・政策・市場</button>
+      </div>
+
+      <!-- ニュースカード一覧（静的HTML初期レンダリング＋JSインタラクティブ両対応：最新5件） -->
+      <div class="home-news-grid" id="home-news-cards">
+        <a class="home-news-card" href="https://www.pveye.jp/eye_sight/view/6938/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="home-news-meta">
+              <span class="news-featured-tag">注目</span>
+              <span class="badge-source source-pveye">PVeye</span>
+              <span class="news-cat cat-policy">制度・法改正・条例</span>
+              <span class="news-date">2026-10-31</span>
+            </div>
+            <h3 class="home-news-title">経産省、FIT・FIPの支援縮小へ 公共地への導入や太陽光カーポートなどに限定か</h3>
+            <p class="home-news-summary">2026年以降のFIT/FIP買取制度の見直し議論が加速。野立てメガソーラーへの支援を段階的に縮小し、公共施設やソーラーカーポート等への重点配分を検討。</p>
+          </div>
+          <div class="home-news-foot">
+            <span>記事を読む ↗</span>
+            <span class="home-news-link-btn">公式配信元で閲覧</span>
+          </div>
+        </a>
+        <a class="home-news-card" href="https://www.pveye.jp/eye_sight/view/6964/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="home-news-meta">
+              <span class="badge-source source-pveye">PVeye</span>
+              <span class="news-cat cat-industry">業界・技術</span>
+              <span class="news-date">2026-10-31</span>
+            </div>
+            <h3 class="home-news-title">「営農用太陽光の普及に壁 自治体支援の拡充が急務」</h3>
+            <p class="home-news-summary">自然エネルギー財団 塚本悠平研究員による営農型太陽光（ソーラーシェアリング）の最新レポート。農地転用基準や地域共生における課題を提示。</p>
+          </div>
+          <div class="home-news-foot">
+            <span>記事を読む ↗</span>
+            <span class="home-news-link-btn">公式配信元で閲覧</span>
+          </div>
+        </a>
+        <a class="home-news-card" href="https://www.pveye.jp/eye_sight/view/6974/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="home-news-meta">
+              <span class="badge-source source-pveye">PVeye</span>
+              <span class="news-cat cat-industry">業界・技術</span>
+              <span class="news-date">2026-10-31</span>
+            </div>
+            <h3 class="home-news-title">堀内電気、近計システムを提訴へ（損害賠償額2300万円）</h3>
+            <p class="home-news-summary">太陽光発電遠隔監視・計測機器の納入を巡る損害賠償請求訴訟。業界内の機器トラブルと契約不適合責任の実務リスク。</p>
+          </div>
+          <div class="home-news-foot">
+            <span>記事を読む ↗</span>
+            <span class="home-news-link-btn">公式配信元で閲覧</span>
+          </div>
+        </a>
+        <a class="home-news-card" href="https://www.pveye.jp/inside_news/view/6944/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="home-news-meta">
+              <span class="badge-source source-pveye">PVeye</span>
+              <span class="news-cat cat-om_tech">O&amp;M・保安・事故</span>
+              <span class="news-date">2026-10-31</span>
+            </div>
+            <h3 class="home-news-title">SBI損保、メガソーラー向け「ケーブル盗難保険」を商品化</h3>
+            <p class="home-news-summary">送電用銅線ケーブルの切断盗難が多発する事態を受け、防犯センサー・カメラ設置等を条件に復旧費用や売電損失を補償する専用特約を新設。</p>
+          </div>
+          <div class="home-news-foot">
+            <span>記事を読む ↗</span>
+            <span class="home-news-link-btn">公式配信元で閲覧</span>
+          </div>
+        </a>
+        <a class="home-news-card" href="https://www.pveye.jp/inside_news/view/6945/" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="home-news-meta">
+              <span class="badge-source source-pveye">PVeye</span>
+              <span class="news-cat cat-market">市場・出力制御・PPA</span>
+              <span class="news-date">2026-10-31</span>
+            </div>
+            <h3 class="home-news-title">大日本印刷、10MW級のオンサイトPPA締結を発表</h3>
+            <p class="home-news-summary">事業所屋根等を活用した大規模オンサイトコーポレートPPAを推進。非FIT再エネ調達と長期脱炭素目標の達成を加速。</p>
+          </div>
+          <div class="home-news-foot">
+            <span>記事を読む ↗</span>
+            <span class="home-news-link-btn">公式配信元で閲覧</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="home-news-footer reveal">
+        <a class="btn btn-primary" href="news.html" style="padding: 12px 28px;">
+          📰 全てのニュース一覧・でんき予報10社・審議会リンクを見る (全120件) →
+        </a>
+      </div>
+    </section>
+
     <!-- ===== Topics ===== -->
     <section class="section" id="topics" aria-labelledby="topics-title">
       <div class="section-head reveal">
         <span class="kicker">Curriculum &amp; Domains</span>
         <h2 id="topics-title">実務体系別 学習ノート ＆ ツール</h2>
-        <p>太陽光アセットマネジメント（AM）に必要な全13テーマを4大実務領域に整理・分類しました。興味のある分野から体系的に読み進められます。</p>
+        <p>太陽光アセットマネジメント（AM）に必要な全12テーマを4大実務領域に整理・分類しました。興味のある分野から体系的に読み進められます。</p>
       </div>
 
       <!-- カテゴリ切り替えチップ -->
       <div class="filter-chips" id="topic-chips" role="group" aria-label="テーマで絞り込み" style="justify-content: center; margin-bottom: 28px;">
-        <button class="chip active" data-filter="all">全13ノートを表示</button>
+        <button class="chip active" data-filter="all">全12ノートを表示</button>
         <button class="chip" data-filter="tech">⚡ 現場・技術・O&amp;M (4)</button>
         <button class="chip" data-filter="perf">📈 発電性能分析 (1)</button>
-        <button class="chip" data-filter="market">🔋 制度・市場・蓄電池 (3)</button>
+        <button class="chip" data-filter="market">🔋 制度・市場・蓄電池 (2)</button>
         <button class="chip" data-filter="finance">⚖️ 金融・法務 (4)</button>
         <button class="chip" data-filter="tool">📖 用語・ツール (1)</button>
       </div>
@@ -149,20 +338,10 @@
           <span class="more">PPA実務ノートを開く →</span>
         </a>
 
-        <a class="card reveal" href="notes/news.html" id="card-news" data-cat="market">
-          <span class="badge-domain domain-market">📰 情報ポータル</span>
-          <span class="num">08</span>
-          <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></span>
-          <h3>最新ニュース・情報収集ポータル</h3>
-          <p>全国10エリアのでんき予報・出力制御速報、経産省・エネ庁・環境省・内閣府の政府審議会、JEPX市場データを完全網羅。</p>
-          <div class="tags"><span class="tag">でんき予報10社</span><span class="tag">政府審議会リンク</span><span class="tag">1日4回更新</span></div>
-          <span class="more">実務ポータルを開く →</span>
-        </a>
-
         <!-- ===== 領域4: 金融・法務・事業性 ===== -->
         <a class="card reveal" href="notes/finance.html" id="card-finance" data-cat="finance">
           <span class="badge-domain domain-finance">⚖️ 金融・PF</span>
-          <span class="num">09</span>
+          <span class="num">08</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l6 8 6-8M12 12v8M7 13h10M7 17h10"/></svg></span>
           <h3>金融・ファイナンス</h3>
           <p>GK-TKスキーム、プロジェクトファイナンス、キャッシュウォーターフォール、コベナンツ管理、リアルタイムDSCR/IRRシミュレーター。</p>
@@ -172,7 +351,7 @@
 
         <a class="card reveal" href="notes/acts.html" id="card-acts" data-cat="finance">
           <span class="badge-domain domain-finance">⚖️ 法令・許認可</span>
-          <span class="num">10</span>
+          <span class="num">09</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
           <h3>重要法令詳解</h3>
           <p>電気事業法・再エネ特措法・農地法・森林法・盛土規制法・環境アセス法。義務・手続き・罰則・法令適用診断ツール。</p>
@@ -182,7 +361,7 @@
 
         <a class="card reveal" href="notes/legal.html" id="card-legal" data-cat="finance">
           <span class="badge-domain domain-finance">⚖️ 契約・リスク</span>
-          <span class="num">11</span>
+          <span class="num">10</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></span>
           <h3>契約・保険・土地権原</h3>
           <p>地上権・賃借権、EPC/O&amp;M/AM契約の主要条項、メーカー保証、自然災害・利益保険実務とリスク配分。</p>
@@ -192,7 +371,7 @@
 
         <a class="card reveal" href="notes/industry.html" id="card-industry" data-cat="finance">
           <span class="badge-domain domain-finance">⚖️ 業界構造</span>
-          <span class="num">12</span>
+          <span class="num">11</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           <h3>業界マップ・企業ガイド</h3>
           <p>IPP・インフラファンド、AM、O&amp;M、EPC、モジュール・PCSメーカー、金融機関、TA。業界多層カオスマップ。</p>
@@ -203,11 +382,11 @@
         <!-- ===== 領域5: 実務リファレンス ===== -->
         <a class="card reveal" href="notes/glossary.html" id="card-glossary" data-cat="tool">
           <span class="badge-domain domain-tool">📖 実務辞典</span>
-          <span class="num">13</span>
+          <span class="num">12</span>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>
           <h3>用語集（Glossary）</h3>
-          <p>現場・会議・レポートで頻出する70+の実務専門用語を即時インクリメンタル検索＆カテゴリ絞り込み。</p>
-          <div class="tags"><span class="tag">70+用語収録</span><span class="tag">リアルタイム検索</span></div>
+          <p>現場・会議・レポートで頻出する160+の専門用語を体系的6ジャンルに網羅。図解イラスト5点＆即時インクリメンタル検索対応。</p>
+          <div class="tags"><span class="tag">160+用語収録</span><span class="tag">図解5点収録</span><span class="tag">リアルタイム検索</span></div>
           <span class="more">用語集を開く →</span>
         </a>
 
@@ -284,6 +463,7 @@
   </footer>
 
   <button class="to-top" id="to-top" aria-label="ページの先頭へ戻る"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <script src="assets/js/news_data.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

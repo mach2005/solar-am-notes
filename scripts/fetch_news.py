@@ -4,6 +4,7 @@
 Solar AM Notes - 最新ニュース・政策動向 自動収集スクリプト (ワイド拡充版)
 ・経済産業省 / 資源エネルギー庁 公式新着 (Atom)
 ・スマートジャパン（再エネ・電力システム専門）
+・日経BP メガソーラービジネス / SOLAR JOURNAL / PVeye（太陽光専門メディア）
 ・Google News RSS（メガソーラー・政策・規制・条例・市場・PPA・盗難・事故・ファイナンス）
 などから、アセットマネージャーに関わる最新情報を多角的に収集し data/news.json に保存します。
 ※Python標準ライブラリのみで動作します。
@@ -48,6 +49,28 @@ FEEDS = [
         "name": "スマートジャパン",
         "url": "https://rss.itmedia.co.jp/rss/2.0/smartjapan.xml",
         "type": "rss2",
+        "category": "media",
+        "filter_keywords": False,
+    },
+    {
+        "name": "日経BP メガソーラービジネス",
+        "url": "https://project.nikkeibp.co.jp/ms/mega-solar/index.rdf",
+        "type": "rdf",
+        "category": "media",
+        "filter_keywords": False,
+    },
+    {
+        "name": "SOLAR JOURNAL",
+        "url": "https://solarjournal.jp/feed/",
+        "type": "rss2",
+        "category": "media",
+        "filter_keywords": False,
+    },
+    {
+        # RSS非提供のため公開ニュース一覧HTMLから見出しのみ抽出（本文は会員限定）
+        "name": "PVeye",
+        "url": "https://www.pveye.jp/article/news/",
+        "type": "pveye_html",
         "category": "media",
         "filter_keywords": False,
     },
@@ -160,10 +183,41 @@ def split_gnews_title(raw_title):
         return parts[0].strip(), parts[1].strip()
     return raw_title.strip(), "ニュース"
 
+def parse_pveye_html(feed_def, data):
+    """PVeye ニュース一覧ページ（eye sight / Inside News）から見出しを抽出"""
+    items = []
+    html = data.decode("utf-8", errors="ignore")
+    today = datetime.now(JST).strftime("%Y-%m-%d")
+    pattern = re.compile(
+        r'<article class="item"><a href="(/(?:eye_sight|inside_news)/view/\d+/?)">[\s\S]*?<h3>([\s\S]*?)</h3>([\s\S]*?)</article>'
+    )
+    for m in pattern.finditer(html):
+        link = "https://www.pveye.jp" + m.group(1)
+        title = clean_html(m.group(2))
+        rest = m.group(3)
+        sub = re.search(r'<p class="sub-title\d*"[^>]*>([\s\S]*?)</p>', rest)
+        summary = clean_html(sub.group(1)) if sub else ""
+        # 日付は「YYYY年MM月号」表記のため号の1日とし、未来日付は今日に丸める
+        dm = re.search(r"(\d{4})年(\d{1,2})月号", rest)
+        date = f"{dm.group(1)}-{int(dm.group(2)):02d}-01" if dm else today
+        if date > today:
+            date = today
+        items.append({
+            "title": title,
+            "summary": summary[:160],
+            "link": link,
+            "date": date,
+            "source": feed_def["name"],
+            "category": determine_category(title, summary, feed_def["category"])
+        })
+    return items
+
 def parse_feed(feed_def, data):
     items = []
     if not data:
         return items
+    if feed_def["type"] == "pveye_html":
+        return parse_pveye_html(feed_def, data)
     try:
         root = ET.fromstring(data)
     except ET.ParseError as e:
@@ -204,6 +258,28 @@ def parse_feed(feed_def, data):
             if date_el is None:
                 date_el = entry.find("updated")
             date = parse_date(date_el.text if date_el is not None else "")
+
+            comb = f"{title} {summary}"
+            if feed_def["filter_keywords"] and not is_relevant(comb):
+                continue
+
+            items.append({
+                "title": clean_html(title),
+                "summary": clean_html(summary)[:160],
+                "link": link.strip(),
+                "date": date,
+                "source": feed_def["name"],
+                "category": determine_category(title, summary, feed_def["category"])
+            })
+
+    elif ftype == "rdf":
+        # RSS 1.0 (RDF)
+        ns = {"rss": "http://purl.org/rss/1.0/", "dc": "http://purl.org/dc/elements/1.1/"}
+        for item in root.findall("rss:item", ns):
+            title = item.findtext("rss:title", default="", namespaces=ns)
+            summary = item.findtext("rss:description", default="", namespaces=ns)
+            link = item.findtext("rss:link", default="", namespaces=ns)
+            date = parse_date(item.findtext("dc:date", default="", namespaces=ns))
 
             comb = f"{title} {summary}"
             if feed_def["filter_keywords"] and not is_relevant(comb):
@@ -353,7 +429,14 @@ def main():
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
 
-    print(f"[{datetime.now(JST)}] 収集完了: 合計 {len(unique_items)} 件を {out_file} に保存しました。")
+    # assets/js/news_data.js にも出力（ローカル file:// 閲覧時のCORS回避用）
+    js_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "js")
+    os.makedirs(js_dir, exist_ok=True)
+    js_file = os.path.join(js_dir, "news_data.js")
+    with open(js_file, "w", encoding="utf-8") as f:
+        f.write("window.SOLAR_NEWS_DATA = " + json.dumps(result, ensure_ascii=False, indent=2) + ";\n")
+
+    print(f"[{datetime.now(JST)}] 収集完了: 合計 {len(unique_items)} 件を {out_file} および {js_file} に保存しました。")
 
 if __name__ == "__main__":
     main()
